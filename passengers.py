@@ -1,12 +1,14 @@
 ID_INDEX = 0
 
 class Passenger:
-    def __init__(self, xy1, xy2):
+    def __init__(self, xy1, xy2, num=0):
         self.start = xy1
         self.goal = xy2
-        self.time = 0
+        self.time = num
         self.pickedUp = False
+        # keep track of which Uber picked passenger up or not?
         self.route = [self.start]
 
         self.ID = ID_INDEX
         ID_INDEX += 1
+
