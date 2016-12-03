@@ -9,9 +9,9 @@ Node -> intersection of rodes
 '''
 import numpy as np
 
-class Node(object):
+cclass Node:
     # init values
-    def __init__(self, node_id, x=0, y=0, traffic=1, neighbors=[], passengers=[]):
+    def __init__(self, node_id, neighbors, passengers, x=0, y=0, traffic=1):
         self.node_id = node_id
         self.x = x
         self.y = y
@@ -23,13 +23,18 @@ class Node(object):
     def get_neighbors(self):
         return self.neighbors
     
+    
     # add neighbors (doesn't have to be mutual, could be one way)
     def add_neighbor(self, neighbor):
         if neighbor in self.neighbors:
             print 'They are already neighrbors!'
         else:
             self.neighbors.append(neighbor)
+            for i in self.neighbors:
+                print i.node_id, '1'
             neighbor.neighbors.append(self)
+            for j in neighbor.neighbors:
+                print j.node_id, '2'
             if self in self.neighbors:
                 self.neighbors.remove(self)
     
@@ -76,19 +81,20 @@ def add_neighbor(node1, node2):
     else:
         node1.neighbors.append(node2)
         node2.neighbors.append(node1)
+        
     
 
 if __name__ == '__main__':
-	aa = Node(node_id=10)
-	bb = Node(node_id=11, x=12, y=50)
-	cc = Node(node_id=12, x=111, y=3)
-	add_neighbor(aa, bb)
-	for i in aa.neighbors:
-		print i.node_id
-	for i in cc.neighbors:
- 		print i.node_id
-  	print aa.get_euc_dist(cc)
-  	aa.add_passenger('a')
-  	print 'aa passengers: ', aa.passenters
-  	print 'bb passengers: ', bb.passenters
-  	print 'cc passengers: ', cc.passenters
+    aa = Node(node_id=10)
+    bb = Node(node_id=11, x=12, y=50)
+    cc = Node(node_id=12, x=111, y=3)
+    add_neighbor(aa, bb)
+    for i in aa.neighbors:
+        print i.node_id
+    for i in cc.neighbors:
+        print i.node_id
+    print aa.get_euc_dist(cc)
+    aa.add_passenger('a')
+    print 'aa passengers: ', aa.passenters
+    print 'bb passengers: ', bb.passenters
+    print 'cc passengers: ', cc.passenters
