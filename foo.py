@@ -8,15 +8,19 @@
       cars[]
       passengers[]
   Reminder: in A*, when passenger delivered, remove them from the list of passengers
+    can add them to finishedPassengers, which we can use to output data to a file to graph data
 '''
 import sys, uber
+
+# maybe for purposes of graphing, keep some list of finished passengers
+finishedPassengers = []
 
 time = 10 # some number that we set, and we can just leave the passengers who were unlucky enough to spawn too late
 
 def main():
     spawnTimes = [1, 3, 4] # maybe keep a list of times at which to spawn someone
     spawnQueue = ['a','b','c'] # list of passengers that we want to spawn at above times (arrays must be same len)
-    for step in time:
+    for step in range(time):
         if step == spawnTimes[0]: # spawn and remove from queue
             spawn(spawnQueue[0])
             del spawnQueue[0]
