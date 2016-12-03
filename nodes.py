@@ -8,10 +8,13 @@ Node class for Uber Dispatch System
 Node -> intersection of rodes
 '''
 import numpy as np
+import passengers
+import uber
 
-cclass Node:
+class Node:
     # init values
-    def __init__(self, node_id, neighbors, passengers, x=0, y=0, traffic=1):
+    def __init__(self, node_id, neighbors, passengers, x, y, traffic):
+
         self.node_id = node_id
         self.x = x
         self.y = y
@@ -71,6 +74,7 @@ cclass Node:
         a = np.array([self.x, self.y])
         b = np.array([node.x, node.y])
         return np.sqrt(np.sum((a-b)**2))
+
     
     
 # no one-ways! roads will be two-ways always
@@ -83,6 +87,7 @@ def add_neighbor(node1, node2):
         node2.neighbors.append(node1)
         
     
+
 
 if __name__ == '__main__':
     aa = Node(node_id=10)
@@ -98,3 +103,4 @@ if __name__ == '__main__':
     print 'aa passengers: ', aa.passenters
     print 'bb passengers: ', bb.passenters
     print 'cc passengers: ', cc.passenters
+
