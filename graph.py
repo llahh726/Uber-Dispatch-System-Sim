@@ -36,13 +36,17 @@ class graph:
             i.traffic = 1
     
     # spawn new passengers
-    def spawn(self, newPass):
+    def spawn(self):
         global PAS_ID
-        self.passengers.append(newPass)
-        PAS_ID += 1
+        # work in progress: where do I get the coordinates?
+        passengers = []
+        # so nodes would actually have to be made first
+        for i in xrange(n):
+            passengers.append(Passenger(random.choice(nodes), random.choice(nodes), ID_INDEX))
+            PAS_ID += 1
 
-        #for p in passengers:
-        #    print p.info()
+        for p in passengers:
+            print p.info()
 
     # run spawn and time
     def pass_time(self):
@@ -56,7 +60,7 @@ class graph:
                 if uber.passengerCount == 0:
                     minDist = sys.maxsize
                     assignedTo = None # not sure if this is a proper initialization
-                    for p in self.passengers:
+                    for p in passengers:
                         if (not p.pickedUp): # just look at passengers who need a ride
                             currDist = get_euc_dist(car.currentNode, p.start)
                             if (minDist > currDist):
@@ -65,40 +69,73 @@ class graph:
                     car.pickupPassenger(assignedTo)
                     assignedTo.pickedUp = True
 
-            for p in self.passengers: # increment their time in the system
+            for p in passengers: # increment their time in the system
                 p.time += 1
+                
+    # euclidian 
+    def euclidian_heuristic(self, node1, node2):
+        a = np.array([node1.x, node1.y])
+        b = np.array([node2.x, node2.y])
+        return np.sqrt(np.sum((a-b)**2))
+    
+    # a star search for finding a 
+    def a_star_search(self, start, goal):
+        frontier = PriorityQueue()
+        frontier.put(start, 0)
+        came_from = collections.OrderedDict()
+        cost_so_far = collections.OrderedDict()
+        came_from[start] = None
+        cost_so_far[start] = 0
+
+        while not frontier.empty():
+            current = frontier.get()
+
+            if current == goal:
+                break
+
+            for neighbor in current.get_neighbors():
+                # cost = current cost + dist + current traffic + neighbor traffic
+                new_cost = cost_so_far[current] + current.get_euc_dist(neighbor) * current.traffic + neighbor.traffic
+                # a star
+                if neighbor not in cost_so_far or new_cost < cost_so_far[neighbor]:
+                    cost_so_far[neighbor] = new_cost
+                    priority = new_cost + self.euclidian_heuristic(goal, neighbor)
+                    frontier.put(neighbor, priority)
+                    came_from[neighbor] = current
+
+        return came_from, cost_so_far
 
 
-if __name__ == '__main__':
-    n1 = Node(node_id=NODE_ID, x=1, y=1, neighbors=[], passengers=[])
-    n2 = Node(node_id=NODE_ID, x=2, y=3, neighbors=[], passengers=[])
-    n3 = Node(node_id=NODE_ID, x=3, y=4, neighbors=[], passengers=[])
-    n4 = Node(node_id=NODE_ID, x=10, y=1, neighbors=[], passengers=[])
-    n5 = Node(node_id=NODE_ID, x=15, y=30, neighbors=[], passengers=[])
-    n6 = Node(node_id=NODE_ID, x=35, y=4, neighbors=[], passengers=[])
-    n7 = Node(node_id=NODE_ID, x=89, y=11, neighbors=[], passengers=[])
-    n8 = Node(node_id=NODE_ID, x=15, y=35, neighbors=[], passengers=[])
-    n9 = Node(node_id=NODE_ID, x=40, y=44, neighbors=[], passengers=[])
-    n10 = Node(node_id=NODE_ID, x=10, y=91, neighbors=[], passengers=[])
-    n11 = Node(node_id=NODE_ID, x=55, y=87, neighbors=[], passengers=[])
-    n12 = Node(node_id=NODE_ID, x=99, y=99, neighbors=[], passengers=[])
-    n13 = Node(node_id=NODE_ID, x=15, y=10, neighbors=[], passengers=[])
-    n14 = Node(node_id=NODE_ID, x=86, y=30, neighbors=[], passengers=[])
-    n15 = Node(node_id=NODE_ID, x=36, y=59, neighbors=[], passengers=[])
-    add_neighbor(n1, n2)
-    add_neighbor(n2, n3)
-    add_neighbor(n3, n4)
-    add_neighbor(n1, n4)
-    add_neighbor(n4, n5)
-    add_neighbor(n3, n6)
-    add_neighbor(n6, n7)
-    add_neighbor(n5, n8)
-    add_neighbor(n8, n9)
-    add_neighbor(n9, n10)
-    add_neighbor(n10, n11)
-    add_neighbor(n11, n12)
-    add_neighbor(n12, n13)
-    add_neighbor(n14, n13)
-    add_neighbor(n15, n14)
-    nodes = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15]
-    g = graph(nodes=nodes, passengers=[], ubers=[])
+# if __name__ == '__main__':
+#     n1 = Node(node_id=NODE_ID, x=1, y=1, neighbors=[], passengers=[])
+#     n2 = Node(node_id=NODE_ID, x=2, y=3, neighbors=[], passengers=[])
+#     n3 = Node(node_id=NODE_ID, x=3, y=4, neighbors=[], passengers=[])
+#     n4 = Node(node_id=NODE_ID, x=10, y=1, neighbors=[], passengers=[])
+#     n5 = Node(node_id=NODE_ID, x=15, y=30, neighbors=[], passengers=[])
+#     n6 = Node(node_id=NODE_ID, x=35, y=4, neighbors=[], passengers=[])
+#     n7 = Node(node_id=NODE_ID, x=89, y=11, neighbors=[], passengers=[])
+#     n8 = Node(node_id=NODE_ID, x=15, y=35, neighbors=[], passengers=[])
+#     n9 = Node(node_id=NODE_ID, x=40, y=44, neighbors=[], passengers=[])
+#     n10 = Node(node_id=NODE_ID, x=10, y=91, neighbors=[], passengers=[])
+#     n11 = Node(node_id=NODE_ID, x=55, y=87, neighbors=[], passengers=[])
+#     n12 = Node(node_id=NODE_ID, x=99, y=99, neighbors=[], passengers=[])
+#     n13 = Node(node_id=NODE_ID, x=15, y=10, neighbors=[], passengers=[])
+#     n14 = Node(node_id=NODE_ID, x=86, y=30, neighbors=[], passengers=[])
+#     n15 = Node(node_id=NODE_ID, x=36, y=59, neighbors=[], passengers=[])
+#     add_neighbor(n1, n2)
+#     add_neighbor(n2, n3)
+#     add_neighbor(n3, n4)
+#     add_neighbor(n1, n4)
+#     add_neighbor(n4, n5)
+#     add_neighbor(n3, n6)
+#     add_neighbor(n6, n7)
+#     add_neighbor(n5, n8)
+#     add_neighbor(n8, n9)
+#     add_neighbor(n9, n10)
+#     add_neighbor(n10, n11)
+#     add_neighbor(n11, n12)
+#     add_neighbor(n12, n13)
+#     add_neighbor(n14, n13)
+#     add_neighbor(n15, n14)
+#     nodes = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15]
+#     g = graph(nodes=nodes, passengers=[], ubers=[])

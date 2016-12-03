@@ -8,17 +8,12 @@ Node class for Uber Dispatch System
 Node -> intersection of rodes
 '''
 import numpy as np
-<<<<<<< HEAD
-NODE_ID = 0
-=======
 import passengers
->>>>>>> 1efbf143d949f82f6fa8aaa4795c173c4868f7c0
-
+NODE_ID = 0
 
 class Node:
     # init values
-    def __init__(self, node_id, neighbors, passengers, x, y, traffic):
-
+    def __init__(self, node_id, neighbors, passengers, x=0, y=0, traffic=1):
         self.node_id = node_id
         self.x = x
         self.y = y
@@ -65,7 +60,6 @@ class Node:
         a = np.array([self.x, self.y])
         b = np.array([node.x, node.y])
         return np.sqrt(np.sum((a-b)**2))
-
     
     
 # no one-ways! roads will be two-ways always
@@ -75,27 +69,22 @@ def add_neighbor(node1, node2):
         print 'They are already neighrbors!'
     else:
         node1.neighbors.append(node2)
-<<<<<<< HEAD
-        node2.neighbors.append(node1)
-=======
         node2.neighbors.append(node1)
         
     
 
 
-if __name__ == '__main__':
-    aa = Node(node_id=10)
-    bb = Node(node_id=11, x=12, y=50)
-    cc = Node(node_id=12, x=111, y=3)
-    add_neighbor(aa, bb)
-    for i in aa.neighbors:
-        print i.node_id
-    for i in cc.neighbors:
-        print i.node_id
-    print aa.get_euc_dist(cc)
-    aa.add_passenger('a')
-    print 'aa passengers: ', aa.passenters
-    print 'bb passengers: ', bb.passenters
-    print 'cc passengers: ', cc.passenters
-
->>>>>>> 1efbf143d949f82f6fa8aaa4795c173c4868f7c0
+# if __name__ == '__main__':
+#     aa = Node(node_id=10)
+#     bb = Node(node_id=11, x=12, y=50)
+#     cc = Node(node_id=12, x=111, y=3)
+#     add_neighbor(aa, bb)
+#     for i in aa.neighbors:
+#         print i.node_id
+#     for i in cc.neighbors:
+#         print i.node_id
+#     print aa.get_euc_dist(cc)
+#     aa.add_passenger('a')
+#     print 'aa passengers: ', aa.passenters
+#     print 'bb passengers: ', bb.passenters
+#     print 'cc passengers: ', cc.passenters
