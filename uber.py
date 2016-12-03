@@ -37,13 +37,13 @@ class Uber:
 		return self.passengers
 
 	def getCurrentNode(self):
-		return currentNode
+		return self.currentNode
 
 	def getDestinationNode(self):
-		return destinationNode
+		return self.destinationNode
 
 	def getCurrTravelCost(self):
-		return currentTotalTravelCost
+		return self.currentTotalTravelCost
 
 	# def graphSearch(problem, frontier):
 
