@@ -4,7 +4,7 @@ import nodes
 ID_INDEX = 0
 
 class Passenger:
-    def __init__(self, node1, node2, idInt,  num=0):
+    def __init__(self, node1, node2, idInt=0,  num=0):
         self.start = node1
         self.goal = node2
         self.time = num
