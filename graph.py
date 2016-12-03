@@ -72,4 +72,38 @@ class graph:
             for p in passengers: # increment their time in the system
                 p.time += 1
 
-                
+
+
+if __name__ == '__main__':
+    n1 = Node(node_id=NODE_ID, x=1, y=1, neighbors=[], passengers=[])
+    n2 = Node(node_id=NODE_ID, x=2, y=3, neighbors=[], passengers=[])
+    n3 = Node(node_id=NODE_ID, x=3, y=4, neighbors=[], passengers=[])
+    n4 = Node(node_id=NODE_ID, x=10, y=1, neighbors=[], passengers=[])
+    n5 = Node(node_id=NODE_ID, x=15, y=30, neighbors=[], passengers=[])
+    n6 = Node(node_id=NODE_ID, x=35, y=4, neighbors=[], passengers=[])
+    n7 = Node(node_id=NODE_ID, x=89, y=11, neighbors=[], passengers=[])
+    n8 = Node(node_id=NODE_ID, x=15, y=35, neighbors=[], passengers=[])
+    n9 = Node(node_id=NODE_ID, x=40, y=44, neighbors=[], passengers=[])
+    n10 = Node(node_id=NODE_ID, x=10, y=91, neighbors=[], passengers=[])
+    n11 = Node(node_id=NODE_ID, x=55, y=87, neighbors=[], passengers=[])
+    n12 = Node(node_id=NODE_ID, x=99, y=99, neighbors=[], passengers=[])
+    n13 = Node(node_id=NODE_ID, x=15, y=10, neighbors=[], passengers=[])
+    n14 = Node(node_id=NODE_ID, x=86, y=30, neighbors=[], passengers=[])
+    n15 = Node(node_id=NODE_ID, x=36, y=59, neighbors=[], passengers=[])
+    add_neighbor(n1, n2)
+    add_neighbor(n2, n3)
+    add_neighbor(n3, n4)
+    add_neighbor(n1, n4)
+    add_neighbor(n4, n5)
+    add_neighbor(n3, n6)
+    add_neighbor(n6, n7)
+    add_neighbor(n5, n8)
+    add_neighbor(n8, n9)
+    add_neighbor(n9, n10)
+    add_neighbor(n10, n11)
+    add_neighbor(n11, n12)
+    add_neighbor(n12, n13)
+    add_neighbor(n14, n13)
+    add_neighbor(n15, n14)
+    nodes = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15]
+    g = graph(nodes=nodes, passengers=[], ubers=[])
