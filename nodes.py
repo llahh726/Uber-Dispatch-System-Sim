@@ -11,7 +11,7 @@ import numpy as np
 
 class Node(object):
     # init values
-    def __init__(self, node_id, x=0, y=0, traffic=1, neighbors=[], passengers=[]):
+    def __init__(self, node_id, neighbors, x=0, y=0, traffic=1, passengers=[]):
         self.node_id = node_id
         self.x = x
         self.y = y
@@ -79,18 +79,40 @@ def add_neighbor(node1, node2):
         node2.neighbors.append(node1)
     
 
-if __name__ == '__main__':
-	aa = Node(node_id=10)
-	bb = Node(node_id=11, x=12, y=50)
-	cc = Node(node_id=12, x=111, y=3)
-	add_neighbor(aa, bb)
-	for i in aa.neighbors:
-		print i.node_id
-	for i in cc.neighbors:
- 		print i.node_id
-  	print aa.get_euc_dist(cc)
-  	aa.add_passenger('a')
-  	print 'aa passengers: ', aa.passenters
-  	print 'bb passengers: ', bb.passenters
-  	print 'cc passengers: ', cc.passenters
+# if __name__ == '__main__':
+# 	aa = Node(node_id=10)
+# 	bb = Node(node_id=11, x=12, y=50)
+# 	cc = Node(node_id=12, x=111, y=3)
+#     print aa
 
+# 	add_neighbor(aa, bb)
+# 	# for i in aa.neighbors:
+# 	# 	# print i.node_id
+#  #  #       print "aa"
+# 	# for i in cc.neighbors:
+#  # 		# print i.node_id
+#  #  	# print aa.get_euc_dist(cc)
+#   	aa.add_passenger('a')
+#   	# print 'aa passengers: ', aa.passengers
+#   	# print 'bb passengers: ', bb.passengers
+#   	# print 'cc passengers: ', cc.passengers
+
+aa = Node(node_id=10, neighbors = [])
+bb = Node(node_id=11, neighbors = [])
+cc = Node(node_id=12, neighbors = [])
+
+print aa.neighbors
+print bb.neighbors
+print cc.neighbors
+
+# add_neighbor(aa, cc)
+aa.neighbors.append(5)
+
+
+print aa.neighbors
+print bb.neighbors
+print cc.neighbors
+
+
+# print (aa.node_id)
+# print (cc.node_id)
