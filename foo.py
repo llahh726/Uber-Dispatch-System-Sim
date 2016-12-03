@@ -3,8 +3,6 @@
   Rough sketch of how we might set up the search part
   Will need:
     spawn()
-    assign
-    distance (can use/reformat the same as euclidean already written)
     Possibly global vars:
       nodes[] 
       cars[]
@@ -29,7 +27,7 @@ def main():
                 assignedTo = None # not sure if this is a proper initialization
                 for p in passengers:
                     if (not p.pickedUp): # just look at passengers who need a ride
-                        currDist = distance(car.currentNode, p.start)
+                        currDist = get_euc_dist(car.currentNode, p.start)
                         if (minDist > currDist):
                             minDist = currDist
                             assignedTo = p

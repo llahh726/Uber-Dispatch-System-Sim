@@ -17,7 +17,6 @@ class Uber:
 	def pickupPassenger(self, passenger):
 		self.destinationNode = passenger.destinationNode
 		self.currentTotalTravelCost = 0
-    self.passengerCount += 1
 
 	def reachedDestination(self, passenger):
 		if self.currentNode == self.destinationNode:
