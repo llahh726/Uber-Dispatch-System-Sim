@@ -1,7 +1,7 @@
-from nodes import Node, NODE_ID
+from nodes import *
 from passengers import Passenger, ID_INDEX
 from uber import Uber, UBER_ID
-from util import add_neighbor
+from util import *
 
 PAS_ID = 0
 
@@ -167,5 +167,11 @@ if __name__ == '__main__':
     # print passengerList
     # g.passengers = passengerList
     # print "Passengers", g.passengers
+
+    tuple = g.a_star_search(n10, n6)
+    path = tuple[0]
+    cost = tuple[1]
+    print path
+    print cost
 
 

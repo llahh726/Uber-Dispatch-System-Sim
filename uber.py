@@ -48,6 +48,12 @@ class Uber:
 			# print "Reached destination, dropped off passenger:", self.passengers[0], "at", (self.currentNode.x, self.currentNode.y)
 			# print "Total time:", self.currentTotalTravelCost
 
+	def getPathAndCostToDestination(self, currentNode, destinationNode):
+		tuple = graph.a_star_search(currentNode, destinationNode)
+		path = tuple[0]
+		cost = tuple[1]
+
+
 	def getCarId(self):
 		return self.carId
 
