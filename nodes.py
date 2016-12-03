@@ -8,7 +8,11 @@ Node class for Uber Dispatch System
 Node -> intersection of rodes
 '''
 import numpy as np
+<<<<<<< HEAD
+NODE_ID = 0
+=======
 import passengers
+>>>>>>> 1efbf143d949f82f6fa8aaa4795c173c4868f7c0
 
 
 class Node:
@@ -21,25 +25,12 @@ class Node:
         self.traffic = traffic
         self.neighbors = neighbors
         self.passengers = passengers
+        global NODE_ID
+        NODE_ID += 1
     
     # return neighbors
     def get_neighbors(self):
         return self.neighbors
-    
-    
-    # add neighbors (doesn't have to be mutual, could be one way)
-    def add_neighbor(self, neighbor):
-        if neighbor in self.neighbors:
-            print 'They are already neighrbors!'
-        else:
-            self.neighbors.append(neighbor)
-            for i in self.neighbors:
-                print i.node_id, '1'
-            neighbor.neighbors.append(self)
-            for j in neighbor.neighbors:
-                print j.node_id, '2'
-            if self in self.neighbors:
-                self.neighbors.remove(self)
     
     # coordinates
     def get_coord(self):
@@ -84,6 +75,9 @@ def add_neighbor(node1, node2):
         print 'They are already neighrbors!'
     else:
         node1.neighbors.append(node2)
+<<<<<<< HEAD
+        node2.neighbors.append(node1)
+=======
         node2.neighbors.append(node1)
         
     
@@ -104,3 +98,4 @@ if __name__ == '__main__':
     print 'bb passengers: ', bb.passenters
     print 'cc passengers: ', cc.passenters
 
+>>>>>>> 1efbf143d949f82f6fa8aaa4795c173c4868f7c0
