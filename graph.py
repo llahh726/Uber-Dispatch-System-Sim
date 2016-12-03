@@ -2,6 +2,7 @@ import nodes
 import passengers
 import uber
 import util
+
 PAS_ID = 0
 
 # a class to hold everything
@@ -9,7 +10,7 @@ class graph:
     # init
     def __init__(self, nodes, passengers, ubers, start_t = 0):
         self.nodes = nodes
-        self.passengers = passengers
+        self.passengers = passengers # All the passengers on the map
         self.ubers = ubers
         self.time = start_t # start time
         self.max_time = 10 
@@ -65,6 +66,10 @@ class graph:
                                 assignedTo = p
                     car.pickupPassenger(assignedTo)
                     assignedTo.pickedUp = True
+                else:
+                    # uber.reachedDestination()
+                    print "Check if reached destination"
+
 
             for p in self.passengers: # increment their time in the system
                 p.time += 1
@@ -103,36 +108,62 @@ class graph:
         return came_from, cost_so_far
 
 
-# if __name__ == '__main__':
-#     n1 = Node(node_id=NODE_ID, x=1, y=1, neighbors=[], passengers=[])
-#     n2 = Node(node_id=NODE_ID, x=2, y=3, neighbors=[], passengers=[])
-#     n3 = Node(node_id=NODE_ID, x=3, y=4, neighbors=[], passengers=[])
-#     n4 = Node(node_id=NODE_ID, x=10, y=1, neighbors=[], passengers=[])
-#     n5 = Node(node_id=NODE_ID, x=15, y=30, neighbors=[], passengers=[])
-#     n6 = Node(node_id=NODE_ID, x=35, y=4, neighbors=[], passengers=[])
-#     n7 = Node(node_id=NODE_ID, x=89, y=11, neighbors=[], passengers=[])
-#     n8 = Node(node_id=NODE_ID, x=15, y=35, neighbors=[], passengers=[])
-#     n9 = Node(node_id=NODE_ID, x=40, y=44, neighbors=[], passengers=[])
-#     n10 = Node(node_id=NODE_ID, x=10, y=91, neighbors=[], passengers=[])
-#     n11 = Node(node_id=NODE_ID, x=55, y=87, neighbors=[], passengers=[])
-#     n12 = Node(node_id=NODE_ID, x=99, y=99, neighbors=[], passengers=[])
-#     n13 = Node(node_id=NODE_ID, x=15, y=10, neighbors=[], passengers=[])
-#     n14 = Node(node_id=NODE_ID, x=86, y=30, neighbors=[], passengers=[])
-#     n15 = Node(node_id=NODE_ID, x=36, y=59, neighbors=[], passengers=[])
-#     add_neighbor(n1, n2)
-#     add_neighbor(n2, n3)
-#     add_neighbor(n3, n4)
-#     add_neighbor(n1, n4)
-#     add_neighbor(n4, n5)
-#     add_neighbor(n3, n6)
-#     add_neighbor(n6, n7)
-#     add_neighbor(n5, n8)
-#     add_neighbor(n8, n9)
-#     add_neighbor(n9, n10)
-#     add_neighbor(n10, n11)
-#     add_neighbor(n11, n12)
-#     add_neighbor(n12, n13)
-#     add_neighbor(n14, n13)
-#     add_neighbor(n15, n14)
-#     nodes = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15]
-#     g = graph(nodes=nodes, passengers=[], ubers=[])
+
+if __name__ == '__main__':
+    # Nodes
+    n1 = Node(node_id=NODE_ID, x=1, y=1, neighbors=[], passengers=[], traffic=1)
+    n2 = Node(node_id=NODE_ID, x=2, y=3, neighbors=[], passengers=[], traffic=1)
+    n3 = Node(node_id=NODE_ID, x=3, y=4, neighbors=[], passengers=[], traffic=1)
+    n4 = Node(node_id=NODE_ID, x=10, y=1, neighbors=[], passengers=[], traffic=1)
+    n5 = Node(node_id=NODE_ID, x=15, y=30, neighbors=[], passengers=[], traffic=1)
+    n6 = Node(node_id=NODE_ID, x=35, y=4, neighbors=[], passengers=[], traffic=1)
+    n7 = Node(node_id=NODE_ID, x=89, y=11, neighbors=[], passengers=[], traffic=1)
+    n8 = Node(node_id=NODE_ID, x=15, y=35, neighbors=[], passengers=[], traffic=1)
+    n9 = Node(node_id=NODE_ID, x=40, y=44, neighbors=[], passengers=[], traffic=1)
+    n10 = Node(node_id=NODE_ID, x=10, y=91, neighbors=[], passengers=[], traffic=1)
+    n11 = Node(node_id=NODE_ID, x=55, y=87, neighbors=[], passengers=[], traffic=1)
+    n12 = Node(node_id=NODE_ID, x=99, y=99, neighbors=[], passengers=[], traffic=1)
+    n13 = Node(node_id=NODE_ID, x=15, y=10, neighbors=[], passengers=[], traffic=1)
+    n14 = Node(node_id=NODE_ID, x=86, y=30, neighbors=[], passengers=[], traffic=1)
+    n15 = Node(node_id=NODE_ID, x=36, y=59, neighbors=[], passengers=[], traffic=1)
+    
+    # Connections
+    add_neighbor(n1, n2)
+    add_neighbor(n2, n3)
+    add_neighbor(n3, n4)
+    add_neighbor(n1, n4)
+    add_neighbor(n4, n5)
+    add_neighbor(n3, n6)
+    add_neighbor(n6, n7)
+    add_neighbor(n5, n8)
+    add_neighbor(n8, n9)
+    add_neighbor(n9, n10)
+    add_neighbor(n10, n11)
+    add_neighbor(n11, n12)
+    add_neighbor(n12, n13)
+    add_neighbor(n14, n13)
+    add_neighbor(n15, n14)
+    nodes = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15]
+
+    # Ubers
+    u1 = Uber(UBER_ID, 0, [], n1, None, 0)
+    u2 = Uber(UBER_ID, 0, [], n9, None, 0)
+    u3 = Uber(UBER_ID, 0, [], n14, None, 0)
+    ubers = [u1, u2, u3]
+    # Passengers
+    p1 = Passenger(n3, n7, ID_INDEX)
+    p2 = Passenger(n1, n10, ID_INDEX)
+    p3 = Passenger(n11, n4, ID_INDEX)
+    p4 = Passenger(n15, n4, ID_INDEX)
+    p5 = Passenger(n7, n2, ID_INDEX)
+    passengerList = [p1, p2, p3, p4, p5]
+
+    g = graph(nodes=nodes, passengers=passengerList, ubers=ubers)
+
+
+    # passengerList = passengers.spawn(5, nodes)
+    # print passengerList
+    # g.passengers = passengerList
+    # print "Passengers", g.passengers
+
+
