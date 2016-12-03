@@ -11,7 +11,6 @@ import numpy as np
 import passengers
 NODE_ID = 0
 
-
 class Node:
     # init values
     def __init__(self, node_id, neighbors, passengers, x, y, traffic):

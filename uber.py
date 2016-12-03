@@ -43,6 +43,7 @@ class Uber:
 	def reachedDestination(self):
 		if self.currentNode == self.destinationNode:
 			self.passengerCount -= 1
+			return true
 			# print "Reached destination, dropped off passenger:", self.passengers[0], "at", (self.currentNode.x, self.currentNode.y)
 			# print "Total time:", self.currentTotalTravelCost
 

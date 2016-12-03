@@ -8,7 +8,7 @@ class graph:
     # init
     def __init__(self, nodes, passengers, ubers, start_t = 0):
         self.nodes = nodes
-        self.passengers = passengers
+        self.passengers = passengers # All the passengers on the map
         self.ubders = ubers
         self.time = start_t # start time
         self.max_time = 10 
@@ -68,8 +68,10 @@ class graph:
                                 assignedTo = p
                     car.pickupPassenger(assignedTo)
                     assignedTo.pickedUp = True
+                else:
+                    # uber.reachedDestination()
+
 
             for p in passengers: # increment their time in the system
                 p.time += 1
 
-                
