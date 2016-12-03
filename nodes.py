@@ -60,9 +60,8 @@ class Node:
         a = np.array([self.x, self.y])
         b = np.array([node.x, node.y])
         return np.sqrt(np.sum((a-b)**2))
-        
-    
 
+        
 
 # if __name__ == '__main__':
 #     aa = Node(node_id=10)
@@ -78,3 +77,4 @@ class Node:
 #     print 'aa passengers: ', aa.passenters
 #     print 'bb passengers: ', bb.passenters
 #     print 'cc passengers: ', cc.passenters
+
