@@ -68,8 +68,6 @@ class graph:
             for p in self.passengers: # increment their time in the system
                 p.time += 1
 
-<<<<<<< HEAD
-
 
 if __name__ == '__main__':
     n1 = Node(node_id=NODE_ID, x=1, y=1, neighbors=[], passengers=[])
@@ -104,6 +102,3 @@ if __name__ == '__main__':
     add_neighbor(n15, n14)
     nodes = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15]
     g = graph(nodes=nodes, passengers=[], ubers=[])
-=======
-                
->>>>>>> 48209be80a7a6dea19910da4bef2d7ec626b412a
