@@ -53,5 +53,3 @@ class Node(object):
         b = np.array([node.x, node.y])
         return np.sqrt(np.sum((a-b)**2))
     
-
-		
