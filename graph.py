@@ -10,7 +10,7 @@ class graph:
     def __init__(self, nodes, passengers, ubers, start_t = 0):
         self.nodes = nodes
         self.passengers = passengers
-        self.ubders = ubers
+        self.ubers = ubers
         self.time = start_t # start time
         self.max_time = 10 
         self.spawnTimes = [1, 3, 4] # maybe keep a list of times at which to spawn someone
@@ -19,7 +19,7 @@ class graph:
     # roads will be two-ways always
     def add_neighbor(self, node1, node2):
         if node1 in node2.neighbors:
-            print 'They are already neighrbors!'
+            print 'They are already neighbors!'
         else:
             node1.neighbors.append(node2)
             node2.neighbors.append(node1)
