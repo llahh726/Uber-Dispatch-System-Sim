@@ -1,12 +1,13 @@
 '''
-  Putting this in a separate file for now
-  Rough sketch of how we might set up the search part
+  Putting this in a separate file for now (can probably merge a bunch of this with Graph class)
+  Rough sketch of how we might set up the setup part
   Will need:
-    spawn()
+    spawn() 
     Possibly global vars:
       nodes[] 
       cars[]
       passengers[]
+  Reminder: in A*, when passenger delivered, remove them from the list of passengers
 '''
 import sys, uber
 
@@ -33,4 +34,7 @@ def main():
                             assignedTo = p
                 car.pickupPassenger(assignedTo)
                 assignedTo.pickedUp = True
+
+        for p in passengers: # increment their time in the system
+            p.time += 1
 main()
