@@ -27,6 +27,24 @@ class Uber:
 			self.passengerCount -= 1
 			return self.currentNode
 
+	def getCarId(self):
+		return self.carId
+
+	def getPassengerCount(self):
+		return self.passengerCount
+
+	def getPassengers(self):
+		return self.passengers
+
+	def getCurrentNode(self):
+		return currentNode
+
+	def getDestinationNode(self):
+		return destinationNode
+
+	def getCurrTravelCost(self):
+		return currentTotalTravelCost
+
 	# def graphSearch(problem, frontier):
 
 	# def heuristic(a, b):
@@ -41,5 +59,6 @@ class Uber:
 	# 	return frontier
 
 node1 = Node(0, [], [], 0, 0, 1)
+node2 = Node(1, [node1], [], 1, 1, 1)
 car1 = Uber(1, 0, [], Node, Node, 0)
 
