@@ -36,17 +36,13 @@ class graph:
             i.traffic = 1
     
     # spawn new passengers
-    def spawn(self):
+    def spawn(self, newPass):
         global PAS_ID
-        # work in progress: where do I get the coordinates?
-        passengers = []
-        # so nodes would actually have to be made first
-        for i in xrange(n):
-            passengers.append(Passenger(random.choice(nodes), random.choice(nodes), ID_INDEX))
-            PAS_ID += 1
+        self.passengers.append(newPass)
+        PAS_ID += 1
 
-        for p in passengers:
-            print p.info()
+        #for p in passengers:
+        #    print p.info()
 
     # run spawn and time
     def pass_time(self):
