@@ -13,8 +13,7 @@ NODE_ID = 0
 
 class Node:
     # init values
-    def __init__(self, node_id, neighbors, passengers, x, y, traffic):
-
+    def __init__(self, node_id, neighbors, passengers, x=0, y=0, traffic=1):
         self.node_id = node_id
         self.x = x
         self.y = y
@@ -62,33 +61,20 @@ class Node:
         b = np.array([node.x, node.y])
         return np.sqrt(np.sum((a-b)**2))
 
-    
-    
-# no one-ways! roads will be two-ways always
-# use this to add node or use 
-def add_neighbor(node1, node2):
-    if node1 in node2.neighbors:
-        print 'They are already neighrbors!'
-    else:
-        node1.neighbors.append(node2)
-        node2.neighbors.append(node1)
         
-    
 
-
-if __name__ == '__main__':
-    aa = Node(node_id=10)
-    bb = Node(node_id=11, x=12, y=50)
-    cc = Node(node_id=12, x=111, y=3)
-    add_neighbor(aa, bb)
-    for i in aa.neighbors:
-        print i.node_id
-    for i in cc.neighbors:
-        print i.node_id
-    print aa.get_euc_dist(cc)
-    aa.add_passenger('a')
-    print 'aa passengers: ', aa.passenters
-    print 'bb passengers: ', bb.passenters
-    print 'cc passengers: ', cc.passenters
-
+# if __name__ == '__main__':
+#     aa = Node(node_id=10)
+#     bb = Node(node_id=11, x=12, y=50)
+#     cc = Node(node_id=12, x=111, y=3)
+#     add_neighbor(aa, bb)
+#     for i in aa.neighbors:
+#         print i.node_id
+#     for i in cc.neighbors:
+#         print i.node_id
+#     print aa.get_euc_dist(cc)
+#     aa.add_passenger('a')
+#     print 'aa passengers: ', aa.passenters
+#     print 'bb passengers: ', bb.passenters
+#     print 'cc passengers: ', cc.passenters
 

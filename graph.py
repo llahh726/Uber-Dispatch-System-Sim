@@ -1,6 +1,8 @@
-from nodes import Node, NODE_ID, add_neighbor
-from passengers import Passenger, ID_INDEX
-from uber import Uber, UBER_ID
+import nodes
+import passengers
+import uber
+import util
+
 PAS_ID = 0
 
 # a class to hold everything
@@ -37,18 +39,18 @@ class graph:
     
     # spawn new passengers
     def spawn(self, newPass):
-        global PAS_ID
         self.passengers.append(newPass)
-        PAS_ID += 1
 
-        #for p in passengers:
+        # for p in passengers:
         #    print p.info()
 
     # run spawn and time
     def pass_time(self):
+        global PAS_ID
         for step in range(self.max_time):
             if step == self.spawnTimes[0]: # spawn and remove from queue
                 self.spawn(self.spawnQueue[0])
+                PAS_ID += 1
                 del self.spawnQueue[0]
                 del self.spawnTimes[0]
             # assign unassigned cars to nearest passengers
@@ -71,6 +73,40 @@ class graph:
 
             for p in self.passengers: # increment their time in the system
                 p.time += 1
+                
+    # euclidian 
+    def euclidian_heuristic(self, node1, node2):
+        a = np.array([node1.x, node1.y])
+        b = np.array([node2.x, node2.y])
+        return np.sqrt(np.sum((a-b)**2))
+    
+    # a star search for finding a 
+    def a_star_search(self, start, goal):
+        frontier = PriorityQueue()
+        frontier.put(start, 0)
+        came_from = collections.OrderedDict()
+        cost_so_far = collections.OrderedDict()
+        came_from[start] = None
+        cost_so_far[start] = 0
+
+        while not frontier.empty():
+            current = frontier.get()
+
+            if current == goal:
+                break
+
+            for neighbor in current.get_neighbors():
+                # cost = current cost + dist + current traffic + neighbor traffic
+                new_cost = cost_so_far[current] + current.get_euc_dist(neighbor) * current.traffic + neighbor.traffic
+                # a star
+                if neighbor not in cost_so_far or new_cost < cost_so_far[neighbor]:
+                    cost_so_far[neighbor] = new_cost
+                    priority = new_cost + self.euclidian_heuristic(goal, neighbor)
+                    frontier.put(neighbor, priority)
+                    came_from[neighbor] = current
+
+        return came_from, cost_so_far
+
 
 
 if __name__ == '__main__':
@@ -129,4 +165,5 @@ if __name__ == '__main__':
     # print passengerList
     # g.passengers = passengerList
     # print "Passengers", g.passengers
+
 
