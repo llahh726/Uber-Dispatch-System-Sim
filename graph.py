@@ -36,17 +36,13 @@ class graph:
             i.traffic = 1
     
     # spawn new passengers
-    def spawn(self):
+    def spawn(self, newPass):
         global PAS_ID
-        # work in progress: where do I get the coordinates?
-        passengers = []
-        # so nodes would actually have to be made first
-        for i in xrange(n):
-            passengers.append(Passenger(random.choice(nodes), random.choice(nodes), ID_INDEX))
-            PAS_ID += 1
+        self.passengers.append(newPass)
+        PAS_ID += 1
 
-        for p in passengers:
-            print p.info()
+        #for p in passengers:
+        #    print p.info()
 
     # run spawn and time
     def pass_time(self):
@@ -60,7 +56,7 @@ class graph:
                 if uber.passengerCount == 0:
                     minDist = sys.maxsize
                     assignedTo = None # not sure if this is a proper initialization
-                    for p in passengers:
+                    for p in self.passengers:
                         if (not p.pickedUp): # just look at passengers who need a ride
                             currDist = get_euc_dist(car.currentNode, p.start)
                             if (minDist > currDist):
@@ -69,9 +65,10 @@ class graph:
                     car.pickupPassenger(assignedTo)
                     assignedTo.pickedUp = True
 
-            for p in passengers: # increment their time in the system
+            for p in self.passengers: # increment their time in the system
                 p.time += 1
 
+<<<<<<< HEAD
 
 
 if __name__ == '__main__':
@@ -107,3 +104,6 @@ if __name__ == '__main__':
     add_neighbor(n15, n14)
     nodes = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15]
     g = graph(nodes=nodes, passengers=[], ubers=[])
+=======
+                
+>>>>>>> 48209be80a7a6dea19910da4bef2d7ec626b412a
