@@ -9,8 +9,8 @@ class Passenger:
         self.goal = node2
         self.time = num
         self.pickedUp = False
-        # keep track of which Uber picked passenger up or not?
-        self.route = [self.start]
+        
+        self.route = [self.start] # we may not use this (can use the uber's route)
 
         self.ID = idInt
 
