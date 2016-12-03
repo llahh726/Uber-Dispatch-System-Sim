@@ -8,11 +8,8 @@ Node class for Uber Dispatch System
 Node -> intersection of rodes
 '''
 import numpy as np
-<<<<<<< HEAD
-NODE_ID = 0
-=======
 import passengers
->>>>>>> 1efbf143d949f82f6fa8aaa4795c173c4868f7c0
+NODE_ID = 0
 
 
 class Node:
@@ -75,9 +72,6 @@ def add_neighbor(node1, node2):
         print 'They are already neighrbors!'
     else:
         node1.neighbors.append(node2)
-<<<<<<< HEAD
-        node2.neighbors.append(node1)
-=======
         node2.neighbors.append(node1)
         
     
@@ -98,4 +92,4 @@ if __name__ == '__main__':
     print 'bb passengers: ', bb.passenters
     print 'cc passengers: ', cc.passenters
 
->>>>>>> 1efbf143d949f82f6fa8aaa4795c173c4868f7c0
+
