@@ -1,8 +1,5 @@
 import random
 
-MAX_X = 10
-MAX_Y = 10
-
 class Passenger:
     def __init__(self, node1, node2, idInt,  num=0):
         self.start = node1
