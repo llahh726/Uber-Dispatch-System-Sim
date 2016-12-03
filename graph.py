@@ -56,7 +56,7 @@ class graph:
                 if uber.passengerCount == 0:
                     minDist = sys.maxsize
                     assignedTo = None # not sure if this is a proper initialization
-                    for p in passengers:
+                    for p in self.passengers:
                         if (not p.pickedUp): # just look at passengers who need a ride
                             currDist = get_euc_dist(car.currentNode, p.start)
                             if (minDist > currDist):
@@ -65,7 +65,7 @@ class graph:
                     car.pickupPassenger(assignedTo)
                     assignedTo.pickedUp = True
 
-            for p in passengers: # increment their time in the system
+            for p in self.passengers: # increment their time in the system
                 p.time += 1
 
                 
