@@ -5,7 +5,7 @@ import util
 PAS_ID = 0
 
 # a class to hold everything
-class graph:
+class Graph:
     # init
     def __init__(self, nodes, passengers, ubers, start_t = 0):
         self.nodes = nodes
