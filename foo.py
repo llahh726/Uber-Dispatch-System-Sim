@@ -10,7 +10,7 @@
       cars[]
       passengers[]
 '''
-import sys
+import sys, uber
 
 time = 10 # some number that we set, and we can just leave the passengers who were unlucky enough to spawn too late
 
@@ -33,5 +33,6 @@ def main():
                         if (minDist > currDist):
                             minDist = currDist
                             assignedTo = p
-                            p.pickedUp = True
+                car.pickupPassenger(assignedTo)
+                assignedTo.pickedUp = True
 main()
