@@ -1,7 +1,7 @@
 from nodes import Node
 from passengers import Passenger
 # import util
-
+UBER_ID = 0
 
 class Uber:
 
@@ -14,7 +14,8 @@ class Uber:
 		self.currentNode = currentNode # current Node() that car is at
 		self.destinationNode = destinationNode # Node() that is Passenger() goal
 		self.currentTotalTravelCost = currentTotalTravelCost # int starting at 0 on pickup
-
+		global UBER_ID
+		UBER_ID += 1
 
 	def pickupPassenger(self, passenger):
 		if self.currentNode == passenger.start:	
@@ -43,7 +44,7 @@ class Uber:
 	def reachedDestination(self):
 		if self.currentNode == self.destinationNode:
 			self.passengerCount -= 1
-			return true
+			# return true
 			# print "Reached destination, dropped off passenger:", self.passengers[0], "at", (self.currentNode.x, self.currentNode.y)
 			# print "Total time:", self.currentTotalTravelCost
 
