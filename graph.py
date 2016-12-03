@@ -1,12 +1,12 @@
-import nodes
-import passengers
-import uber
-import util
+from nodes import Node, NODE_ID
+from passengers import Passenger, ID_INDEX
+from uber import Uber, UBER_ID
+from util import add_neighbor
 
 PAS_ID = 0
 
 # a class to hold everything
-class graph:
+class Graph:
     # init
     def __init__(self, nodes, passengers, ubers, start_t = 0):
         self.nodes = nodes
@@ -158,9 +158,11 @@ if __name__ == '__main__':
     p5 = Passenger(n7, n2, ID_INDEX)
     passengerList = [p1, p2, p3, p4, p5]
 
-    g = graph(nodes=nodes, passengers=passengerList, ubers=ubers)
+    g = Graph(nodes=nodes, passengers=passengerList, ubers=ubers)
 
-
+    print "Uber1 pos:", u1.currentNode.x, u1.currentNode.y
+    print "Uber2 pos:", u2.currentNode.x, u2.currentNode.y
+    print "Uber3 pos:", u3.currentNode.x, u3.currentNode.y
     # passengerList = passengers.spawn(5, nodes)
     # print passengerList
     # g.passengers = passengerList
