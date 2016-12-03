@@ -36,23 +36,19 @@ class graph:
             i.traffic = 1
     
     # spawn new passengers
-    def spawn(self):
-        global PAS_ID
-        # work in progress: where do I get the coordinates?
-        passengers = []
-        # so nodes would actually have to be made first
-        for i in xrange(n):
-            passengers.append(Passenger(random.choice(nodes), random.choice(nodes), ID_INDEX))
-            PAS_ID += 1
+    def spawn(self, newPass):
+        self.passengers.append(newPass)
 
-        for p in passengers:
-            print p.info()
+        # for p in passengers:
+        #    print p.info()
 
     # run spawn and time
     def pass_time(self):
+        global PAS_ID
         for step in range(self.max_time):
             if step == self.spawnTimes[0]: # spawn and remove from queue
                 self.spawn(self.spawnQueue[0])
+                PAS_ID += 1
                 del self.spawnQueue[0]
                 del self.spawnTimes[0]
             # assign unassigned cars to nearest passengers
@@ -60,7 +56,7 @@ class graph:
                 if uber.passengerCount == 0:
                     minDist = sys.maxsize
                     assignedTo = None # not sure if this is a proper initialization
-                    for p in passengers:
+                    for p in self.passengers:
                         if (not p.pickedUp): # just look at passengers who need a ride
                             currDist = get_euc_dist(car.currentNode, p.start)
                             if (minDist > currDist):
@@ -69,7 +65,7 @@ class graph:
                     car.pickupPassenger(assignedTo)
                     assignedTo.pickedUp = True
 
-            for p in passengers: # increment their time in the system
+            for p in self.passengers: # increment their time in the system
                 p.time += 1
                 
     # euclidian 
