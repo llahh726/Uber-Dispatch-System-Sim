@@ -14,8 +14,9 @@ class Graph:
         self.ubers = ubers
         self.time = start_t # start time
         self.max_time = 10 
-        self.spawnTimes = [1, 3, 4] # maybe keep a list of times at which to spawn someone
-        self.spawnQueue = ['a','b','c'] # list of passengers that we want to spawn at above times (arrays must be same len)
+        # just noticed this doesn't support spawning two passengers at the same time
+        self.spawnTimes = [1, 3, 4, 6] # maybe keep a list of times at which to spawn someone
+        self.spawnQueue = [Passenger(self.nodes[1], self.nodes[3]), Passenger(self.nodes[2], self.nodes[7]), Passenger(self.nodes[10], self.nodes[1]), Passenger(self.nodes[4], self.nodes[6])] # list of passengers that we want to spawn at above times (arrays must be same len)
     
     # roads will be two-ways always
     def add_neighbor(self, node1, node2):
@@ -39,18 +40,19 @@ class Graph:
     
     # spawn new passengers
     def spawn(self, newPass):
+        global PAS_ID
+        newPass.ID = PAS_ID # set the correct ID to new passenger
         self.passengers.append(newPass)
+        PAS_ID += 1
 
         # for p in passengers:
         #    print p.info()
 
     # run spawn and time
     def pass_time(self):
-        global PAS_ID
         for step in range(self.max_time):
             if step == self.spawnTimes[0]: # spawn and remove from queue
                 self.spawn(self.spawnQueue[0])
-                PAS_ID += 1
                 del self.spawnQueue[0]
                 del self.spawnTimes[0]
             # assign unassigned cars to nearest passengers
