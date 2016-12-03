@@ -8,10 +8,12 @@ Node class for Uber Dispatch System
 Node -> intersection of rodes
 '''
 import numpy as np
+import passengers
+import uber
 
-cclass Node:
+class Node:
     # init values
-    def __init__(self, node_id, neighbors, passengers, x=0, y=0, traffic=1):
+    def __init__(self, node_id, neighbors, passengers, x, y, traffic):
 
         self.node_id = node_id
         self.x = x
