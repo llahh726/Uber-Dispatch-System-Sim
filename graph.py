@@ -2,6 +2,7 @@ from nodes import *
 from passengers import *
 from uber import *
 from util import *
+import sys
 
 PAS_ID = 0
 
@@ -64,11 +65,11 @@ class Graph:
                     assignedTo = None # not sure if this is a proper initialization
                     for p in self.passengers:
                         if (not p.pickedUp): # just look at passengers who need a ride
-                            currDist = get_euc_dist(car.currentNode, p.start)
+                            currDist = uber.currentNode.get_euc_dist(p.start)
                             if (minDist > currDist):
                                 minDist = currDist
                                 assignedTo = p
-                    car.pickupPassenger(assignedTo)
+                    uber.pickupPassenger(assignedTo)
                     assignedTo.pickedUp = True
                 else:
                     # uber.reachedDestination()
