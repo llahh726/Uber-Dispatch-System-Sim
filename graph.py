@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 from nodes import *
 from passengers import *
 from uber import *
 from util import *
-=======
-from nodes import Node, NODE_ID
-from passengers import Passenger, ID_INDEX
-from uber import Uber, UBER_ID
-from util import add_neighbor
->>>>>>> refs/remotes/origin/master
 
 PAS_ID = 0
 
