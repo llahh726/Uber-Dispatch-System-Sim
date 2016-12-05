@@ -1,7 +1,7 @@
-import nodes
-import passengers
-import uber
-import util
+from nodes import *
+from passengers import *
+from uber import *
+from util import *
 
 PAS_ID = 0
 
