@@ -148,16 +148,16 @@ if __name__ == '__main__':
     nodes = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15]
 
     # Ubers
-    u1 = Uber(UBER_ID, 0, [], n1, None, 0)
-    u2 = Uber(UBER_ID, 0, [], n9, None, 0)
-    u3 = Uber(UBER_ID, 0, [], n14, None, 0)
+    u1 = Uber(1, 0, [], n1, None, 0)
+    u2 = Uber(2, 0, [], n9, None, 0)
+    u3 = Uber(3, 0, [], n14, None, 0)
     ubers = [u1, u2, u3]
     # Passengers
-    p1 = Passenger(n3, n7, ID_INDEX)
-    p2 = Passenger(n1, n10, ID_INDEX)
-    p3 = Passenger(n11, n4, ID_INDEX)
-    p4 = Passenger(n15, n4, ID_INDEX)
-    p5 = Passenger(n7, n2, ID_INDEX)
+    p1 = Passenger(n3, n7, 1)
+    p2 = Passenger(n1, n10, 2)
+    p3 = Passenger(n11, n4, 3)
+    p4 = Passenger(n15, n4, 4)
+    p5 = Passenger(n7, n2, 5)
     passengerList = [p1, p2, p3, p4, p5]
 
     g = Graph(nodes=nodes, passengers=passengerList, ubers=ubers)
@@ -166,6 +166,7 @@ if __name__ == '__main__':
     print "Uber2 pos:", u2.currentNode.x, u2.currentNode.y
     print "Uber3 pos:", u3.currentNode.x, u3.currentNode.y
     # passengerList = passengers.spawn(5, nodes)
+    print passengerList
     # print passengerList
     # g.passengers = passengerList
     # print "Passengers", g.passengers
