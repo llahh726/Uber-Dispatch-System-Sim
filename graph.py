@@ -1,7 +1,7 @@
-from nodes import Node, NODE_ID
-from passengers import Passenger, ID_INDEX
-from uber import Uber, UBER_ID
-from util import add_neighbor
+from nodes import *
+from passengers import *
+from uber import *
+from util import *
 
 PAS_ID = 0
 
