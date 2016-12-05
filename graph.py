@@ -1,6 +1,6 @@
 from nodes import *
-from passengers import Passenger, ID_INDEX
-from uber import Uber, UBER_ID
+from passengers import *
+from uber import *
 from util import *
 
 PAS_ID = 0
@@ -113,21 +113,21 @@ class Graph:
 
 if __name__ == '__main__':
     # Nodes
-    n1 = Node(node_id=NODE_ID, x=1, y=1, neighbors=[], passengers=[], traffic=1)
-    n2 = Node(node_id=NODE_ID, x=2, y=3, neighbors=[], passengers=[], traffic=1)
-    n3 = Node(node_id=NODE_ID, x=3, y=4, neighbors=[], passengers=[], traffic=1)
-    n4 = Node(node_id=NODE_ID, x=10, y=1, neighbors=[], passengers=[], traffic=1)
-    n5 = Node(node_id=NODE_ID, x=15, y=30, neighbors=[], passengers=[], traffic=1)
-    n6 = Node(node_id=NODE_ID, x=35, y=4, neighbors=[], passengers=[], traffic=1)
-    n7 = Node(node_id=NODE_ID, x=89, y=11, neighbors=[], passengers=[], traffic=1)
-    n8 = Node(node_id=NODE_ID, x=15, y=35, neighbors=[], passengers=[], traffic=1)
-    n9 = Node(node_id=NODE_ID, x=40, y=44, neighbors=[], passengers=[], traffic=1)
-    n10 = Node(node_id=NODE_ID, x=10, y=91, neighbors=[], passengers=[], traffic=1)
-    n11 = Node(node_id=NODE_ID, x=55, y=87, neighbors=[], passengers=[], traffic=1)
-    n12 = Node(node_id=NODE_ID, x=99, y=99, neighbors=[], passengers=[], traffic=1)
-    n13 = Node(node_id=NODE_ID, x=15, y=10, neighbors=[], passengers=[], traffic=1)
-    n14 = Node(node_id=NODE_ID, x=86, y=30, neighbors=[], passengers=[], traffic=1)
-    n15 = Node(node_id=NODE_ID, x=36, y=59, neighbors=[], passengers=[], traffic=1)
+    n1 = Node(node_id=0, x=1, y=1, neighbors=[], passengers=[], traffic=1)
+    n2 = Node(node_id=1, x=2, y=3, neighbors=[], passengers=[], traffic=1)
+    n3 = Node(node_id=2, x=3, y=4, neighbors=[], passengers=[], traffic=1)
+    n4 = Node(node_id=3, x=10, y=1, neighbors=[], passengers=[], traffic=1)
+    n5 = Node(node_id=4, x=15, y=30, neighbors=[], passengers=[], traffic=1)
+    n6 = Node(node_id=5, x=35, y=4, neighbors=[], passengers=[], traffic=1)
+    n7 = Node(node_id=6, x=89, y=11, neighbors=[], passengers=[], traffic=1)
+    n8 = Node(node_id=7, x=15, y=35, neighbors=[], passengers=[], traffic=1)
+    n9 = Node(node_id=8, x=40, y=44, neighbors=[], passengers=[], traffic=1)
+    n10 = Node(node_id=9, x=10, y=91, neighbors=[], passengers=[], traffic=1)
+    n11 = Node(node_id=10,x=55, y=87, neighbors=[], passengers=[], traffic=1)
+    n12 = Node(node_id=11,x=99, y=99, neighbors=[], passengers=[], traffic=1)
+    n13 = Node(node_id=12,x=15, y=10, neighbors=[], passengers=[], traffic=1)
+    n14 = Node(node_id=13,x=86, y=30, neighbors=[], passengers=[], traffic=1)
+    n15 = Node(node_id=14,x=36, y=59, neighbors=[], passengers=[], traffic=1)
     
     # Connections
     add_neighbor(n1, n2)
@@ -173,7 +173,14 @@ if __name__ == '__main__':
     tuple = g.a_star_search(n10, n6)
     path = tuple[0]
     cost = tuple[1]
-    print path
-    print cost
+    # for x in path:
+    #     print x.node_id, x.x, x.y
+    #     print x
+    # print cost
+    # #for x in cost:
+    # print x.node_id
 
+    # Get cost at each step
+    # for i in cost:
+    #     print cost[i]
 

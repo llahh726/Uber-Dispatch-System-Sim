@@ -52,6 +52,10 @@ class Uber:
 		tuple = graph.a_star_search(currentNode, destinationNode)
 		path = tuple[0]
 		cost = tuple[1]
+		
+		# path is the path of nodes to destination
+		# do we move one node per time step? 
+
 
 
 	def getCarId(self):
