@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 from nodes import *
 from passengers import *
 from uber import *
 from util import *
+=======
+from nodes import Node, NODE_ID
+from passengers import Passenger, ID_INDEX
+from uber import Uber, UBER_ID
+from util import add_neighbor
+>>>>>>> refs/remotes/origin/master
 
 PAS_ID = 0
 
@@ -14,8 +21,9 @@ class Graph:
         self.ubers = ubers
         self.time = start_t # start time
         self.max_time = 10 
-        self.spawnTimes = [1, 3, 4] # maybe keep a list of times at which to spawn someone
-        self.spawnQueue = ['a','b','c'] # list of passengers that we want to spawn at above times (arrays must be same len)
+        # just noticed this doesn't support spawning two passengers at the same time
+        self.spawnTimes = [1, 3, 4, 6] # maybe keep a list of times at which to spawn someone
+        self.spawnQueue = [Passenger(self.nodes[1], self.nodes[3]), Passenger(self.nodes[2], self.nodes[7]), Passenger(self.nodes[10], self.nodes[1]), Passenger(self.nodes[4], self.nodes[6])] # list of passengers that we want to spawn at above times (arrays must be same len)
     
     # roads will be two-ways always
     def add_neighbor(self, node1, node2):
@@ -39,18 +47,19 @@ class Graph:
     
     # spawn new passengers
     def spawn(self, newPass):
+        global PAS_ID
+        newPass.ID = PAS_ID # set the correct ID to new passenger
         self.passengers.append(newPass)
+        PAS_ID += 1
 
         # for p in passengers:
         #    print p.info()
 
     # run spawn and time
     def pass_time(self):
-        global PAS_ID
         for step in range(self.max_time):
             if step == self.spawnTimes[0]: # spawn and remove from queue
                 self.spawn(self.spawnQueue[0])
-                PAS_ID += 1
                 del self.spawnQueue[0]
                 del self.spawnTimes[0]
             # assign unassigned cars to nearest passengers
@@ -158,9 +167,11 @@ if __name__ == '__main__':
     p5 = Passenger(n7, n2, ID_INDEX)
     passengerList = [p1, p2, p3, p4, p5]
 
-    g = graph(nodes=nodes, passengers=passengerList, ubers=ubers)
+    g = Graph(nodes=nodes, passengers=passengerList, ubers=ubers)
 
-
+    print "Uber1 pos:", u1.currentNode.x, u1.currentNode.y
+    print "Uber2 pos:", u2.currentNode.x, u2.currentNode.y
+    print "Uber3 pos:", u3.currentNode.x, u3.currentNode.y
     # passengerList = passengers.spawn(5, nodes)
     # print passengerList
     # g.passengers = passengerList
