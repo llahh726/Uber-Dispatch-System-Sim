@@ -3,6 +3,9 @@ from passengers import *
 from uber import *
 from util import *
 
+import sys
+
+
 PAS_ID = 0
 
 # a class to hold everything
@@ -16,7 +19,9 @@ class Graph:
         self.max_time = 10 
         # just noticed this doesn't support spawning two passengers at the same time
         self.spawnTimes = [1, 3, 4, 6] # maybe keep a list of times at which to spawn someone
-        self.spawnQueue = [Passenger(self.nodes[1], self.nodes[3]), Passenger(self.nodes[2], self.nodes[7]), Passenger(self.nodes[10], self.nodes[1]), Passenger(self.nodes[4], self.nodes[6])] # list of passengers that we want to spawn at above times (arrays must be same len)
+        # commented out/replaced this because I don't want it just yet when I'm testing
+        #self.spawnQueue = [Passenger(self.nodes[1], self.nodes[3]), Passenger(self.nodes[2], self.nodes[7]), Passenger(self.nodes[10], self.nodes[1]), Passenger(self.nodes[4], self.nodes[6])] # list of passengers that we want to spawn at above times (arrays must be same len)
+        self.spawnQueue = []
     
     # roads will be two-ways always
     def add_neighbor(self, node1, node2):
@@ -62,11 +67,11 @@ class Graph:
                     assignedTo = None # not sure if this is a proper initialization
                     for p in self.passengers:
                         if (not p.pickedUp): # just look at passengers who need a ride
-                            currDist = get_euc_dist(car.currentNode, p.start)
+                            currDist = uber.currentNode.get_euc_dist(p.start)
                             if (minDist > currDist):
                                 minDist = currDist
                                 assignedTo = p
-                    car.pickupPassenger(assignedTo)
+                    uber.pickupPassenger(assignedTo)
                     assignedTo.pickedUp = True
                 else:
                     # uber.reachedDestination()
@@ -112,40 +117,63 @@ class Graph:
 
 
 if __name__ == '__main__':
-    # Nodes
-    n1 = Node(node_id=0, x=1, y=1, neighbors=[], passengers=[], traffic=1)
-    n2 = Node(node_id=1, x=2, y=3, neighbors=[], passengers=[], traffic=1)
-    n3 = Node(node_id=2, x=3, y=4, neighbors=[], passengers=[], traffic=1)
-    n4 = Node(node_id=3, x=10, y=1, neighbors=[], passengers=[], traffic=1)
-    n5 = Node(node_id=4, x=15, y=30, neighbors=[], passengers=[], traffic=1)
-    n6 = Node(node_id=5, x=35, y=4, neighbors=[], passengers=[], traffic=1)
-    n7 = Node(node_id=6, x=89, y=11, neighbors=[], passengers=[], traffic=1)
-    n8 = Node(node_id=7, x=15, y=35, neighbors=[], passengers=[], traffic=1)
-    n9 = Node(node_id=8, x=40, y=44, neighbors=[], passengers=[], traffic=1)
-    n10 = Node(node_id=9, x=10, y=91, neighbors=[], passengers=[], traffic=1)
-    n11 = Node(node_id=10,x=55, y=87, neighbors=[], passengers=[], traffic=1)
-    n12 = Node(node_id=11,x=99, y=99, neighbors=[], passengers=[], traffic=1)
-    n13 = Node(node_id=12,x=15, y=10, neighbors=[], passengers=[], traffic=1)
-    n14 = Node(node_id=13,x=86, y=30, neighbors=[], passengers=[], traffic=1)
-    n15 = Node(node_id=14,x=36, y=59, neighbors=[], passengers=[], traffic=1)
-    
-    # Connections
+
+    # test for graph
+    n1 = Node(node_id=NODE_ID, x=0, y=0, neighbors=[], passengers=[])
+    n2 = Node(node_id=NODE_ID, x=50, y=0, neighbors=[], passengers=[])
+    n3 = Node(node_id=NODE_ID, x=100, y=0, neighbors=[], passengers=[])
+    n4 = Node(node_id=NODE_ID, x=0, y=50, neighbors=[], passengers=[])
+    n5 = Node(node_id=NODE_ID, x=50, y=50, neighbors=[], passengers=[])
+    n6 = Node(node_id=NODE_ID, x=100, y=50, neighbors=[], passengers=[])
+    n7 = Node(node_id=NODE_ID, x=0, y=100, neighbors=[], passengers=[])
+    n8 = Node(node_id=NODE_ID, x=50, y=100, neighbors=[], passengers=[])
+    n9 = Node(node_id=NODE_ID, x=100, y=100, neighbors=[], passengers=[])
+    n10 = Node(node_id=NODE_ID, x=25, y=25, neighbors=[], passengers=[])
+    n11 = Node(node_id=NODE_ID, x=25, y=75, neighbors=[], passengers=[])
+    n12 = Node(node_id=NODE_ID, x=75, y=25, neighbors=[], passengers=[])
+    n13 = Node(node_id=NODE_ID, x=75, y=75, neighbors=[], passengers=[])
+    n14 = Node(node_id=NODE_ID, x=10, y=10, neighbors=[], passengers=[])
+    n15 = Node(node_id=NODE_ID, x=90, y=90, neighbors=[], passengers=[])
+    n16 = Node(node_id=NODE_ID, x=10, y=90, neighbors=[], passengers=[])
+    n17 = Node(node_id=NODE_ID, x=90, y=10, neighbors=[], passengers=[])
+
     add_neighbor(n1, n2)
     add_neighbor(n2, n3)
-    add_neighbor(n3, n4)
     add_neighbor(n1, n4)
-    add_neighbor(n4, n5)
+    add_neighbor(n2, n5)
     add_neighbor(n3, n6)
-    add_neighbor(n6, n7)
+    add_neighbor(n4, n7)
     add_neighbor(n5, n8)
+    add_neighbor(n6, n9)
+    add_neighbor(n4, n5)
+    add_neighbor(n5, n6)
+    add_neighbor(n7, n8)
     add_neighbor(n8, n9)
-    add_neighbor(n9, n10)
-    add_neighbor(n10, n11)
-    add_neighbor(n11, n12)
-    add_neighbor(n12, n13)
-    add_neighbor(n14, n13)
-    add_neighbor(n15, n14)
-    nodes = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15]
+    add_neighbor(n1, n14)
+    add_neighbor(n14, n10)
+    add_neighbor(n10, n5)
+    add_neighbor(n4, n10)
+    add_neighbor(n10, n2)
+    add_neighbor(n5, n12)
+    add_neighbor(n12, n17)
+    add_neighbor(n17, n3)
+    add_neighbor(n2, n12)
+    add_neighbor(n12, n6)
+    add_neighbor(n4, n11)
+    add_neighbor(n11, n8)
+    add_neighbor(n7, n16)
+    add_neighbor(n16, n11)
+    add_neighbor(n11, n5)
+    add_neighbor(n5, n13)
+    add_neighbor(n13, n15)
+    add_neighbor(n15, n9)
+    add_neighbor(n8, n13)
+    add_neighbor(n13, n6)
+    nodes = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15, n16, n17]
+    g = graph(nodes=nodes, passengers=[], ubers=[])
+
+    # graph it
+    print graph_map(g)
 
     # Ubers
     u1 = Uber(1, 0, [], n1, None, 0)
