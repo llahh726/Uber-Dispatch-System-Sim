@@ -25,7 +25,7 @@ def main():
 
     # initialize ubers
     ubers = []
-    ubers.append(Uber(UBER_ID, 0, [], nodes[4], nodes[4], 0))
+    ubers.append(Uber(UBER_ID, 0, [], 1, 1, nodes[4], nodes[4], 0))
 
     test = Graph(nodes, passengers, ubers)
     # connect them as a grid
