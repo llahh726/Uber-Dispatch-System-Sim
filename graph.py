@@ -16,7 +16,9 @@ class Graph:
         self.max_time = 10 
         # just noticed this doesn't support spawning two passengers at the same time
         self.spawnTimes = [1, 3, 4, 6] # maybe keep a list of times at which to spawn someone
-        self.spawnQueue = [Passenger(self.nodes[1], self.nodes[3]), Passenger(self.nodes[2], self.nodes[7]), Passenger(self.nodes[10], self.nodes[1]), Passenger(self.nodes[4], self.nodes[6])] # list of passengers that we want to spawn at above times (arrays must be same len)
+        # commented out/replaced this because I don't want it just yet when I'm testing
+        #self.spawnQueue = [Passenger(self.nodes[1], self.nodes[3]), Passenger(self.nodes[2], self.nodes[7]), Passenger(self.nodes[10], self.nodes[1]), Passenger(self.nodes[4], self.nodes[6])] # list of passengers that we want to spawn at above times (arrays must be same len)
+        self.spawnQueue = []
     
     # roads will be two-ways always
     def add_neighbor(self, node1, node2):
