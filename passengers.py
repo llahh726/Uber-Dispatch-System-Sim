@@ -1,5 +1,13 @@
+'''
+  TODO:
+    - passenger find closest uber
+    - do a simulation for pass_time to make sure that it works 
+      - integrate this with timestep = 1
+'''
+
 import random
 import nodes
+from sys import * #trying to avoid that weirdo error (since sys is imported in graph.py)
 
 ID_INDEX = 0
 
@@ -13,6 +21,21 @@ class Passenger:
         self.route = [self.start] # we may not use this (can use the uber's route)
 
         self.ID = idInt
+
+    def closestUber(self, ubers):
+        if self.pickedUp: # then don't claim any uber
+            return None
+
+        minDist = sys.maxsize
+        myUber = None
+        for uber in ubers:
+            if uber.passengerCount == 0:
+                currDist = get_euc_dist(self.start, uber.currentNode)
+                if (currDist < minDist):
+                    minDist = currDist
+                    myUber = uber
+        # optional: change pickedUp value here?
+        return myUber
 
     def info(self):
         return [self.ID, self.start, self.goal, self.time, self.pickedUp, self.route]
