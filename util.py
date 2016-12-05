@@ -1,6 +1,8 @@
 # all util helper class and functions 
 import collections
 import heapq
+import matplotlib
+import matplotlib.pyplot as plt
 
 class Queue:
     def __init__(self):
@@ -36,3 +38,43 @@ def add_neighbor(node1, node2):
     else:
         node1.neighbors.append(node2)
         node2.neighbors.append(node1)
+
+def graph_map(graph):
+    # init
+    xs, ys, ids, edges = [], [], [], []
+    # get values we need
+    for i in graph.nodes:
+        xs.append(i.x)
+        ys.append(i.y)
+        ids.append(i.node_id)
+        for n in i.neighbors:
+            edges.append([i.x, n.x, i.y, n.y])
+    
+    # make format into np so we can graph easily
+    xs = np.array(xs)
+    ys = np.array(ys)
+    ids = np.array(ids)
+
+    # graph the map
+    fig, ax = plt.subplots(1, 1, figsize=(10, 10))
+    # main graph
+    ax = plt.scatter(xs, ys, marker='o', alpha = 0.7, color = 'g')
+    # labels
+    for label, x, y in zip(ids, xs, ys):
+        plt.annotate(
+            label, 
+            xy = (x, y), xytext = (-10, 10),
+            textcoords = 'offset points', ha = 'right', va = 'bottom',
+            bbox = dict(boxstyle = 'round,pad=0.3', fc = 'blue', alpha = 0.1),
+            arrowprops = dict(arrowstyle = '-', connectionstyle = 'arc3,rad=0'))
+
+    # plot edges
+    for edge in edges:
+        plt.plot(edge[:2], edge[2:], '-', color = 'blue', alpha = 0.3)
+    plt.show()
+
+# Jason -> print graph 
+# create a better test graph
+# maybe a better traffic varying function
+# write DFS, BFS, UCF for difference viewing
+# think about what the poster what look like 
