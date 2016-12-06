@@ -48,6 +48,7 @@ class Uber:
 
 	# In graph, for all ubers:
 	# Each time step is 1. Adds 1 to total travel cost
+	# Needs to be passed a node path
 	def uberMove(self, nextNodeInPath):
 		if self.destinationNode != None:
 			print "My coords:", self.x, self.y
