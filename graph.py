@@ -69,7 +69,7 @@ class Graph:
 
                 if uber.passengerCount == 0:
                     minDist = sys.maxsize
-                    assignedTo = None # not sure if this is a proper initialization
+                    assignedTo = False
                     for p in self.passengers:
                         if (not p.pickedUp): # just look at passengers who need a ride
                             currDist = uber.currentNode.get_euc_dist(p.start)
@@ -77,7 +77,7 @@ class Graph:
                                 print "REACHED CONDITION: New assignment is pass_id:", p.ID
                                 minDist = currDist
                                 assignedTo = p
-                    if assignedTo != None:
+                    if !assignedTo:
                         uber.pickupPassenger(assignedTo)
                         print "ASSIGNED Uber", uber.carId, "to", assignedTo.ID
                         assignedTo.pickedUp = True
