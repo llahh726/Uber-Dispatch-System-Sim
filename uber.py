@@ -46,6 +46,8 @@ class Uber:
 
 	# Gets called at every time step
 	def setNodePath(self):
+		print "cnode=", self.currentNode,", dnode=", self.destinationNode
+		print "A star:", a_star_search(self.currentNode, self.destinationNode)
 		self.nodePath = reconstruct_path(a_star_search(self.currentNode, self.destinationNode)[0], self.currentNode, self.destinationNode)
 
 	# In graph, for all ubers:
