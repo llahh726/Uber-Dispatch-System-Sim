@@ -55,8 +55,5 @@ def spawn(n, nodes):
 
     # return passengers
 
-def main():
-    nodes = ['a', 'b', 'c', 'd', 'e'] # random stuff just to get started
-    spawn(10, nodes)
-main()
+
 
