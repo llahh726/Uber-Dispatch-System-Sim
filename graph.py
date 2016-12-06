@@ -61,6 +61,12 @@ class Graph:
 
             # assign unassigned cars to nearest passengers
             for uber in self.ubers:
+                if uber.currentNode != None:
+                    if len(u.nodePath) == 0:
+                        u.setNodePath()
+                u.uberMove(u.nodePath[0]) # get next node from the route returned by search alg  
+                del u.nodePath[0]
+
                 if uber.passengerCount == 0:
                     minDist = sys.maxsize
                     assignedTo = None # not sure if this is a proper initialization
@@ -91,13 +97,6 @@ class Graph:
 
             for p in self.passengers: # increment their time in the system
                 p.time += 1
-            for u in self.ubers: # should probably mooooove each uber
-                # if you don't have a route, get one
-                if len(u.nodePath) == 0:
-                    if u.currentNode != None: #ie. at a node:
-                        u.setNodePath()
-                u.uberMove(u.nodePath[0]) # get next node from the route returned by search alg  
-                del u.nodePath[0]
 
     # euclidian 
     def euclidian_heuristic(self, node1, node2):
