@@ -9,12 +9,13 @@ class Uber:
 
 	## init values - don't think x,y is needed for car if we do it in node
 	## used passenger
-	def __init__(self, carId, passengerCount, passengers, x, y, currentNode, destinationNode, currentTotalTravelCost):
+	def __init__(self, carId, passengerCount, passengers, x, y, nodePath, currentNode, destinationNode, currentTotalTravelCost):
 		self.carId = carId # int starting from 0
 		self.passengerCount = passengerCount # int = 0, used count if we maybe do groups later
 		self.passengers = passengers # array of passengers in car
 		self.x = x # x coord
 		self.y = y # y coord
+		self.nodePath = nodePath
 		self.currentNode = currentNode # current Node() that car is at
 		self.destinationNode = destinationNode # Node() that is Passenger() goal
 		self.currentTotalTravelCost = currentTotalTravelCost # int starting at 0 on pickup
@@ -47,13 +48,16 @@ class Uber:
 	def travelToPassengerToPickup(self, node):
 		# receive node location of passenger to pickup
 		a_star_search()
-		# Need to check if remaining distance to goal is less than 1
+
+	def setNodePath(self):
+		self.nodePath = nodePathToList()
 
 	# In graph, for all ubers:
 	# Each time step is 1. Adds 1 to total travel cost
 	# Needs to be passed a node path
-	def uberMove(self, targetNode):
+	def uberMove(self):
 		if self.destinationNode != None:
+			targetNode = self.nodePath[0]
 			print "My coords:", self.x, self.y
 			print "Target coords:", targetNode.x, targetNode.y
 			dx = targetNode.x - self.x
@@ -75,7 +79,8 @@ class Uber:
 				self.y = targetNode.y
 				# move to nextnode in path
 				# call a function that changes the targetNode
-				print "Distance less than 1, moved to node and switched to new target"
+				moveToNextTargetNode()
+				print "Distance less than 1, reached node and switched to new target"
 			else:
 				self.x += moveX
 				self.y += moveY
@@ -85,6 +90,8 @@ class Uber:
 		self.currentTotalTravelCost += 1
 		print "-------------------------"
 
+	def moveToNextTargetNode(self):
+		self.nodePath.pop(0)
 	# def bringPassengerToGoal(self,):
 
 	## NEEDS TO BE CALLED At each time step,
