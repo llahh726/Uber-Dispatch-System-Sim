@@ -61,9 +61,15 @@ class Graph:
 
             # assign unassigned cars to nearest passengers
             for uber in self.ubers:
+                if uber.currentNode != None:
+                    if len(u.nodePath) == 0:
+                        u.setNodePath()
+                u.uberMove(u.nodePath[0]) # get next node from the route returned by search alg  
+                del u.nodePath[0]
+
                 if uber.passengerCount == 0:
                     minDist = sys.maxsize
-                    assignedTo = None # not sure if this is a proper initialization
+                    assignedTo = False
                     for p in self.passengers:
                         if (not p.pickedUp): # just look at passengers who need a ride
                             currDist = uber.currentNode.get_euc_dist(p.start)
@@ -71,7 +77,7 @@ class Graph:
                                 print "REACHED CONDITION: New assignment is pass_id:", p.ID
                                 minDist = currDist
                                 assignedTo = p
-                    if assignedTo != None:
+                    if not assignedTo:
                         uber.pickupPassenger(assignedTo)
                         print "ASSIGNED Uber", uber.carId, "to", assignedTo.ID
                         assignedTo.pickedUp = True
@@ -91,13 +97,6 @@ class Graph:
 
             for p in self.passengers: # increment their time in the system
                 p.time += 1
-            for u in self.ubers: # should probably mooooove each uber
-                # if you don't have a route, get one
-                if len(u.nodePath) == 0:
-                    if u.currentNode != None: #ie. at a node:
-                        u.setNodePath()
-                u.uberMove(u.nodePath[0]) # get next node from the route returned by search alg  
-                del u.nodePath[0]
 
     # euclidian 
     def euclidian_heuristic(self, node1, node2):
@@ -268,9 +267,9 @@ if __name__ == '__main__':
     # print graph_map(g)
 
     # Ubers
-    u1 = Uber(1, 0, [], 0, 0, n1, None, 0)
-    u2 = Uber(2, 0, [], 50, 0, n9, None, 0)
-    u3 = Uber(3, 0, [], 100, 0, n14, None, 0)
+    u1 = Uber(carId=1, passengerCount=0, passengers=[], x=0, y=0, nodePath=[], currentNode=n1, destinationNode=None, currentTotalTravelCost=0)
+    u2 = Uber(2, 0, [], 50, 0, [], n9, None, 0)
+    u3 = Uber(3, 0, [], 100, 0, [], n14, None, 0)
     ubers = [u1, u2, u3]
     # Passengers
     p1 = Passenger(n3, n7, 1)
