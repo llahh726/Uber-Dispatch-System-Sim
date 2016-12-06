@@ -47,10 +47,9 @@ class Uber:
 
 	# Gets called at every time step
 	def setNodePath(self):
-		print "cnode=", self.currentNode,", dnode=", self.destinationNode
-		print "A star:", a_star_search(self.currentNode, self.destinationNode)
+		print "ASTAR", a_star_search(self.currentNode, self.destinationNode)[0]
 		self.nodePath = reconstruct_path(a_star_search(self.currentNode, self.destinationNode)[0], self.currentNode, self.destinationNode)
-
+		print "Self.nodePath", self.nodePath
 	# In graph, for all ubers:
 	# Each time step is 1. Adds 1 to total travel cost
 	# Needs to be passed a node path
@@ -102,8 +101,7 @@ class Uber:
 	## For all cars that have 1 or more passengers,
 	## Check if destination has been reached
 	def reachedDestination(self):
-		if self.currentNode == self.destinationNode:
-			self.passengerCount -= 1
+		return self.currentNode == self.destinationNode
 			# return true
 			# print "Reached destination, dropped off passenger:", self.passengers[0], "at", (self.currentNode.x, self.currentNode.y)
 			# print "Total time:", self.currentTotalTravelCost

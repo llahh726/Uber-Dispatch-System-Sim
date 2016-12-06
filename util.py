@@ -231,6 +231,9 @@ def uniform_cost_search(start, goal):
 # a helper function to get the path
 # return path from start to final in a list of nodes
 def reconstruct_path(came_from, start, goal):
+    print "Camefrom", came_from
+    print "Start", start
+    print "Goal", goal
     current = goal
     path = [current]
     while current != start:
