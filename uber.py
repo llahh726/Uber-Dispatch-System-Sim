@@ -22,8 +22,6 @@ class Uber:
 		global UBER_ID
 		UBER_ID += 1
 
-		self.plannedPath = [] # will be filled with ls returned by search alg
-
 	def pickupPassenger(self, passenger):
 		if self.currentNode == passenger.start:	
 			# print "There is a passenger here at", (self.currentNode.x, self.currentNode.y)

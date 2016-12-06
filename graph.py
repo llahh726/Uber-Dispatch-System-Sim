@@ -93,10 +93,10 @@ class Graph:
                 p.time += 1
             for u in self.ubers: # should probably mooooove each uber
                 # if you don't have a route, get one
-                if len(u.plannedPath) == 0:
-                    u.plannedPath = reconstruct_path(a_star_search(u.currentNode, self.destinationNode)[0], u.currentNode, u.destinationNode)
-                u.uberMove(u.plannedPath[0]) # get next node from the route returned by search alg  
-                del u.plannedPath[0]
+                if len(u.nodePath) == 0:
+                    u.nodePath = reconstruct_path(a_star_search(u.currentNode, self.destinationNode)[0], u.currentNode, u.destinationNode)
+                u.uberMove(u.nodePath[0]) # get next node from the route returned by search alg  
+                del u.nodePath[0]
 
     # euclidian 
     def euclidian_heuristic(self, node1, node2):
