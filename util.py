@@ -3,6 +3,9 @@ import collections
 import heapq
 import matplotlib
 import matplotlib.pyplot as plt
+import numpy as np
+
+NODE_ITERATOR = 0
 
 class Stack:
     def __init__(self):
@@ -85,6 +88,19 @@ def graph_map(graph):
     for edge in edges:
         plt.plot(edge[:2], edge[2:], '-', color = 'blue', alpha = 0.3)
     plt.show()
+
+def nodePathToList(path):
+        nodePathList = []
+        for i in path:
+            nodePathList.append(i)
+        return nodePathList
+
+def getNextNodeInPath(nodePathList):
+    #print "Node in path:", NODE_ITERATOR, path[NODE_ITERATOR]
+    global NODE_ITERATOR
+    index = NODE_ITERATOR
+    NODE_ITERATOR += 1
+    return nodePathList[index]
 
 # Jason:
 # maybe a better traffic varying function (not that important now)

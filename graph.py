@@ -252,12 +252,12 @@ if __name__ == '__main__':
     g = Graph(nodes=nodes, passengers=[], ubers=[])
 
     # graph it
-    print graph_map(g)
+    # print graph_map(g)
 
     # Ubers
-    u1 = Uber(1, 0, [], n1, None, 0)
-    u2 = Uber(2, 0, [], n9, None, 0)
-    u3 = Uber(3, 0, [], n14, None, 0)
+    u1 = Uber(1, 0, [], 0, 0, n1, None, 0)
+    u2 = Uber(2, 0, [], 50, 0, n9, None, 0)
+    u3 = Uber(3, 0, [], 100, 0, n14, None, 0)
     ubers = [u1, u2, u3]
     # Passengers
     p1 = Passenger(n3, n7, 1)
@@ -269,21 +269,19 @@ if __name__ == '__main__':
 
     g = Graph(nodes=nodes, passengers=passengerList, ubers=ubers)
 
-    print "Uber1 pos:", u1.currentNode.x, u1.currentNode.y
-    print "Uber2 pos:", u2.currentNode.x, u2.currentNode.y
-    print "Uber3 pos:", u3.currentNode.x, u3.currentNode.y
-    # passengerList = passengers.spawn(5, nodes)
-    print passengerList
+    #print "Uber1 pos:", u1.currentNode.x, u1.currentNode.y
+    #print "Uber2 pos:", u2.currentNode.x, u2.currentNode.y
+    #print "Uber3 pos:", u3.currentNode.x, u3.currentNode.y
+
     # print passengerList
-    # g.passengers = passengerList
     # print "Passengers", g.passengers
 
     tuple = g.a_star_search(n10, n6)
     path = tuple[0]
     cost = tuple[1]
-    # for x in path:
-    #     print x.node_id, x.x, x.y
-    #     print x
+    print "Path:", path.items()[0][0]
+    for x in path:
+        print x.node_id, x.x, x.y
     # print cost
     # #for x in cost:
     # print x.node_id
@@ -291,4 +289,9 @@ if __name__ == '__main__':
     # Get cost at each step
     # for i in cost:
     #     print cost[i]
+    #print "Path:", path(1)
 
+    nodePathList = nodePathToList(path)
+    print getNextNodeInPath(nodePathList)
+    print getNextNodeInPath(nodePathList)
+    print getNextNodeInPath(nodePathList)

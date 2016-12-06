@@ -46,18 +46,17 @@ class Uber:
 		a_star_search()
 		# Need to check if remaining distance to goal is less than 1
 
-	def getNextNodeInPath(path):
-		print "Get node"
+	
 
 	# In graph, for all ubers:
 	# Each time step is 1. Adds 1 to total travel cost
 	# Needs to be passed a node path
-	def uberMove(self, nextNodeInPath):
+	def uberMove(self, targetNode):
 		if self.destinationNode != None:
 			print "My coords:", self.x, self.y
-			print "Target coords:", nextNodeInPath.x, nextNodeInPath.y
-			dx = nextNodeInPath.x - self.x
-			dy = nextNodeInPath.y - self.y
+			print "Target coords:", targetNode.x, targetNode.y
+			dx = targetNode.x - self.x
+			dy = targetNode.y - self.y
 			print "Dx:", dx
 			print "Dy:", dy
 			c = math.sqrt(dx**2 + dy**2)
@@ -71,10 +70,11 @@ class Uber:
 			print "Move Y:", moveY
 			print "Move total", math.sqrt(moveX**2 + moveY**2)
 			if c <= 1.0:
-				self.x = nextNodeInPath.x
-				self.y = nextNodeInPath.y
+				self.x = targetNode.x
+				self.y = targetNode.y
 				# move to nextnode in path
-				print "Distance less than 1, moved to node"
+				# call a function that changes the targetNode
+				print "Distance less than 1, moved to node and switched to new target"
 			else:
 				self.x += moveX
 				self.y += moveY
