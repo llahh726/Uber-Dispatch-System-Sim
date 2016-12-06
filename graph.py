@@ -56,10 +56,14 @@ class Graph:
     # run spawn and time
     def pass_time(self):
         for step in range(self.max_time):
-            if step == self.spawnTimes[0]: # spawn and remove from queue
-                self.spawn(self.spawnQueue[0])
-                del self.spawnQueue[0]
-                del self.spawnTimes[0]
+            try:
+                if step == self.spawnTimes[0]: # spawn and remove from queue
+                    self.spawn(self.spawnQueue[0])
+                    del self.spawnQueue[0]
+                    del self.spawnTimes[0]
+            except:
+                pass
+
             # assign unassigned cars to nearest passengers
             for uber in self.ubers:
                 if uber.passengerCount == 0:
@@ -69,10 +73,17 @@ class Graph:
                         if (not p.pickedUp): # just look at passengers who need a ride
                             currDist = uber.currentNode.get_euc_dist(p.start)
                             if (minDist > currDist):
+                                print "REACHED CONDITION"
                                 minDist = currDist
                                 assignedTo = p
-                    uber.pickupPassenger(assignedTo)
-                    assignedTo.pickedUp = True
+                    if assignedTo != None:
+                        uber.pickupPassenger(assignedTo)
+                        assignedTo.pickedUp = True
+                    else:
+                        print "self.passengers is", self.passengers
+                        for p in self.passengers:
+                            print "status is", p.pickedUp
+                        print ">>"
                 else:
                     # uber.reachedDestination()
                     print "Check if reached destination"
