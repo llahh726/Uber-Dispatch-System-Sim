@@ -94,7 +94,7 @@ class Graph:
             for u in self.ubers: # should probably mooooove each uber
                 # if you don't have a route, get one
                 if len(u.nodePath) == 0:
-                    u.nodePath = reconstruct_path(a_star_search(u.currentNode, self.destinationNode)[0], u.currentNode, u.destinationNode)
+                    u.setNodePath()
                 u.uberMove(u.nodePath[0]) # get next node from the route returned by search alg  
                 del u.nodePath[0]
 
