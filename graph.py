@@ -83,7 +83,7 @@ class Graph:
                         print "self.passengers is", self.passengers
                         for p in self.passengers:
                             print "status is", p.pickedUp
-                        print ">>"
+                        print ">>>"
                 else:
                     # uber.reachedDestination()
                     print "Check if reached destination"
