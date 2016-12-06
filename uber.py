@@ -77,8 +77,8 @@ class Uber:
 				self.x = targetNode.x
 				self.y = targetNode.y
 				# move to nextnode in path
-				# call a function that changes the targetNode
 				moveToNextTargetNode()
+				reachedDestination()
 				print "Distance less than 1, reached node and switched to new target"
 			else:
 				self.x += moveX
@@ -90,8 +90,8 @@ class Uber:
 		print "-------------------------"
 
 	def moveToNextTargetNode(self):
-		self.nodePath.pop(0)
-	# def bringPassengerToGoal(self,):
+		if len(self.nodePath) > 0:
+			self.nodePath.pop(0)
 
 	## NEEDS TO BE CALLED At each time step,
 	## For all cars that have 1 or more passengers,
