@@ -20,8 +20,9 @@ class Passenger:
         
         self.route = [self.start] # we may not use this (can use the uber's route)
 
-        self.ID = idInt
         global PAS_ID
+        print "INIT:", PAS_ID
+        self.ID = idInt
         PAS_ID += 1
 
     def closestUber(self, ubers):
