@@ -21,6 +21,8 @@ class Uber:
 		global UBER_ID
 		UBER_ID += 1
 
+		self.plannedPath = [] # will be filled with ls returned by search alg
+
 	def pickupPassenger(self, passenger):
 		if self.currentNode == passenger.start:	
 			# print "There is a passenger here at", (self.currentNode.x, self.currentNode.y)
@@ -41,12 +43,11 @@ class Uber:
 		else:
 			print "No passenger here to pick up"
 
+	# holding off on deleting this so far, but I think it's sufficient to put into graphs.py
 	def travelToPassengerToPickup(self, node):
 		# receive node location of passenger to pickup
 		a_star_search()
 		# Need to check if remaining distance to goal is less than 1
-
-	
 
 	# In graph, for all ubers:
 	# Each time step is 1. Adds 1 to total travel cost
