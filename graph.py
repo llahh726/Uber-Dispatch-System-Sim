@@ -56,10 +56,14 @@ class Graph:
     # run spawn and time
     def pass_time(self):
         for step in range(self.max_time):
-            if step == self.spawnTimes[0]: # spawn and remove from queue
-                self.spawn(self.spawnQueue[0])
-                del self.spawnQueue[0]
-                del self.spawnTimes[0]
+            try:
+                if step == self.spawnTimes[0]: # spawn and remove from queue
+                    self.spawn(self.spawnQueue[0])
+                    del self.spawnQueue[0]
+                    del self.spawnTimes[0]
+            except:
+                pass
+
             # assign unassigned cars to nearest passengers
             for uber in self.ubers:
                 if uber.passengerCount == 0:
@@ -69,10 +73,17 @@ class Graph:
                         if (not p.pickedUp): # just look at passengers who need a ride
                             currDist = uber.currentNode.get_euc_dist(p.start)
                             if (minDist > currDist):
+                                print "REACHED CONDITION"
                                 minDist = currDist
                                 assignedTo = p
-                    uber.pickupPassenger(assignedTo)
-                    assignedTo.pickedUp = True
+                    if assignedTo != None:
+                        uber.pickupPassenger(assignedTo)
+                        assignedTo.pickedUp = True
+                    else:
+                        print "self.passengers is", self.passengers
+                        for p in self.passengers:
+                            print "status is", p.pickedUp
+                        print ">>>"
                 else:
                     # uber.reachedDestination()
                     print "Check if reached destination"
@@ -87,7 +98,7 @@ class Graph:
         b = np.array([node2.x, node2.y])
         return np.sqrt(np.sum((a-b)**2))
     
-    # a star search for finding a 
+    # a star search for finding a best route
     def a_star_search(self, start, goal):
         frontier = PriorityQueue()
         frontier.put(start, 0)
@@ -104,7 +115,7 @@ class Graph:
 
             for neighbor in current.get_neighbors():
                 # cost = current cost + dist + current traffic + neighbor traffic
-                new_cost = cost_so_far[current] + current.get_euc_dist(neighbor) * current.traffic + neighbor.traffic
+                new_cost = cost_so_far[current] + current.get_euc_dist(neighbor) + current.traffic + neighbor.traffic
                 # a star
                 if neighbor not in cost_so_far or new_cost < cost_so_far[neighbor]:
                     cost_so_far[neighbor] = new_cost
@@ -113,6 +124,74 @@ class Graph:
                     came_from[neighbor] = current
 
         return came_from, cost_so_far
+
+    # DFS / BFS, method -> 'DFS', 'BFS'
+    def depth_breadth_first_search(self, method, start, goal):
+        if method == 'BFS':
+            frontier = Queue()
+        elif method == 'DFS':
+            frontier = Stack()
+        else:
+            print 'method invalid'
+        # init frontier
+        frontier.put(start)
+        came_from = collections.OrderedDict()
+        came_from[start] = None
+        cost_so_far = collections.OrderedDict()
+        cost_so_far[start] = 0
+        
+        # run search
+        while not frontier.empty():
+            current = frontier.get()
+            
+            if current == goal:
+                break
+            
+            for neighbor in current.get_neighbors():
+                new_cost = cost_so_far[current] + current.get_euc_dist(neighbor) + current.traffic + neighbor.traffic
+                if neighbor not in came_from:
+                    cost_so_far[neighbor] = new_cost
+                    frontier.put(neighbor)
+                    came_from[neighbor] = current
+        
+        return came_from, cost_so_far
+
+    # some tiny modification from A star
+    def uniform_cost_search(self, start, goal):
+        frontier = PriorityQueue()
+        frontier.put(start, 0)
+        came_from = collections.OrderedDict()
+        cost_so_far = collections.OrderedDict()
+        came_from[start] = None
+        cost_so_far[start] = 0
+        
+        while not frontier.empty():
+            current = frontier.get()
+            
+            if current == goal:
+                break
+            
+            for neighbor in current.get_neighbors():
+                new_cost = cost_so_far[current] + current.get_euc_dist(neighbor) + current.traffic + neighbor.traffic
+                if neighbor not in cost_so_far or new_cost < cost_so_far[neighbor]:
+                    cost_so_far[neighbor] = new_cost
+                    priority = new_cost
+                    frontier.put(neighbor, priority)
+                    came_from[neighbor] = current
+        
+        return came_from, cost_so_far
+
+
+    # a helper function to get the path
+    # return path from start to final in a list of nodes
+    def reconstruct_path(self, came_from, start, goal):
+        current = goal
+        path = [current]
+        while current != start:
+            current = came_from[current]
+            path.append(current)
+        path.reverse() 
+        return path
 
 
 
