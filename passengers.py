@@ -7,6 +7,7 @@
 
 import random
 import nodes
+import sys
 #from sys import * #trying to avoid that weirdo error (since sys is imported in graph.py)
 
 PAS_ID = 0
@@ -29,6 +30,7 @@ class Passenger:
         minDist = sys.maxsize
         myUber = None
         for uber in ubers:
+            print "myUber:", myUber
             if uber.destinationNode == None:
                 currDist = self.start.get_euc_dist(uber.currentNode)
                 if (currDist < minDist):
