@@ -64,9 +64,11 @@ class Graph:
                 if uber.currentNode != None:
                     if len(uber.nodePath) == 0:
                         uber.setNodePath()
-                    uber.uberMove(uber.nodePath[0]) # get next node from the route returned by search alg  
-                    del uber.nodePath[0]
-
+                    try:
+                        uber.uberMove(uber.nodePath[0]) # get next node from the route returned by search alg  
+                        del uber.nodePath[0]
+                    except:
+                        print "nodePath[] empty"
                     if uber.passengerCount == 0:
                         minDist = sys.maxsize
                         assignedTo = False
