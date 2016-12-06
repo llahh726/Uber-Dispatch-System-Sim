@@ -9,6 +9,7 @@ import sys
 class Graph:
     # init
     def __init__(self, nodes, passengers, ubers, start_t = 0):
+
         self.nodes = nodes
         self.passengers = passengers # All the passengers on the map
         self.ubers = ubers
