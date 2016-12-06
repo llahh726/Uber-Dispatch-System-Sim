@@ -50,7 +50,42 @@ class Graph:
 
 
     def pass_time(self):
-<<<<<<< HEAD
+        for step in range(self.max_time):
+            try:
+                if step == self.spawnTimes[0]: # spawn and remove from queue
+                    self.spawn(self.spawnQueue[0])
+                    del self.spawnQueue[0]
+                    del self.spawnTimes[0]
+            except:
+                pass
+            for passenger in self.passengers:
+                if not passenger.pickedUp:
+                    closestUber = passenger.closestUber(self.ubers)
+                    closestUber.destinationNode = passenger.start
+                    # how to we change the dest node later?
+
+            for uber in self.ubers:
+                if uber.destinationNode != None:
+                    uber.uberMove()
+                    if uber.currentNode != None:
+                        uber.setNodePath()
+                # check dest for passenger
+                for p in uber.passengers:
+                    if uber.reachedDestination():
+                        uber.passengers.remove(p)
+                        self.passengers.remove(p)
+                        uber.destinationNode = None
+                        uber.passengerCount -= 1
+                        print 'journey done!'
+
+            for p in self.passengers:
+                p.time += 1
+
+            
+
+
+
+
         
 
 
@@ -105,58 +140,6 @@ class Graph:
 
     #         for p in self.passengers: # increment their time in the system
     #             p.time += 1
-=======
-        for step in range(self.max_time):
-            try:
-                if step == self.spawnTimes[0]: # spawn and remove from queue
-                    self.spawn(self.spawnQueue[0])
-                    del self.spawnQueue[0]
-                    del self.spawnTimes[0]
-            except:
-                pass
-
-            # assign unassigned cars to nearest passengers
-            for uber in self.ubers:
-                if uber.currentNode != None:
-                    if uber.passengerCount == 0:
-                        minDist = sys.maxsize
-                        assignedTo = False
-                        for p in self.passengers:
-                            print "passenger=", p.ID, " status=", p.pickedUp
-                            if (not p.pickedUp): # just look at passengers who need a ride
-                                currDist = uber.currentNode.get_euc_dist(p.start)
-                                if (minDist > currDist):
-                                    print "REACHED CONDITION: New assignment is pass_id:", p.ID
-                                    minDist = currDist
-                                    assignedTo = p
-                        if not assignedTo:
-                            uber.pickupPassenger(assignedTo)
-                            print "ASSIGNED Uber", uber.carId, "to", assignedTo.ID
-                            assignedTo.pickedUp = True
-                        else:
-                            print "No one was assigned! (Could mean everyone has been picked up)"
-                            #print "self.passengers is", self.passengers
-                            #for p in self.passengers:
-                            #    print "status is", p.pickedUp
-                            #print ">>>"
-                    else:
-                        # check for arrivals and kill passengers who are done
-                        print "Check if reached destination"
-                        for uber in self.ubers:
-                            retval = uber.reachedDestination()
-                            if retval >= 0:
-                                del self.passengers[retval]
-                    if len(uber.nodePath) == 0:
-                        uber.setNodePath()
-                    try:
-                        uber.uberMove(uber.nodePath[0]) # get next node from the route returned by search alg  
-                        del uber.nodePath[0]
-                    except:
-                        print "nodePath[] empty"
-
-            for p in self.passengers: # increment their time in the system
-                p.time += 1
->>>>>>> 2c99c7cca2cd839d2fdd9f22769f0215e220b5ed
 
     # euclidian 
     def euclidian_heuristic(self, node1, node2):
