@@ -10,7 +10,6 @@ from graph import *
 from uber import *
 from nodes import *
 from passengers import *
-from sys import *
 
 def main():
     # initialize nodes
@@ -26,9 +25,22 @@ def main():
 
     # initialize ubers
     ubers = []
-    ubers.append(Uber(UBER_ID, 0, [], nodes[4], nodes[4], 0))
+    ubers.append(Uber(UBER_ID, 0, [], 1, 1, nodes[4], nodes[4], 0))
 
     test = Graph(nodes, passengers, ubers)
     # connect them as a grid
-    
+    add_neighbor(nodes[0], nodes[1])   
+    add_neighbor(nodes[1], nodes[2])   
+    add_neighbor(nodes[3], nodes[4])   
+    add_neighbor(nodes[4], nodes[5])   
+    add_neighbor(nodes[6], nodes[7])   
+    add_neighbor(nodes[7], nodes[8])   
+    add_neighbor(nodes[0], nodes[3])   
+    add_neighbor(nodes[3], nodes[6])   
+    add_neighbor(nodes[1], nodes[4])   
+    add_neighbor(nodes[4], nodes[7])   
+    add_neighbor(nodes[2], nodes[5])   
+    add_neighbor(nodes[5], nodes[8])   
+
+    test.pass_time()
 main()

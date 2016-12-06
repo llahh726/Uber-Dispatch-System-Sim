@@ -3,6 +3,9 @@ from passengers import *
 from uber import *
 from util import *
 
+import sys
+
+
 PAS_ID = 0
 
 # a class to hold everything
@@ -53,10 +56,14 @@ class Graph:
     # run spawn and time
     def pass_time(self):
         for step in range(self.max_time):
-            if step == self.spawnTimes[0]: # spawn and remove from queue
-                self.spawn(self.spawnQueue[0])
-                del self.spawnQueue[0]
-                del self.spawnTimes[0]
+            try:
+                if step == self.spawnTimes[0]: # spawn and remove from queue
+                    self.spawn(self.spawnQueue[0])
+                    del self.spawnQueue[0]
+                    del self.spawnTimes[0]
+            except:
+                pass
+
             # assign unassigned cars to nearest passengers
             for uber in self.ubers:
                 if uber.passengerCount == 0:
@@ -64,12 +71,19 @@ class Graph:
                     assignedTo = None # not sure if this is a proper initialization
                     for p in self.passengers:
                         if (not p.pickedUp): # just look at passengers who need a ride
-                            currDist = get_euc_dist(car.currentNode, p.start)
+                            currDist = uber.currentNode.get_euc_dist(p.start)
                             if (minDist > currDist):
+                                print "REACHED CONDITION"
                                 minDist = currDist
                                 assignedTo = p
-                    car.pickupPassenger(assignedTo)
-                    assignedTo.pickedUp = True
+                    if assignedTo != None:
+                        uber.pickupPassenger(assignedTo)
+                        assignedTo.pickedUp = True
+                    else:
+                        print "self.passengers is", self.passengers
+                        for p in self.passengers:
+                            print "status is", p.pickedUp
+                        print ">>>"
                 else:
                     # uber.reachedDestination()
                     print "Check if reached destination"
@@ -144,6 +158,7 @@ class Graph:
 
 
 if __name__ == '__main__':
+
     # test for graph
     n1 = Node(node_id=NODE_ID, x=0, y=0, neighbors=[], passengers=[])
     n2 = Node(node_id=NODE_ID, x=50, y=0, neighbors=[], passengers=[])
@@ -162,6 +177,7 @@ if __name__ == '__main__':
     n15 = Node(node_id=NODE_ID, x=90, y=90, neighbors=[], passengers=[])
     n16 = Node(node_id=NODE_ID, x=10, y=90, neighbors=[], passengers=[])
     n17 = Node(node_id=NODE_ID, x=90, y=10, neighbors=[], passengers=[])
+
     add_neighbor(n1, n2)
     add_neighbor(n2, n3)
     add_neighbor(n1, n4)
@@ -201,16 +217,16 @@ if __name__ == '__main__':
     print graph_map(g)
 
     # Ubers
-    u1 = Uber(UBER_ID, 0, [], n1, None, 0)
-    u2 = Uber(UBER_ID, 0, [], n9, None, 0)
-    u3 = Uber(UBER_ID, 0, [], n14, None, 0)
+    u1 = Uber(1, 0, [], n1, None, 0)
+    u2 = Uber(2, 0, [], n9, None, 0)
+    u3 = Uber(3, 0, [], n14, None, 0)
     ubers = [u1, u2, u3]
     # Passengers
-    p1 = Passenger(n3, n7, ID_INDEX)
-    p2 = Passenger(n1, n10, ID_INDEX)
-    p3 = Passenger(n11, n4, ID_INDEX)
-    p4 = Passenger(n15, n4, ID_INDEX)
-    p5 = Passenger(n7, n2, ID_INDEX)
+    p1 = Passenger(n3, n7, 1)
+    p2 = Passenger(n1, n10, 2)
+    p3 = Passenger(n11, n4, 3)
+    p4 = Passenger(n15, n4, 4)
+    p5 = Passenger(n7, n2, 5)
     passengerList = [p1, p2, p3, p4, p5]
 
     g = Graph(nodes=nodes, passengers=passengerList, ubers=ubers)
@@ -219,8 +235,22 @@ if __name__ == '__main__':
     print "Uber2 pos:", u2.currentNode.x, u2.currentNode.y
     print "Uber3 pos:", u3.currentNode.x, u3.currentNode.y
     # passengerList = passengers.spawn(5, nodes)
+    print passengerList
     # print passengerList
     # g.passengers = passengerList
     # print "Passengers", g.passengers
 
+    tuple = g.a_star_search(n10, n6)
+    path = tuple[0]
+    cost = tuple[1]
+    # for x in path:
+    #     print x.node_id, x.x, x.y
+    #     print x
+    # print cost
+    # #for x in cost:
+    # print x.node_id
+
+    # Get cost at each step
+    # for i in cost:
+    #     print cost[i]
 

@@ -7,7 +7,7 @@
 
 import random
 import nodes
-from sys import * #trying to avoid that weirdo error (since sys is imported in graph.py)
+#from sys import * #trying to avoid that weirdo error (since sys is imported in graph.py)
 
 ID_INDEX = 0
 
@@ -30,7 +30,7 @@ class Passenger:
         myUber = None
         for uber in ubers:
             if uber.passengerCount == 0:
-                currDist = get_euc_dist(self.start, uber.currentNode)
+                currDist = self.start.get_euc_dist(uber.currentNode)
                 if (currDist < minDist):
                     minDist = currDist
                     myUber = uber
