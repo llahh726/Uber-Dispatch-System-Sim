@@ -15,15 +15,6 @@ class Uber:
 		self.nodePath = nodePath # list of remaining nodes to move through to reach destination node
 		self.currentNode = currentNode # current Node() that car is at, if any
 		self.destinationNode = destinationNode # current destination. can be passenger to pick up position or carrying passenger's end goal
-=======
-	## used passenger
-	def __init__(self, carId, passengerCount, passengers, currentNode, destinationNode, currentTotalTravelCost):
-		self.carId = carId # int starting from 0
-		self.passengerCount = passengerCount # int = 0, used count if we maybe do groups later
-		self.passengers = passengers # array of passengers in car
-		self.currentNode = currentNode # current Node() that car is at
-		self.destinationNode = destinationNode # Node() that is Passenger() goal
->>>>>>> ead9c74c08bf7813856621123ee5b92b2cce3d37
 		self.currentTotalTravelCost = currentTotalTravelCost # int starting at 0 on pickup
 		global UBER_ID
 		UBER_ID += 1
