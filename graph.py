@@ -77,7 +77,9 @@ class Graph:
                             print "ASSIGNED Uber", uber.carId, "to", assignedTo.ID
                             assignedTo.pickedUp = True
                         else:
-                            print "Pass list:", self.passengers.pickedUp
+                            print "Pass list:", self.passengers[0].pickedUp
+                            for uber in ubers:
+                                print "Uber passengers", uber.passengers
                             print "No one was assigned! (Could mean everyone has been picked up)"
                             #print "self.passengers is", self.passengers
                             #for p in self.passengers:
