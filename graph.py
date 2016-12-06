@@ -5,9 +5,6 @@ from util import *
 
 import sys
 
-
-PAS_ID = 0
-
 # a class to hold everything
 class Graph:
     # init
@@ -45,10 +42,8 @@ class Graph:
     
     # spawn new passengers
     def spawn(self, newPass):
-        global PAS_ID
         newPass.ID = PAS_ID # set the correct ID to new passenger
         self.passengers.append(newPass)
-        PAS_ID += 1
 
         # for p in passengers:
         #    print p.info()
@@ -73,21 +68,26 @@ class Graph:
                         if (not p.pickedUp): # just look at passengers who need a ride
                             currDist = uber.currentNode.get_euc_dist(p.start)
                             if (minDist > currDist):
-                                print "REACHED CONDITION"
+                                print "REACHED CONDITION: New assignment is pass_id:", p.ID
                                 minDist = currDist
                                 assignedTo = p
                     if assignedTo != None:
                         uber.pickupPassenger(assignedTo)
+                        print "ASSIGNED Uber", uber.carId, "to", assignedTo.ID
                         assignedTo.pickedUp = True
                     else:
-                        print "self.passengers is", self.passengers
-                        for p in self.passengers:
-                            print "status is", p.pickedUp
-                        print ">>>"
+                        print "No one was assigned! (Could mean everyone has been picked up)"
+                        #print "self.passengers is", self.passengers
+                        #for p in self.passengers:
+                        #    print "status is", p.pickedUp
+                        #print ">>>"
                 else:
-                    # uber.reachedDestination()
+                    # check for arrivals and kill passengers who are done
                     print "Check if reached destination"
-
+                    for uber in self.ubers:
+                        retval = uber.reachedDestination()
+                        if retval >= 0:
+                            del self.passengers[retval]
 
             for p in self.passengers: # increment their time in the system
                 p.time += 1
@@ -137,8 +137,6 @@ class Graph:
         frontier.put(start)
         came_from = collections.OrderedDict()
         came_from[start] = None
-        cost_so_far = collections.OrderedDict()
-        cost_so_far[start] = 0
         
         # run search
         while not frontier.empty():
@@ -148,13 +146,11 @@ class Graph:
                 break
             
             for neighbor in current.get_neighbors():
-                new_cost = cost_so_far[current] + current.get_euc_dist(neighbor) + current.traffic + neighbor.traffic
                 if neighbor not in came_from:
-                    cost_so_far[neighbor] = new_cost
                     frontier.put(neighbor)
                     came_from[neighbor] = current
         
-        return came_from, cost_so_far
+        return came_from
 
     # some tiny modification from A star
     def uniform_cost_search(self, start, goal):
@@ -192,6 +188,16 @@ class Graph:
             path.append(current)
         path.reverse() 
         return path
+
+
+    # pass it path from the above function, it will return the cost of the path
+    def get_path_cost(self, path):
+        cursor = 1
+        cost = 0
+        while cursor != len(path):
+            cost += path[cursor-1].get_euc_dist(path[cursor]) + path[cursor-1].traffic + path[cursor].traffic
+            cursor += 1
+        return cost
 
 
 

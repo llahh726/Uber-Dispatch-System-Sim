@@ -14,14 +14,18 @@ from passengers import *
 def main():
     # initialize nodes
     nodes = []
-    PAS_ID = 0
+    global PAS_ID
     for xcoord in range(3):
         for ycoord in range(3):
             nodes.append(Node(NODE_ID, [], [], xcoord, ycoord))
 
     # initialize passengers
+    print PAS_ID
     passengers = []
     passengers.append(Passenger(nodes[0], nodes[8], PAS_ID)) #did not set spawn time here
+    print PAS_ID
+    passengers.append(Passenger(nodes[2], nodes[8], PAS_ID)) #did not set spawn time here
+    print PAS_ID
 
     # initialize ubers
     ubers = []
