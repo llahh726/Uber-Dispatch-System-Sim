@@ -62,41 +62,40 @@ class Graph:
             # assign unassigned cars to nearest passengers
             for uber in self.ubers:
                 if uber.currentNode != None:
-                    if len(u.nodePath) == 0:
-                        u.setNodePath()
-                try:
-                    u.uberMove(u.nodePath[0]) # get next node from the route returned by search alg  
-                    del u.nodePath[0]
-                except:
-                    print "nodePath[] empty"
-
-                if uber.passengerCount == 0:
-                    minDist = sys.maxsize
-                    assignedTo = False
-                    for p in self.passengers:
-                        if (not p.pickedUp): # just look at passengers who need a ride
-                            currDist = uber.currentNode.get_euc_dist(p.start)
-                            if (minDist > currDist):
-                                print "REACHED CONDITION: New assignment is pass_id:", p.ID
-                                minDist = currDist
-                                assignedTo = p
-                    if not assignedTo:
-                        uber.pickupPassenger(assignedTo)
-                        print "ASSIGNED Uber", uber.carId, "to", assignedTo.ID
-                        assignedTo.pickedUp = True
+                    if len(uber.nodePath) == 0:
+                        uber.setNodePath()
+                    try:
+                        uber.uberMove(uber.nodePath[0]) # get next node from the route returned by search alg  
+                        del uber.nodePath[0]
+                    except:
+                        print "nodePath[] empty"
+                    if uber.passengerCount == 0:
+                        minDist = sys.maxsize
+                        assignedTo = False
+                        for p in self.passengers:
+                            if (not p.pickedUp): # just look at passengers who need a ride
+                                currDist = uber.currentNode.get_euc_dist(p.start)
+                                if (minDist > currDist):
+                                    print "REACHED CONDITION: New assignment is pass_id:", p.ID
+                                    minDist = currDist
+                                    assignedTo = p
+                        if not assignedTo:
+                            uber.pickupPassenger(assignedTo)
+                            print "ASSIGNED Uber", uber.carId, "to", assignedTo.ID
+                            assignedTo.pickedUp = True
+                        else:
+                            print "No one was assigned! (Could mean everyone has been picked up)"
+                            #print "self.passengers is", self.passengers
+                            #for p in self.passengers:
+                            #    print "status is", p.pickedUp
+                            #print ">>>"
                     else:
-                        print "No one was assigned! (Could mean everyone has been picked up)"
-                        #print "self.passengers is", self.passengers
-                        #for p in self.passengers:
-                        #    print "status is", p.pickedUp
-                        #print ">>>"
-                else:
-                    # check for arrivals and kill passengers who are done
-                    print "Check if reached destination"
-                    for uber in self.ubers:
-                        retval = uber.reachedDestination()
-                        if retval >= 0:
-                            del self.passengers[retval]
+                        # check for arrivals and kill passengers who are done
+                        print "Check if reached destination"
+                        for uber in self.ubers:
+                            retval = uber.reachedDestination()
+                            if retval >= 0:
+                                del self.passengers[retval]
 
             for p in self.passengers: # increment their time in the system
                 p.time += 1

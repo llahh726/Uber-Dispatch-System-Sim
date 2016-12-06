@@ -146,6 +146,8 @@ def euclidian_heuristic(node1, node2):
 
 # a star search for finding a best route
 def a_star_search(start, goal):
+    # print "Start", start
+    # print "Goal", goal
     frontier = PriorityQueue()
     frontier.put(start, 0)
     came_from = collections.OrderedDict()
@@ -165,6 +167,8 @@ def a_star_search(start, goal):
             # a star
             if neighbor not in cost_so_far or new_cost < cost_so_far[neighbor]:
                 cost_so_far[neighbor] = new_cost
+                # print "Goal:", goal
+                # print "Neighbor:", neighbor
                 priority = new_cost + euclidian_heuristic(goal, neighbor)
                 frontier.put(neighbor, priority)
                 came_from[neighbor] = current
