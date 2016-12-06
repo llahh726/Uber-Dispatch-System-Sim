@@ -62,13 +62,6 @@ class Graph:
             # assign unassigned cars to nearest passengers
             for uber in self.ubers:
                 if uber.currentNode != None:
-                    if len(uber.nodePath) == 0:
-                        uber.setNodePath()
-                    try:
-                        uber.uberMove(uber.nodePath[0]) # get next node from the route returned by search alg  
-                        del uber.nodePath[0]
-                    except:
-                        print "nodePath[] empty"
                     if uber.passengerCount == 0:
                         minDist = sys.maxsize
                         assignedTo = False
@@ -96,6 +89,13 @@ class Graph:
                             retval = uber.reachedDestination()
                             if retval >= 0:
                                 del self.passengers[retval]
+                    if len(uber.nodePath) == 0:
+                        uber.setNodePath()
+                    try:
+                        uber.uberMove(uber.nodePath[0]) # get next node from the route returned by search alg  
+                        del uber.nodePath[0]
+                    except:
+                        print "nodePath[] empty"
 
             for p in self.passengers: # increment their time in the system
                 p.time += 1
