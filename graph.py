@@ -83,13 +83,6 @@ class Graph:
             for p in self.passengers:
                 p.time += 1
 
-            
-
-
-
-
-        
-
 
     # # run spawn and time
     # def pass_time(self):
@@ -331,9 +324,9 @@ if __name__ == '__main__':
 
     # Ubers
     u1 = Uber(carId=1, passengerCount=0, passengers=[], x=0, y=0, nodePath=[], currentNode=n1, destinationNode=None, currentTotalTravelCost=0)
-    u2 = Uber(2, 0, [], 50, 0, [], n9, None, 0)
-    u3 = Uber(3, 0, [], 100, 0, [], n14, None, 0)
-    ubers = [u1, u2, u3]
+    #u2 = Uber(2, 0, [], 50, 0, [], n9, None, 0)
+    #u3 = Uber(3, 0, [], 100, 0, [], n14, None, 0)
+    ubers = [u1]
     # Passengers
     p1 = Passenger(n3, n7, 1)
     p2 = Passenger(n1, n10, 2)
