@@ -73,6 +73,7 @@ class Graph:
                                 assignedTo = p
                     if assignedTo != None:
                         uber.pickupPassenger(assignedTo)
+                        print "ASSIGNED Uber", uber.carId, "to", assignedTo.ID
                         assignedTo.pickedUp = True
                     else:
                         print "No one was assigned! (Could mean everyone has been picked up)"
@@ -81,9 +82,12 @@ class Graph:
                         #    print "status is", p.pickedUp
                         #print ">>>"
                 else:
-                    # uber.reachedDestination()
+                    # check for arrivals and kill passengers who are done
                     print "Check if reached destination"
-
+                    for uber in self.ubers:
+                        retval = uber.reachedDestination()
+                        if retval >= 0:
+                            del self.passengers[retval]
 
             for p in self.passengers: # increment their time in the system
                 p.time += 1

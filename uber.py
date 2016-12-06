@@ -91,7 +91,11 @@ class Uber:
 			self.destinationNode = None
 			# print "Reached destination, dropped off passenger:", self.passengers[0], "at", (self.currentNode.x, self.currentNode.y)
 			# print "Total time:", self.currentTotalTravelCost
-
+			finishedID = self.passengers[0]
+			del self.passengers[0]
+			return finishedID
+		else:
+			return -1
 
 	# Need to get cost at first step
 
