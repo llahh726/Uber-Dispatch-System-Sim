@@ -37,8 +37,6 @@ class Uber:
 			## run a* to get there
 			print "No passenger here to pick up"
 
-<<<<<<< HEAD
-=======
 	# holding off on deleting this so far, but I think it's sufficient to put into graphs.py
 	# def travelToPassengerToPickup(self, node):
 	# 	# receive node location of passenger to pickup
@@ -92,7 +90,6 @@ class Uber:
 		if len(self.nodePath) > 0:
 			self.nodePath.pop(0)
 
->>>>>>> 712583a66015fb85bc16db2a345b951217bcc536
 	## NEEDS TO BE CALLED At each time step,
 	## For all cars that have 1 or more passengers,
 	## Check if destination has been reached
@@ -141,26 +138,27 @@ class Uber:
 # Testing
 
 # Init
-<<<<<<< HEAD
+
+
 node1 = Node(0, [], [], 0, 0, 1)
 node2 = Node(1, [node1], [], 1, 1, 1)
 car1 = Uber(1, 0, [], node1, None, 0)
-=======
+
 node1 = Node(node_id=1, neighbors=[], passengers=[], x=0.0, y=0.0, traffic=1)
 node2 = Node(node_id=2, neighbors=[node1], passengers=[], x=1.0, y=1.0, traffic=1)
 
 car1 = Uber(carId=1, passengerCount=0, passengers=[], x=0.0, y=0.0, nodePath=[], currentNode=node1, destinationNode=None, currentTotalTravelCost=0)
->>>>>>> 712583a66015fb85bc16db2a345b951217bcc536
+
 passenger1 = Passenger(node1, node2, 13, 5)
 
 
 car1.pickupPassenger(passenger1)
 # print "Took a time step"
 ## Moved to node2
-<<<<<<< HEAD
+
 car1.currentNode = node2
 car1.reachedDestination()
-=======
+
 #car1.currentNode = node2
 car1.uberMove()
 car1.uberMove()
@@ -169,4 +167,3 @@ car1.uberMove()
 car1.reachedDestination()
 
 #car1.uberMove(node2)
->>>>>>> 712583a66015fb85bc16db2a345b951217bcc536
