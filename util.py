@@ -56,7 +56,7 @@ def add_neighbor(node1, node2):
         node2.neighbors.append(node1)
 
 def graph_map(graph):
-    # init
+    # init for nodes
     xs, ys, ids, edges = [], [], [], []
     # get values we need
     for i in graph.nodes:
@@ -74,19 +74,60 @@ def graph_map(graph):
     # graph the map
     fig, ax = plt.subplots(1, 1, figsize=(10, 10))
     # main graph
-    ax = plt.scatter(xs, ys, marker='o', alpha = 0.7, color = 'g')
+    ax = plt.scatter(xs, ys, marker='o', alpha = 0.4, s = 100, color = 'g', label='Locations')
     # labels
     for label, x, y in zip(ids, xs, ys):
         plt.annotate(
             label, 
             xy = (x, y), xytext = (-10, 10),
             textcoords = 'offset points', ha = 'right', va = 'bottom',
-            bbox = dict(boxstyle = 'round,pad=0.3', fc = 'blue', alpha = 0.1),
+            bbox = dict(boxstyle = 'round,pad=0.3', fc = 'green', alpha = 0.1),
             arrowprops = dict(arrowstyle = '-', connectionstyle = 'arc3,rad=0'))
 
     # plot edges
     for edge in edges:
-        plt.plot(edge[:2], edge[2:], '-', color = 'blue', alpha = 0.3)
+        plt.plot(edge[:2], edge[2:], '-', color = 'black', alpha = 0.3)   
+    
+    # print ubers
+    uxs = []
+    uys = []
+    uids = []
+    for u in graph.ubers:
+        uxs.append(u.x)
+        uys.append(u.y)
+        uids.append(u.carId)
+    # plot again
+    ax = plt.scatter(uxs, uys, marker='s', alpha = 0.6, s = 50, color = 'red', label='Ubers')
+    # labels
+    for label, x, y in zip(uids, uxs, uys):
+        plt.annotate(
+            label, 
+            xy = (x, y), xytext = (20, 20),
+            textcoords = 'offset points', ha = 'right', va = 'bottom',
+            bbox = dict(boxstyle = 'round,pad=0.2', fc = 'red', alpha = 0.1),
+            arrowprops = dict(arrowstyle = '-', connectionstyle = 'arc3,rad=0'))
+        
+    # now graph passengers
+    pxs = []
+    pys = []
+    pids = []
+    for p in graph.passengers:
+        if p.pickedUp == False:
+            pxs.append(p.start.x)
+            pys.append(p.start.y)
+            pids.append(p.ID)
+    # plot again
+    ax = plt.scatter(pxs, pys, marker='^', alpha = 0.9, s = 25, color = 'b', label='Passengers')
+    # labels
+    for label, x, y in zip(pids, pxs, pys):
+        plt.annotate(
+            label, 
+            xy = (x, y), xytext = (15, -15),
+            textcoords = 'offset points', ha = 'right', va = 'bottom',
+            bbox = dict(boxstyle = 'round,pad=0.1', fc = 'blue', alpha = 0.1),
+            arrowprops = dict(arrowstyle = '-', connectionstyle = 'arc3,rad=0'))
+    
+    plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)    
     plt.show()
 
 
