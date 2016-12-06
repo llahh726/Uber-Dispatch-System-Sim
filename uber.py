@@ -7,7 +7,6 @@ UBER_ID = 0
 
 class Uber:
 
-	## init values - don't think x,y is needed for car if we do it in node
 	## used passenger
 	def __init__(self, carId, passengerCount, passengers, x, y, nodePath, currentNode, destinationNode, currentTotalTravelCost):
 		self.carId = carId # int starting from 0
@@ -43,9 +42,9 @@ class Uber:
 			print "No passenger here to pick up"
 
 	# holding off on deleting this so far, but I think it's sufficient to put into graphs.py
-	def travelToPassengerToPickup(self, node):
-		# receive node location of passenger to pickup
-		a_star_search()
+	# def travelToPassengerToPickup(self, node):
+	# 	# receive node location of passenger to pickup
+	# 	a_star_search()
 
 	# Gets called at every time step
 	def setNodePath(self):
@@ -76,6 +75,7 @@ class Uber:
 			if c <= 1.0:
 				self.x = targetNode.x
 				self.y = targetNode.y
+				self.currentNode = targetNode
 				# move to nextnode in path
 				moveToNextTargetNode()
 				reachedDestination()
@@ -83,6 +83,7 @@ class Uber:
 			else:
 				self.x += moveX
 				self.y += moveY
+				self.currentNode = None
 			print "New x:", self.x
 			print "New y:", self.y
 
@@ -147,7 +148,7 @@ class Uber:
 node1 = Node(node_id=1, neighbors=[], passengers=[], x=0.0, y=0.0, traffic=1)
 node2 = Node(node_id=2, neighbors=[node1], passengers=[], x=1.0, y=1.0, traffic=1)
 
-car1 = Uber(carId=1, passengerCount=0, passengers=[], x=0.0, y=0.0, currentNode=node1, destinationNode=None, currentTotalTravelCost=0)
+car1 = Uber(carId=1, passengerCount=0, passengers=[], x=0.0, y=0.0, nodePath=[], currentNode=node1, destinationNode=None, currentTotalTravelCost=0)
 passenger1 = Passenger(node1, node2, 13, 5)
 
 print passenger1.goal.node_id
@@ -157,8 +158,8 @@ print car1.destinationNode.node_id
 # print "Took a time step"
 ## Moved to node2
 #car1.currentNode = node2
-car1.uberMove(car1.destinationNode)
-car1.uberMove(car1.destinationNode)
+car1.uberMove()
+car1.uberMove()
 
 
 car1.reachedDestination()
