@@ -189,9 +189,15 @@ class Graph:
         path.reverse() 
         return path
 
-    # pass it cost so far, it will return the actual path cost in float
-    def correct_cost(cost_so_far):
-        return (cost_so_far.values()[-1] - cost_so_far.values()[1])
+
+    # pass it path from the above function, it will return the cost of the path
+    def get_path_cost(self, path):
+        cursor = 1
+        cost = 0
+        while cursor != len(path):
+            cost += path[cursor-1].get_euc_dist(path[cursor]) + path[cursor-1].traffic + path[cursor].traffic
+            cursor += 1
+        return cost
 
 
 
