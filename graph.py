@@ -249,7 +249,7 @@ if __name__ == '__main__':
     add_neighbor(n8, n13)
     add_neighbor(n13, n6)
     nodes = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15, n16, n17]
-    g = graph(nodes=nodes, passengers=[], ubers=[])
+    g = Graph(nodes=nodes, passengers=[], ubers=[])
 
     # graph it
     print graph_map(g)
