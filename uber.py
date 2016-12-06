@@ -46,6 +46,9 @@ class Uber:
 		a_star_search()
 		# Need to check if remaining distance to goal is less than 1
 
+	def getNextNodeInPath(path):
+		print "Get node"
+
 	# In graph, for all ubers:
 	# Each time step is 1. Adds 1 to total travel cost
 	# Needs to be passed a node path
