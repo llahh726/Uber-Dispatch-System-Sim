@@ -66,6 +66,7 @@ class Graph:
                         minDist = sys.maxsize
                         assignedTo = False
                         for p in self.passengers:
+                            print "passenger=", p.ID, " status=", p.pickedUp
                             if (not p.pickedUp): # just look at passengers who need a ride
                                 currDist = uber.currentNode.get_euc_dist(p.start)
                                 if (minDist > currDist):

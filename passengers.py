@@ -26,13 +26,10 @@ class Passenger:
         PAS_ID += 1
 
     def closestUber(self, ubers):
-        if self.pickedUp: # then don't claim any uber
-            return None
-
         minDist = sys.maxsize
         myUber = None
         for uber in ubers:
-            if uber.passengerCount == 0:
+            if uber.destinationNode == None:
                 currDist = self.start.get_euc_dist(uber.currentNode)
                 if (currDist < minDist):
                     minDist = currDist
