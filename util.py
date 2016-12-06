@@ -86,7 +86,7 @@ def graph_map(graph):
 
     # plot edges
     for edge in edges:
-        plt.plot(edge[:2], edge[2:], '-', color = 'black', alpha = 0.3)   
+        plt.plot(edge[:2], edge[2:], '-', color = 'blue', alpha = 0.3)   
     
     # print ubers
     uxs = []
