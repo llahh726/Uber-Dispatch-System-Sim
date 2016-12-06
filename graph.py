@@ -133,8 +133,6 @@ class Graph:
         frontier.put(start)
         came_from = collections.OrderedDict()
         came_from[start] = None
-        cost_so_far = collections.OrderedDict()
-        cost_so_far[start] = 0
         
         # run search
         while not frontier.empty():
@@ -144,13 +142,11 @@ class Graph:
                 break
             
             for neighbor in current.get_neighbors():
-                new_cost = cost_so_far[current] + current.get_euc_dist(neighbor) + current.traffic + neighbor.traffic
                 if neighbor not in came_from:
-                    cost_so_far[neighbor] = new_cost
                     frontier.put(neighbor)
                     came_from[neighbor] = current
         
-        return came_from, cost_so_far
+        return came_from
 
     # some tiny modification from A star
     def uniform_cost_search(self, start, goal):
