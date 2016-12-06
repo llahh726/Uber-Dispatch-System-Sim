@@ -298,6 +298,3 @@ if __name__ == '__main__':
     #print "Path:", path(1)
 
     nodePathList = nodePathToList(path)
-    print getNextNodeInPath(nodePathList)
-    print getNextNodeInPath(nodePathList)
-    print getNextNodeInPath(nodePathList)
