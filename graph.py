@@ -84,7 +84,7 @@ class Graph:
         b = np.array([node2.x, node2.y])
         return np.sqrt(np.sum((a-b)**2))
     
-    # a star search for finding a 
+    # a star search for finding a best route
     def a_star_search(self, start, goal):
         frontier = PriorityQueue()
         frontier.put(start, 0)
@@ -110,6 +110,36 @@ class Graph:
                     came_from[neighbor] = current
 
         return came_from, cost_so_far
+
+    # DFS / BFS, method -> 'DFS', 'BFS'
+    def depth_breadth_first_search(method, start, goal):
+        if method == 'BFS':
+            frontier = Queue()
+        elif method == 'DFS':
+            frontier = Stack()
+        else:
+            print 'method invalid'
+        # init frontier
+        frontier.put(start)
+        came_from = collections.OrderedDict()
+        came_from[start] = None
+        
+        # run search
+        while not frontier.empty():
+            current = frontier.get()
+            
+            if current == goal:
+                break
+            
+            for neighbor in current.get_neighbors():
+                if neighbor not in came_from:
+                    frontier.put(neighbor)
+                    came_from[neighbor] = current
+        
+        return came_from
+
+
+    
 
 
 

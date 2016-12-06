@@ -4,6 +4,19 @@ import heapq
 import matplotlib
 import matplotlib.pyplot as plt
 
+class Stack:
+    def __init__(self):
+        self.elements = []
+    
+    def empty(self):
+        return len(self.elements) == 0
+    
+    def put(self, x):
+        self.elements.append(x)
+    
+    def get(self):
+        return self.elements.pop()
+
 class Queue:
     def __init__(self):
         self.elements = collections.deque()
@@ -73,8 +86,7 @@ def graph_map(graph):
         plt.plot(edge[:2], edge[2:], '-', color = 'blue', alpha = 0.3)
     plt.show()
 
-# Jason -> print graph 
-# create a better test graph
-# maybe a better traffic varying function
+# Jason:
+# maybe a better traffic varying function (not that important now)
 # write DFS, BFS, UCF for difference viewing
 # think about what the poster what look like 
