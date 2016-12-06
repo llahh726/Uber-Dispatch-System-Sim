@@ -189,6 +189,10 @@ class Graph:
         path.reverse() 
         return path
 
+    # pass it cost so far, it will return the actual path cost in float
+    def correct_cost(cost_so_far):
+        return (cost_so_far.values()[-1] - cost_so_far.values()[1])
+
 
 
 if __name__ == '__main__':
