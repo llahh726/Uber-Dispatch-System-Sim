@@ -263,8 +263,7 @@ if __name__ == '__main__':
     nodes = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15, n16, n17]
     g = Graph(nodes=nodes, passengers=[], ubers=[])
 
-    # graph it
-    # print graph_map(g)
+    
 
     # Ubers
     u1 = Uber(carId=1, passengerCount=0, passengers=[], x=0, y=0, nodePath=[], currentNode=n1, destinationNode=None, currentTotalTravelCost=0)
@@ -281,6 +280,9 @@ if __name__ == '__main__':
 
     g = Graph(nodes=nodes, passengers=passengerList, ubers=ubers)
 
+    # graph it
+    print graph_map(g)
+
     #print "Uber1 pos:", u1.currentNode.x, u1.currentNode.y
     #print "Uber2 pos:", u2.currentNode.x, u2.currentNode.y
     #print "Uber3 pos:", u3.currentNode.x, u3.currentNode.y
@@ -288,12 +290,12 @@ if __name__ == '__main__':
     # print passengerList
     # print "Passengers", g.passengers
 
-    tuple = g.a_star_search(n10, n6)
-    path = tuple[0]
-    cost = tuple[1]
-    print "Path:", path.items()[0][0]
-    for x in path:
-        print x.node_id, x.x, x.y
+    # tuple = g.a_star_search(n10, n6)
+    # path = tuple[0]
+    # cost = tuple[1]
+    # print "Path:", path.items()[0][0]
+    # for x in path:
+    #     print x.node_id, x.x, x.y
     # print cost
     # #for x in cost:
     # print x.node_id
@@ -303,4 +305,6 @@ if __name__ == '__main__':
     #     print cost[i]
     #print "Path:", path(1)
 
-    nodePathList = nodePathToList(path)
+    # nodePathList = nodePathToList(path)
+
+    g.pass_time()

@@ -7,16 +7,15 @@ UBER_ID = 0
 
 class Uber:
 
-	## used passenger
 	def __init__(self, carId, passengerCount, passengers, x, y, nodePath, currentNode, destinationNode, currentTotalTravelCost):
 		self.carId = carId # int starting from 0
 		self.passengerCount = passengerCount # int = 0, used count if we maybe do groups later
 		self.passengers = passengers # array of passengers in car
 		self.x = x # x coord
 		self.y = y # y coord
-		self.nodePath = nodePath
-		self.currentNode = currentNode # current Node() that car is at
-		self.destinationNode = destinationNode # Node() that is Passenger() goal
+		self.nodePath = nodePath # list of remaining nodes to move through to reach destination node
+		self.currentNode = currentNode # current Node() that car is at, if any
+		self.destinationNode = destinationNode # current destination. can be passenger to pick up position or carrying passenger's end goal
 		self.currentTotalTravelCost = currentTotalTravelCost # int starting at 0 on pickup
 		global UBER_ID
 		UBER_ID += 1
@@ -145,23 +144,23 @@ class Uber:
 # Testing
 
 # Init
-node1 = Node(node_id=1, neighbors=[], passengers=[], x=0.0, y=0.0, traffic=1)
-node2 = Node(node_id=2, neighbors=[node1], passengers=[], x=1.0, y=1.0, traffic=1)
+# node1 = Node(node_id=1, neighbors=[], passengers=[], x=0.0, y=0.0, traffic=1)
+# node2 = Node(node_id=2, neighbors=[node1], passengers=[], x=1.0, y=1.0, traffic=1)
 
-car1 = Uber(carId=1, passengerCount=0, passengers=[], x=0.0, y=0.0, nodePath=[], currentNode=node1, destinationNode=None, currentTotalTravelCost=0)
-passenger1 = Passenger(node1, node2, 13, 5)
+# car1 = Uber(carId=1, passengerCount=0, passengers=[], x=0.0, y=0.0, nodePath=[], currentNode=node1, destinationNode=None, currentTotalTravelCost=0)
+# passenger1 = Passenger(node1, node2, 13, 5)
 
-print passenger1.goal.node_id
+# print passenger1.goal.node_id
 
-car1.pickupPassenger(passenger1)
-print car1.destinationNode.node_id
-# print "Took a time step"
-## Moved to node2
-#car1.currentNode = node2
-car1.uberMove()
-car1.uberMove()
+# car1.pickupPassenger(passenger1)
+# print car1.destinationNode.node_id
+# # print "Took a time step"
+# ## Moved to node2
+# #car1.currentNode = node2
+# car1.uberMove()
+# car1.uberMove()
 
 
-car1.reachedDestination()
+# car1.reachedDestination()
 
-#car1.uberMove(node2)
+# #car1.uberMove(node2)
