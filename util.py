@@ -89,11 +89,6 @@ def graph_map(graph):
         plt.plot(edge[:2], edge[2:], '-', color = 'blue', alpha = 0.3)
     plt.show()
 
-def nodePathToList(path):
-        nodePathList = []
-        for i in path:
-            nodePathList.append(i)
-        return nodePathList
 
 def getNextNodeInPath(nodePathList):
     #print "Node in path:", NODE_ITERATOR, path[NODE_ITERATOR]
@@ -102,7 +97,109 @@ def getNextNodeInPath(nodePathList):
     NODE_ITERATOR += 1
     return nodePathList[index]
 
-# Jason:
-# maybe a better traffic varying function (not that important now)
-# write DFS, BFS, UCF for difference viewing
-# think about what the poster what look like 
+# euclidian 
+def euclidian_heuristic(node1, node2):
+    a = np.array([node1.x, node1.y])
+    b = np.array([node2.x, node2.y])
+    return np.sqrt(np.sum((a-b)**2))
+
+# a star search for finding a best route
+def a_star_search(start, goal):
+    frontier = PriorityQueue()
+    frontier.put(start, 0)
+    came_from = collections.OrderedDict()
+    cost_so_far = collections.OrderedDict()
+    came_from[start] = None
+    cost_so_far[start] = 0
+
+    while not frontier.empty():
+        current = frontier.get()
+
+        if current == goal:
+            break
+
+        for neighbor in current.get_neighbors():
+            # cost = current cost + dist + current traffic + neighbor traffic
+            new_cost = cost_so_far[current] + current.get_euc_dist(neighbor) + current.traffic + neighbor.traffic
+            # a star
+            if neighbor not in cost_so_far or new_cost < cost_so_far[neighbor]:
+                cost_so_far[neighbor] = new_cost
+                priority = new_cost + euclidian_heuristic(goal, neighbor)
+                frontier.put(neighbor, priority)
+                came_from[neighbor] = current
+
+    return came_from, cost_so_far
+
+# DFS / BFS, method -> 'DFS', 'BFS'
+def depth_breadth_first_search(method, start, goal):
+    if method == 'BFS':
+        frontier = Queue()
+    elif method == 'DFS':
+        frontier = Stack()
+    else:
+        print 'method invalid'
+    # init frontier
+    frontier.put(start)
+    came_from = collections.OrderedDict()
+    came_from[start] = None
+    
+    # run search
+    while not frontier.empty():
+        current = frontier.get()
+        
+        if current == goal:
+            break
+        
+        for neighbor in current.get_neighbors():
+            if neighbor not in came_from:
+                frontier.put(neighbor)
+                came_from[neighbor] = current
+    
+    return came_from
+
+# some tiny modification from A star
+def uniform_cost_search(start, goal):
+    frontier = PriorityQueue()
+    frontier.put(start, 0)
+    came_from = collections.OrderedDict()
+    cost_so_far = collections.OrderedDict()
+    came_from[start] = None
+    cost_so_far[start] = 0
+    
+    while not frontier.empty():
+        current = frontier.get()
+        
+        if current == goal:
+            break
+        
+        for neighbor in current.get_neighbors():
+            new_cost = cost_so_far[current] + current.get_euc_dist(neighbor) + current.traffic + neighbor.traffic
+            if neighbor not in cost_so_far or new_cost < cost_so_far[neighbor]:
+                cost_so_far[neighbor] = new_cost
+                priority = new_cost
+                frontier.put(neighbor, priority)
+                came_from[neighbor] = current
+    
+    return came_from, cost_so_far
+
+
+# a helper function to get the path
+# return path from start to final in a list of nodes
+def reconstruct_path(came_from, start, goal):
+    current = goal
+    path = [current]
+    while current != start:
+        current = came_from[current]
+        path.append(current)
+    path.reverse() 
+    return path
+
+
+# pass it path from the above function, it will return the cost of the path
+def get_path_cost(path):
+    cursor = 1
+    cost = 0
+    while cursor != len(path):
+        cost += path[cursor-1].get_euc_dist(path[cursor]) + path[cursor-1].traffic + path[cursor].traffic
+        cursor += 1
+    return cost
