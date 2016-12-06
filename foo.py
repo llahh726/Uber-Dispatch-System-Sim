@@ -1,8 +1,6 @@
 '''
   Currently being used to test pass_time
   Note(s):
-    - look into PAS_ID for including inside passenger.py
-      - in which case remove it from graph.py
   Reminder(s): in A*, when passenger delivered, remove them from the list of passengers
     can add them to finishedPassengers, which we can use to output data to a file to graph data
 '''

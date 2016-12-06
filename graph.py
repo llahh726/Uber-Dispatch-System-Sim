@@ -91,7 +91,8 @@ class Graph:
 
             for p in self.passengers: # increment their time in the system
                 p.time += 1
-                
+            #for u in self.ubers: # should probably mooooove each uber
+            #    u.uberMove(nextNode) # get nextnode from the route returned by search alg  
     # euclidian 
     def euclidian_heuristic(self, node1, node2):
         a = np.array([node1.x, node1.y])
