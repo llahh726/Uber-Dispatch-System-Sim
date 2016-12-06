@@ -1,11 +1,10 @@
 from nodes import Node
 from passengers import Passenger
-# import util
+from util import *
 UBER_ID = 0
 
 class Uber:
 
-<<<<<<< HEAD
 	def __init__(self, carId, passengerCount, passengers, x, y, nodePath, currentNode, destinationNode, currentTotalTravelCost):
 		self.carId = carId # int starting from 0
 		self.passengerCount = passengerCount # int = 0, used count if we maybe do groups later
@@ -47,7 +46,7 @@ class Uber:
 
 	# Gets called at every time step
 	def setNodePath(self):
-		self.nodePath = reconstructPath(a_star_search(self.currentNode, self.destinationNode)[0], self.currentNode, self.destinationNode)
+		self.nodePath = reconstruct_path(a_star_search(self.currentNode, self.destinationNode)[0], self.currentNode, self.destinationNode)
 
 	# In graph, for all ubers:
 	# Each time step is 1. Adds 1 to total travel cost
