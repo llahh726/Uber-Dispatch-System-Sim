@@ -86,7 +86,6 @@ class Uber:
 
 	def moveToNextTargetNode(self):
 		self.nodePath.pop(0)
-	# def bringPassengerToGoal(self,):
 
 	## NEEDS TO BE CALLED At each time step,
 	## For all cars that have 1 or more passengers,
