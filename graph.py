@@ -61,14 +61,16 @@ class Graph:
             for passenger in self.passengers:
                 if not passenger.pickedUp:
                     closestUber = passenger.closestUber(self.ubers)
-                    closestUber.destinationNode = passenger.start
+                    if closestUber:
+                        closestUber.destinationNode = passenger.start
                     # how to we change the dest node later?
 
             for uber in self.ubers:
                 if uber.destinationNode != None:
-                    uber.uberMove()
                     if uber.currentNode != None:
                         uber.setNodePath()
+                    uber.uberMove()
+
                 # check dest for passenger
                 for p in uber.passengers:
                     if uber.reachedDestination():

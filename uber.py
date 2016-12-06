@@ -1,6 +1,7 @@
 from nodes import Node
 from passengers import Passenger
 from util import *
+import math
 UBER_ID = 0
 
 class Uber:
@@ -63,8 +64,11 @@ class Uber:
 			print "Dy:", dy
 			c = math.sqrt(dx**2 + dy**2)
 			print "C:", c
-
-			theta = math.atan(dy / dx)
+			# account for 0
+			if dx == 0:
+				theta = math.pi/4
+			else:
+				theta = math.atan(dy / dx)
 			print "Theta:", theta
 			moveY = math.sin(theta)
 			moveX = math.cos(theta)
@@ -76,8 +80,8 @@ class Uber:
 				self.y = targetNode.y
 				self.currentNode = targetNode
 				# move to nextnode in path
-				moveToNextTargetNode()
-				reachedDestination()
+				self.moveToNextTargetNode()
+				self.reachedDestination()
 				print "Distance less than 1, reached node and switched to new target"
 			else:
 				self.x += moveX
