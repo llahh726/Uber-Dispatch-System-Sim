@@ -77,7 +77,7 @@ class Graph:
                                 print "REACHED CONDITION: New assignment is pass_id:", p.ID
                                 minDist = currDist
                                 assignedTo = p
-                    if !assignedTo:
+                    if not assignedTo:
                         uber.pickupPassenger(assignedTo)
                         print "ASSIGNED Uber", uber.carId, "to", assignedTo.ID
                         assignedTo.pickedUp = True
