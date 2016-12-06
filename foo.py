@@ -22,6 +22,9 @@ def main():
     # initialize passengers
     passengers = []
     passengers.append(Passenger(nodes[0], nodes[8], PAS_ID)) #did not set spawn time here
+    print PAS_ID
+    passengers.append(Passenger(nodes[2], nodes[8], PAS_ID)) #did not set spawn time here
+    print PAS_ID
 
     # initialize ubers
     ubers = []
