@@ -9,7 +9,7 @@ import random
 import nodes
 import sys
 #from sys import * #trying to avoid that weirdo error (since sys is imported in graph.py)
-
+import sys
 PAS_ID = 0
 
 class Passenger:
