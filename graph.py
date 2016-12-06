@@ -282,7 +282,7 @@ if __name__ == '__main__':
     u6 = Uber(UBER_ID, 0, [], n15.x, n15.y, n15, [], None, 0)
     ubers = [u1,u2,u3,u4,u5,u6]
 
-    g = graph(nodes=nodes, passengers=passengers, ubers=ubers)
+    g = Graph(nodes=nodes, passengers=passengers, ubers=ubers)
 
     
 
