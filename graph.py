@@ -5,8 +5,6 @@ from util import *
 
 import sys
 
-PAS_ID = 0
-
 # a class to hold everything
 class Graph:
     # init
@@ -44,10 +42,8 @@ class Graph:
     
     # spawn new passengers
     def spawn(self, newPass):
-        global PAS_ID
         newPass.ID = PAS_ID # set the correct ID to new passenger
         self.passengers.append(newPass)
-        PAS_ID += 1
 
         # for p in passengers:
         #    print p.info()
@@ -72,17 +68,18 @@ class Graph:
                         if (not p.pickedUp): # just look at passengers who need a ride
                             currDist = uber.currentNode.get_euc_dist(p.start)
                             if (minDist > currDist):
-                                print "REACHED CONDITION"
+                                print "REACHED CONDITION: New assignment is pass_id:", p.ID
                                 minDist = currDist
                                 assignedTo = p
                     if assignedTo != None:
                         uber.pickupPassenger(assignedTo)
                         assignedTo.pickedUp = True
                     else:
-                        print "self.passengers is", self.passengers
-                        for p in self.passengers:
-                            print "status is", p.pickedUp
-                        print ">>>"
+                        print "No one was assigned! (Could mean everyone has been picked up)"
+                        #print "self.passengers is", self.passengers
+                        #for p in self.passengers:
+                        #    print "status is", p.pickedUp
+                        #print ">>>"
                 else:
                     # uber.reachedDestination()
                     print "Check if reached destination"
