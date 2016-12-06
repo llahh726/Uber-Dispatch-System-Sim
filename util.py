@@ -3,6 +3,7 @@ import collections
 import heapq
 import matplotlib
 import matplotlib.pyplot as plt
+import numpy as np
 
 class Stack:
     def __init__(self):
