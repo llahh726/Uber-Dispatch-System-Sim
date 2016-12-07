@@ -10,21 +10,19 @@ import nodes
 import sys
 #from sys import * #trying to avoid that weirdo error (since sys is imported in graph.py)
 from util import *
-PAS_ID = 0
 
 class Passenger:
-    def __init__(self, node1, node2, idInt=0,  num=0):
+    PAS_ID = 0
+    def __init__(self, node1, node2, num=0):
         self.start = node1
         self.goal = node2
         self.time = num
         self.pickedUp = False
         
         self.route = [self.start] # we may not use this (can use the uber's route)
-
-        global PAS_ID
         #print "INIT:", PAS_ID
-        self.ID = idInt
-        PAS_ID += 1
+        self.ID = Passenger.PAS_ID
+        Passenger.PAS_ID += 1
 
     def closestUber(self, ubers):
         minDist = sys.maxsize
