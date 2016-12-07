@@ -85,10 +85,10 @@ class Graph:
                     uber.uberMove()
 
                 # check dest for passenger
-                for p in uber.passengers:
+                # for p in uber.passengers:
                     # if uber.reachedDestination():
                         #uber.passengers.remove(p)
-                    self.passengers.remove(p)
+                        #self.passengers.remove(p)
                         #uber.destinationNode = None
                         #uber.passengerCount -= 1
                         # print 'journey done!'
@@ -382,7 +382,7 @@ if __name__ == '__main__':
 
     # nodePathList = nodePathToList(path)
 
-    for i in range(1):
+    for i in range(10):
         g.pass_time()
     ubers = g.ubers
     passengers = g.passengers
