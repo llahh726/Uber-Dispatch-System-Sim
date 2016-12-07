@@ -57,10 +57,10 @@ class Uber:
 	def uberMove(self):
 		# print "Destination node:", self.destinationNode
 		if self.destinationNode != None:
-			print "Nodepath 0:", self.nodePath[0].x, self.nodePath[0].y
+			#print "Nodepath 0:", self.nodePath[0].x, self.nodePath[0].y
 			#print "Nodepath 1:", self.nodePath[1].x, self.nodePath[1].y
 
-			print "Self.nodepath[0]", self.nodePath[0].x, self.nodePath[0].y
+			#print "Self.nodepath[0]", self.nodePath[0].x, self.nodePath[0].y
 			targetNode = self.nodePath[0]
 			print "My coords:", self.x, self.y
 			print "Target coords:", targetNode.x, targetNode.y
