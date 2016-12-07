@@ -92,7 +92,7 @@ class Graph:
                         #uber.destinationNode = None
                         #uber.passengerCount -= 1
                         # print 'journey done!'
-
+# 
             for p in self.passengers:
                 p.time += 1
 
