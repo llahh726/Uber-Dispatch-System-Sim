@@ -30,9 +30,10 @@ class Passenger:
         minDist = sys.maxsize
         myUber = None
         for uber in ubers:
-            print "myUber:", myUber
+            print "myUber:", myUber, "dnode=", uber.destinationNode
             if uber.destinationNode == None:
                 currDist = self.start.get_euc_dist(uber.currentNode)
+                print "currDist=", currDist
                 if (currDist < minDist):
                     minDist = currDist
                     myUber = uber
