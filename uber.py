@@ -66,7 +66,10 @@ class Uber:
 			print "C:", c
 			# account for 0
 			if dx == 0:
-				theta = math.pi/4
+				if dy > 0:
+					theta = math.pi/4
+				else:
+					theta = math.pi/-4
 			else:
 				theta = math.atan(dy / dx)
 			print "Theta:", theta

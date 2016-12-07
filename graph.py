@@ -329,11 +329,11 @@ if __name__ == '__main__':
     ubers = [u1]
     # Passengers
     p1 = Passenger(n3, n7, 1)
-    p2 = Passenger(n1, n10, 2)
-    p3 = Passenger(n11, n4, 3)
-    p4 = Passenger(n15, n4, 4)
-    p5 = Passenger(n7, n2, 5)
-    passengerList = [p1, p2, p3, p4, p5]
+    # p2 = Passenger(n1, n10, 2)
+    # p3 = Passenger(n11, n4, 3)
+    # p4 = Passenger(n15, n4, 4)
+    # p5 = Passenger(n7, n2, 5)
+    passengerList = [p1]
 
     g = Graph(nodes=nodes, passengers=passengerList, ubers=ubers)
 
@@ -363,5 +363,6 @@ if __name__ == '__main__':
     #print "Path:", path(1)
 
     # nodePathList = nodePathToList(path)
+
 
     g.pass_time()
