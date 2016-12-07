@@ -38,13 +38,7 @@ class Uber:
 			self.assigned_passenger = None
 
 		else:
-			## run a* to get there
 			print "No passenger here to pick up"
-
-	# holding off on deleting this so far, but I think it's sufficient to put into graphs.py
-	# def travelToPassengerToPickup(self, node):
-	# 	# receive node location of passenger to pickup
-	# 	a_star_search()
 
 	# Gets called at every time step
 	def setNodePath(self):
@@ -163,22 +157,6 @@ class Uber:
 
 	def getCurrTravelCost(self):
 		return self.currentTotalTravelCost
-
-
-
-
-	# def graphSearch(problem, frontier):
-
-	# def heuristic(a, b):
-	# 	return abs(a.x - b.x) + abs(a.y - b.y)
-
-	# # we have a graph setup right? nodes and edges
-	# def aStarSearch(problem, heuristic = nullheuristic):
-	# 	frontier = PriorityQueue()
-	# 	frontier.push(start)
-	# 	visited = {}
-	# 	visited[start] = True
-	# 	return frontier
 
 ##############################################################
 # Testing
