@@ -60,7 +60,6 @@ class Graph:
                 pass
             for passenger in self.passengers:
                 if not passenger.pickedUp:
-                    print "self.ubers=", self.ubers
                     closestUber = passenger.closestUber(self.ubers)
                     if closestUber:
                         closestUber.destinationNode = passenger.start
