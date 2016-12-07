@@ -118,10 +118,10 @@ class Uber:
 			# dropping passenger off
 		for p in self.passengers:
 			if self.currentNode == p.goal:
-				print 'yes'
-				print self.currentNode, p.goal
+				# mark true so passenger could be removed
+				p.arrived = True
 				self.passengers.remove(p)
-				# TODO need to remove passenger from graph!!!!
+
 				self.destinationNode = None
 				# print self.passengerCount
 				self.passengerCount -= 1

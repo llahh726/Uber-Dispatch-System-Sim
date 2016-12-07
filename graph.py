@@ -58,6 +58,10 @@ class Graph:
             except:
                 pass
             for passenger in self.passengers:
+                # if arrived, delete
+                if passenger.arrived:
+                    self.passengers.remove(passenger)
+
                 if not passenger.pickedUp:
                     # print "self.ubers=", self.ubers
                     closestUber = passenger.closestUber(self.ubers)
@@ -316,7 +320,7 @@ if __name__ == '__main__':
     u4 = Uber(0, [], n11.x, n11.y, [], n11,  None, 0, None)
     u5 = Uber(0, [], n15.x, n15.y, [], n15,  None, 0, None)
     u6 = Uber(0, [], n15.x, n15.y,  [], n15, None, 0, None)
-    ubers = [u1, u2, u3, u4, u5, u6]
+    ubers = [u1, u2, u3, u4]
 
     # g = Graph(nodes=nodes, passengers=passengers, ubers=ubers)
 
@@ -329,9 +333,9 @@ if __name__ == '__main__':
     # ubers = [u1, u2]
     # Passengers
 
-    # p1 = Passenger(n3, n7, 1)
+    p1 = Passenger(n3, n7)
 
-    # p2 = Passenger(n1, n10, 2)
+    p2 = Passenger(n1, n10)
     # p3 = Passenger(n11, n4, 3)
     # p4 = Passenger(n15, n4, 4)
     # p5 = Passenger(n7, n2, 5)
@@ -340,7 +344,7 @@ if __name__ == '__main__':
 
     passengerList = [p1, p2]
 
-    g = Graph(nodes=nodes, passengers=passengers, ubers=ubers)
+    g = Graph(nodes=nodes, passengers=passengerList, ubers=ubers)
 
     # graph it
     
@@ -369,14 +373,14 @@ if __name__ == '__main__':
 
     # nodePathList = nodePathToList(path)
 
-    # for i in range(10):
-    #     g.pass_time()
-    ubers = g.ubers
-    for u in ubers:
-        print u.carId
-    passengers = g.passengers
-    for p in passengers:
-        print p.ID
+    for i in range(15):
+        g.pass_time()
+    # ubers = g.ubers
+    # for u in ubers:
+    #     print u.carId
+    # passengers = g.passengers
+    # for p in passengers:
+    #     print p.ID
     # for u in ubers:
     #     path = u.nodePath
     #     for p in path:
