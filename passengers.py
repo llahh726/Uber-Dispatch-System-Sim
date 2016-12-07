@@ -19,6 +19,7 @@ class Passenger:
         self.time = num
         self.pickedUp = False
         self.arrived = False
+        self.got_uber = False
         
         self.route = [self.start] # we may not use this (can use the uber's route)
         #print "INIT:", PAS_ID
@@ -31,9 +32,9 @@ class Passenger:
         for uber in ubers:
             #print "myUber:", myUber, "dnode=", uber.destinationNode
             if uber.destinationNode == None:
-                aStarResult = a_star_search(self.start, uber.currentNode)#[1][::-1][0] # get final cost (?)
-                route, num = aStarResult[1].popitem()
-                currDist = num#self.start.get_euc_dist(uber.currentNode)
+                came_from, _ = a_star_search(uber.currentNode, self.start)#[1][::-1][0] # get final cost (?)
+                path = reconstruct_path(came_from, uber.currentNode, self.start)
+                currDist = get_path_cost(path)
                 print "currDist=", currDist
                 if (currDist < minDist):
                     minDist = currDist

@@ -62,12 +62,13 @@ class Graph:
                 if passenger.arrived:
                     self.passengers.remove(passenger)
 
-                if not passenger.pickedUp:
+                if not passenger.got_uber:
                     # print "self.ubers=", self.ubers
                     closestUber = passenger.closestUber(self.ubers)
                     if closestUber:
                         closestUber.destinationNode = passenger.start
                         closestUber.assigned_passenger = passenger
+                        passenger.got_uber = True
                     # how to we change the dest node later?
 
             for uber in self.ubers:
@@ -310,9 +311,9 @@ if __name__ == '__main__':
     p3 = Passenger(n5, n14)
     p4 = Passenger(n11, n1)
     p5 = Passenger(n4, n9)
-    passengers = [p1, p2, p3, p4, p5]
+    passengers = [p1, p2, p3, p4 ,p5]
 
-    # self, carId, passengerCount, passengers, x, y, nodePath, currentNode, destinationNode, currentTotalTravelCost
+    # # self, carId, passengerCount, passengers, x, y, nodePath, currentNode, destinationNode, currentTotalTravelCost
 
     u1 = Uber(0, [], n1.x, n1.y, [], n1,  None, 0, None)
     u2 = Uber(0, [], n7.x, n7.y, [],n7,  None, 0, None)
@@ -320,7 +321,7 @@ if __name__ == '__main__':
     u4 = Uber(0, [], n11.x, n11.y, [], n11,  None, 0, None)
     u5 = Uber(0, [], n15.x, n15.y, [], n15,  None, 0, None)
     u6 = Uber(0, [], n15.x, n15.y,  [], n15, None, 0, None)
-    ubers = [u1, u2, u3, u4]
+    ubers = [u1, u2, u3, u4, u5, u6]
 
     # g = Graph(nodes=nodes, passengers=passengers, ubers=ubers)
 
@@ -333,18 +334,18 @@ if __name__ == '__main__':
     # ubers = [u1, u2]
     # Passengers
 
-    p1 = Passenger(n3, n7)
+    # p1 = Passenger(n3, n7)
 
-    p2 = Passenger(n1, n10)
+    # p2 = Passenger(n1, n10)
     # p3 = Passenger(n11, n4, 3)
     # p4 = Passenger(n15, n4, 4)
     # p5 = Passenger(n7, n2, 5)
 
     # passengerList = [p1, p2, p3, p4, p5]
 
-    passengerList = [p1, p2]
+    # passengerList = [p1, p2]
 
-    g = Graph(nodes=nodes, passengers=passengerList, ubers=ubers)
+    g = Graph(nodes=nodes, passengers=passengers, ubers=ubers)
 
     # graph it
     
@@ -373,7 +374,7 @@ if __name__ == '__main__':
 
     # nodePathList = nodePathToList(path)
 
-    for i in range(15):
+    for i in range(1):
         g.pass_time()
     # ubers = g.ubers
     # for u in ubers:
