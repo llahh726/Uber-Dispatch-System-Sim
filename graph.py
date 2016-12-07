@@ -328,17 +328,18 @@ if __name__ == '__main__':
     #u3 = Uber(3, 0, [], 100, 0, [], n14, None, 0)
     ubers = [u1]
     # Passengers
-    p1 = Passenger(n3, n7, 1)
-    p2 = Passenger(n1, n10, 2)
-    p3 = Passenger(n11, n4, 3)
-    p4 = Passenger(n15, n4, 4)
-    p5 = Passenger(n7, n2, 5)
-    passengerList = [p1, p2, p3, p4, p5]
+    p1 = Passenger(n1, n7, 1)
+    # p2 = Passenger(n1, n10, 2)
+    # p3 = Passenger(n11, n4, 3)
+    # p4 = Passenger(n15, n4, 4)
+    # p5 = Passenger(n7, n2, 5)
+    # passengerList = [p1, p2, p3, p4, p5]
+    passengerList = [p1]
 
     g = Graph(nodes=nodes, passengers=passengerList, ubers=ubers)
 
     # graph it
-    print graph_map(g)
+    
 
     #print "Uber1 pos:", u1.currentNode.x, u1.currentNode.y
     #print "Uber2 pos:", u2.currentNode.x, u2.currentNode.y
@@ -363,5 +364,6 @@ if __name__ == '__main__':
     #print "Path:", path(1)
 
     # nodePathList = nodePathToList(path)
-
-    g.pass_time()
+    for i in range(50):
+        g.pass_time()
+    print graph_map(g)
