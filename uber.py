@@ -85,6 +85,7 @@ class Uber:
 				theta = math.atan(dy / dx) + math.pi
 			else:
 				theta = math.atan(dy / dx) 
+
 			print "Theta:", theta
 			moveY = math.sin(theta)
 			moveX = math.cos(theta)
@@ -98,7 +99,6 @@ class Uber:
 				# move to nextnode in path
 				# self.moveToNextTargetNode()
 
-				# do we still need this?
 				self.reachedDestination()
 				print "Distance less than 1, reached node and switched to new target"
 			else:
@@ -141,6 +141,7 @@ class Uber:
 			#self.passengerCount -= 1
 			#print "Self.pass count after:", self.passengerCount
 			# self.destinationNode = None
+
 			#print "Reached destination, dropped off passenger:", self.passengers[0], "at", (self.currentNode.x, self.currentNode.y)
 			#print "Self.passengers:", self.passengers
 			#self.passengers.pop(0)
