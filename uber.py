@@ -83,8 +83,12 @@ class Uber:
 				self.y = targetNode.y
 				self.currentNode = targetNode
 				# move to nextnode in path
+				for i in self.nodePath:
+					print "1) xcoord=", i.x, ", ycoord=", i.y
 				self.moveToNextTargetNode()
 				self.reachedDestination()
+				for i in self.nodePath:
+					print "2) xcoord=", i.x, ", ycoord=", i.y
 				print "Distance less than 1, reached node and switched to new target"
 			else:
 				self.x += moveX

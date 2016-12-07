@@ -364,5 +364,7 @@ if __name__ == '__main__':
 
     # nodePathList = nodePathToList(path)
 
-
     g.pass_time()
+    g.pass_time()
+    g.pass_time()
+
