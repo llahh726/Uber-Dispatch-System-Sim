@@ -19,6 +19,7 @@ class Passenger:
         self.goal = node2
         self.time = num
         self.pickedUp = False
+        self.arrived = False
         
         self.route = [self.start] # we may not use this (can use the uber's route)
         #print "INIT:", PAS_ID
