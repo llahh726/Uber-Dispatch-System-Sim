@@ -69,6 +69,7 @@ class Graph:
             for uber in self.ubers:
                 if uber.destinationNode != None:
                     if uber.currentNode != None:
+                        
                         uber.setNodePath()
                     uber.uberMove()
 
