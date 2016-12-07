@@ -83,7 +83,6 @@ class Graph:
                         print 'curr'
                         uber.setNodePath()
                     uber.uberMove()
-
                 # check dest for passenger
                 # for p in uber.passengers:
                     # if uber.reachedDestination():
@@ -398,3 +397,4 @@ if __name__ == '__main__':
         # print u.passengers
 
     print graph_map(g)
+

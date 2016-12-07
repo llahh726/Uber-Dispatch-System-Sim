@@ -53,16 +53,17 @@ class Uber:
 		#print "ASTAR", a_star_search(self.currentNode, self.destinationNode)[0]
 		self.nodePath = reconstruct_path(a_star_search(self.currentNode, self.destinationNode)[0], self.currentNode, self.destinationNode)[1:]
 		#print "Self.nodePath", self.nodePath
+
 	# In graph, for all ubers:
 	# Each time step is 1. Adds 1 to total travel cost
 	# Needs to be passed a node path
 	def uberMove(self):
 		# print "Destination node:", self.destinationNode
 		if self.destinationNode != None:
-			print "Nodepath 0:", self.nodePath[0].x, self.nodePath[0].y
+			#print "Nodepath 0:", self.nodePath[0].x, self.nodePath[0].y
 			#print "Nodepath 1:", self.nodePath[1].x, self.nodePath[1].y
 
-			print "Self.nodepath[0]", self.nodePath[0].x, self.nodePath[0].y
+			#print "Self.nodepath[0]", self.nodePath[0].x, self.nodePath[0].y
 			targetNode = self.nodePath[0]
 			print "My coords:", self.x, self.y
 			print "Target coords:", targetNode.x, targetNode.y
@@ -139,6 +140,8 @@ class Uber:
 			#print "Self.pass count:", self.passengerCount
 			#self.passengerCount -= 1
 			#print "Self.pass count after:", self.passengerCount
+			# self.destinationNode = None
+
 			#print "Reached destination, dropped off passenger:", self.passengers[0], "at", (self.currentNode.x, self.currentNode.y)
 			#print "Self.passengers:", self.passengers
 			#self.passengers.pop(0)
