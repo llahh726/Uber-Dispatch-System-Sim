@@ -2,12 +2,11 @@ from nodes import Node
 from passengers import Passenger
 from util import *
 import math
-UBER_ID = 0
 
 class Uber:
-
-	def __init__(self, carId, passengerCount, passengers, x, y, nodePath, currentNode, destinationNode, currentTotalTravelCost, assigned_passenger):
-		self.carId = carId # int starting from 0
+	UBER_ID = 0
+	def __init__(self, passengerCount, passengers, x, y, nodePath, currentNode, destinationNode, currentTotalTravelCost, assigned_passenger):
+		self.carId = Uber.UBER_ID # int starting from 0
 		self.passengerCount = passengerCount # int = 0, used count if we maybe do groups later
 		self.passengers = passengers # array of passengers in car
 		self.x = x # x coord
@@ -17,8 +16,7 @@ class Uber:
 		self.destinationNode = destinationNode # current destination. can be passenger to pick up position or carrying passenger's end goal
 		self.currentTotalTravelCost = currentTotalTravelCost # int starting at 0 on pickup
 		self.assigned_passenger = assigned_passenger
-		global UBER_ID
-		UBER_ID += 1
+		Uber.UBER_ID += 1
 
 	def pickupPassenger(self):
 		if self.currentNode == self.assigned_passenger.start:	
