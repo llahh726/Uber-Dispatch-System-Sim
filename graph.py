@@ -87,9 +87,6 @@ class Graph:
                         uber.setNodePath()
                     uber.uberMove()
 
-<<<<<<< HEAD
-                
-=======
                 # check dest for passenger
                 for p in uber.passengers:
                     # if uber.reachedDestination():
@@ -98,7 +95,6 @@ class Graph:
                         #uber.destinationNode = None
                         #uber.passengerCount -= 1
                         # print 'journey done!'
->>>>>>> 27e3447b67c7dff65ee06ee2ab8904bd10cc4c2d
 
             for p in self.passengers:
                 p.time += 1
@@ -412,6 +408,7 @@ if __name__ == '__main__':
         # print u.passengers
 
     print graph_map(g)
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 =======
@@ -419,3 +416,5 @@ if __name__ == '__main__':
     g.pass_time()
 >>>>>>> 27e3447b67c7dff65ee06ee2ab8904bd10cc4c2d
 >>>>>>> 3a2ae48b1be7d7b73e62103f41ffbeefa752aab7
+=======
+>>>>>>> f7007059c3c695b50bf4b3221914052bddc59b26
