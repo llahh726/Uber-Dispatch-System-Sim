@@ -5,9 +5,6 @@ from util import *
 
 import sys
 
-
-PAS_ID = 0
-
 # a class to hold everything
 class Graph:
     # init
@@ -45,15 +42,13 @@ class Graph:
     
     # spawn new passengers
     def spawn(self, newPass):
-        global PAS_ID
         newPass.ID = PAS_ID # set the correct ID to new passenger
         self.passengers.append(newPass)
-        PAS_ID += 1
 
         # for p in passengers:
         #    print p.info()
 
-    # run spawn and time
+
     def pass_time(self):
         for step in range(self.max_time):
             try:
@@ -63,35 +58,84 @@ class Graph:
                     del self.spawnTimes[0]
             except:
                 pass
+            for passenger in self.passengers:
+                if not passenger.pickedUp:
+                    closestUber = passenger.closestUber(self.ubers)
+                    if closestUber:
+                        closestUber.destinationNode = passenger.start
+                    # how to we change the dest node later?
 
-            # assign unassigned cars to nearest passengers
             for uber in self.ubers:
-                if uber.passengerCount == 0:
-                    minDist = sys.maxsize
-                    assignedTo = None # not sure if this is a proper initialization
-                    for p in self.passengers:
-                        if (not p.pickedUp): # just look at passengers who need a ride
-                            currDist = uber.currentNode.get_euc_dist(p.start)
-                            if (minDist > currDist):
-                                print "REACHED CONDITION"
-                                minDist = currDist
-                                assignedTo = p
-                    if assignedTo != None:
-                        uber.pickupPassenger(assignedTo)
-                        assignedTo.pickedUp = True
-                    else:
-                        print "self.passengers is", self.passengers
-                        for p in self.passengers:
-                            print "status is", p.pickedUp
-                        print ">>>"
-                else:
-                    # uber.reachedDestination()
-                    print "Check if reached destination"
+                if uber.destinationNode != None:
+                    if uber.currentNode != None:
+                        uber.setNodePath()
+                    uber.uberMove()
 
+                # check dest for passenger
+                for p in uber.passengers:
+                    if uber.reachedDestination():
+                        uber.passengers.remove(p)
+                        self.passengers.remove(p)
+                        uber.destinationNode = None
+                        uber.passengerCount -= 1
+                        print 'journey done!'
 
-            for p in self.passengers: # increment their time in the system
+            for p in self.passengers:
                 p.time += 1
-                
+
+
+    # # run spawn and time
+    # def pass_time(self):
+    #     for step in range(self.max_time):
+    #         try:
+    #             if step == self.spawnTimes[0]: # spawn and remove from queue
+    #                 self.spawn(self.spawnQueue[0])
+    #                 del self.spawnQueue[0]
+    #                 del self.spawnTimes[0]
+    #         except:
+    #             pass
+
+    #         # assign unassigned cars to nearest passengers
+    #         for uber in self.ubers:
+    #             if uber.currentNode != None:
+    #                 if uber.passengerCount == 0:
+    #                     minDist = sys.maxsize
+    #                     assignedTo = False
+    #                     for p in self.passengers:
+    #                         if (not p.pickedUp): # just look at passengers who need a ride
+    #                             currDist = uber.currentNode.get_euc_dist(p.start)
+    #                             if (minDist > currDist):
+    #                                 print "REACHED CONDITION: New assignment is pass_id:", p.ID
+    #                                 minDist = currDist
+    #                                 assignedTo = p
+    #                     if not assignedTo:
+    #                         uber.pickupPassenger(assignedTo)
+    #                         print "ASSIGNED Uber", uber.carId, "to", assignedTo.ID
+    #                         assignedTo.pickedUp = True
+    #                     else:
+    #                         print "No one was assigned! (Could mean everyone has been picked up)"
+    #                         #print "self.passengers is", self.passengers
+    #                         #for p in self.passengers:
+    #                         #    print "status is", p.pickedUp
+    #                         #print ">>>"
+    #                 else:
+    #                     # check for arrivals and kill passengers who are done
+    #                     print "Check if reached destination"
+    #                     for uber in self.ubers:
+    #                         retval = uber.reachedDestination()
+    #                         if retval >= 0:
+    #                             del self.passengers[retval]
+    #                 if len(uber.nodePath) == 0:
+    #                     uber.setNodePath()
+    #                 try:
+    #                     uber.uberMove(uber.nodePath[0]) # get next node from the route returned by search alg  
+    #                     del uber.nodePath[0]
+    #                 except:
+    #                     print "nodePath[] empty"
+
+    #         for p in self.passengers: # increment their time in the system
+    #             p.time += 1
+
     # euclidian 
     def euclidian_heuristic(self, node1, node2):
         a = np.array([node1.x, node1.y])
@@ -137,8 +181,6 @@ class Graph:
         frontier.put(start)
         came_from = collections.OrderedDict()
         came_from[start] = None
-        cost_so_far = collections.OrderedDict()
-        cost_so_far[start] = 0
         
         # run search
         while not frontier.empty():
@@ -148,13 +190,11 @@ class Graph:
                 break
             
             for neighbor in current.get_neighbors():
-                new_cost = cost_so_far[current] + current.get_euc_dist(neighbor) + current.traffic + neighbor.traffic
                 if neighbor not in came_from:
-                    cost_so_far[neighbor] = new_cost
                     frontier.put(neighbor)
                     came_from[neighbor] = current
         
-        return came_from, cost_so_far
+        return came_from
 
     # some tiny modification from A star
     def uniform_cost_search(self, start, goal):
@@ -194,10 +234,22 @@ class Graph:
         return path
 
 
+    # pass it path from the above function, it will return the cost of the path
+    def get_path_cost(self, path):
+        cursor = 1
+        cost = 0
+        while cursor != len(path):
+            cost += path[cursor-1].get_euc_dist(path[cursor]) + path[cursor-1].traffic + path[cursor].traffic
+            cursor += 1
+        return cost
+
+
 
 if __name__ == '__main__':
 
-    # test for graph
+    NODE_ID = 0
+    UBER_ID = 0
+    PAS_ID = 0
     n1 = Node(node_id=NODE_ID, x=0, y=0, neighbors=[], passengers=[])
     n2 = Node(node_id=NODE_ID, x=50, y=0, neighbors=[], passengers=[])
     n3 = Node(node_id=NODE_ID, x=100, y=0, neighbors=[], passengers=[])
@@ -215,7 +267,6 @@ if __name__ == '__main__':
     n15 = Node(node_id=NODE_ID, x=90, y=90, neighbors=[], passengers=[])
     n16 = Node(node_id=NODE_ID, x=10, y=90, neighbors=[], passengers=[])
     n17 = Node(node_id=NODE_ID, x=90, y=10, neighbors=[], passengers=[])
-
     add_neighbor(n1, n2)
     add_neighbor(n2, n3)
     add_neighbor(n1, n4)
@@ -249,16 +300,33 @@ if __name__ == '__main__':
     add_neighbor(n8, n13)
     add_neighbor(n13, n6)
     nodes = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15, n16, n17]
-    g = graph(nodes=nodes, passengers=[], ubers=[])
 
-    # graph it
-    print graph_map(g)
+    # p1 = Passenger(n1, n2, PAS_ID)
+    # p2 = Passenger(n10, n12, PAS_ID)
+    # p3 = Passenger(n5, n14, PAS_ID)
+    # p4 = Passenger(n11, n1, PAS_ID)
+    # p5 = Passenger(n4, n9, PAS_ID)
+    # passengers = [p1,p2,p3,p4,p5]
+
+    # # self, carId, passengerCount, passengers, x, y, nodePath, currentNode, destinationNode, currentTotalTravelCost
+
+    # u1 = Uber(UBER_ID, 0, [], n1.x, n1.y, n1, [], None, 0)
+    # u2 = Uber(UBER_ID, 0, [], n7.x, n7.y, n7, [], None, 0)
+    # u3 = Uber(UBER_ID, 0, [], n9.x, n9.y, n9, [], None, 0)
+    # u4 = Uber(UBER_ID, 0, [], n11.x, n11.y, n11, [], None, 0)
+    # u5 = Uber(UBER_ID, 0, [], n15.x, n15.y, n15, [], None, 0)
+    # u6 = Uber(UBER_ID, 0, [], n15.x, n15.y, n15, [], None, 0)
+    # ubers = [u1,u2,u3,u4,u5,u6]
+
+    # g = Graph(nodes=nodes, passengers=passengers, ubers=ubers)
+
+    
 
     # Ubers
-    u1 = Uber(1, 0, [], n1, None, 0)
-    u2 = Uber(2, 0, [], n9, None, 0)
-    u3 = Uber(3, 0, [], n14, None, 0)
-    ubers = [u1, u2, u3]
+    u1 = Uber(carId=1, passengerCount=0, passengers=[], x=0, y=0, nodePath=[], currentNode=n1, destinationNode=None, currentTotalTravelCost=0)
+    #u2 = Uber(2, 0, [], 50, 0, [], n9, None, 0)
+    #u3 = Uber(3, 0, [], 100, 0, [], n14, None, 0)
+    ubers = [u1]
     # Passengers
     p1 = Passenger(n3, n7, 1)
     p2 = Passenger(n1, n10, 2)
@@ -269,21 +337,22 @@ if __name__ == '__main__':
 
     g = Graph(nodes=nodes, passengers=passengerList, ubers=ubers)
 
-    print "Uber1 pos:", u1.currentNode.x, u1.currentNode.y
-    print "Uber2 pos:", u2.currentNode.x, u2.currentNode.y
-    print "Uber3 pos:", u3.currentNode.x, u3.currentNode.y
-    # passengerList = passengers.spawn(5, nodes)
-    print passengerList
+    # graph it
+    print graph_map(g)
+
+    #print "Uber1 pos:", u1.currentNode.x, u1.currentNode.y
+    #print "Uber2 pos:", u2.currentNode.x, u2.currentNode.y
+    #print "Uber3 pos:", u3.currentNode.x, u3.currentNode.y
+
     # print passengerList
-    # g.passengers = passengerList
     # print "Passengers", g.passengers
 
-    tuple = g.a_star_search(n10, n6)
-    path = tuple[0]
-    cost = tuple[1]
+    # tuple = g.a_star_search(n10, n6)
+    # path = tuple[0]
+    # cost = tuple[1]
+    # print "Path:", path.items()[0][0]
     # for x in path:
     #     print x.node_id, x.x, x.y
-    #     print x
     # print cost
     # #for x in cost:
     # print x.node_id
@@ -291,4 +360,8 @@ if __name__ == '__main__':
     # Get cost at each step
     # for i in cost:
     #     print cost[i]
+    #print "Path:", path(1)
 
+    # nodePathList = nodePathToList(path)
+
+    g.pass_time()
