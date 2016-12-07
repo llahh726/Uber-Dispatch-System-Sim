@@ -368,3 +368,4 @@ if __name__ == '__main__':
     g.pass_time()
     g.pass_time()
 
+    print graph_map(g)

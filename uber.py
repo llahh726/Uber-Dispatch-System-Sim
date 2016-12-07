@@ -49,12 +49,18 @@ class Uber:
 	def setNodePath(self):
 		print "ASTAR", a_star_search(self.currentNode, self.destinationNode)[0]
 		self.nodePath = reconstruct_path(a_star_search(self.currentNode, self.destinationNode)[0], self.currentNode, self.destinationNode)
+		self.nodePath.pop(0)
 		print "Self.nodePath", self.nodePath
 	# In graph, for all ubers:
 	# Each time step is 1. Adds 1 to total travel cost
 	# Needs to be passed a node path
 	def uberMove(self):
+		print "Destination node:", self.destinationNode
 		if self.destinationNode != None:
+			print "Nodepath 0:", self.nodePath[0].x, self.nodePath[0].y
+			print "Nodepath 1:", self.nodePath[1].x, self.nodePath[1].y
+
+			print "Self.nodepath[0]", self.nodePath[0].x, self.nodePath[0].y
 			targetNode = self.nodePath[0]
 			print "My coords:", self.x, self.y
 			print "Target coords:", targetNode.x, targetNode.y
@@ -68,8 +74,10 @@ class Uber:
 			if dx == 0:
 				if dy > 0:
 					theta = math.pi/4
-				else:
+				elif dy < 0:
 					theta = math.pi/-4
+				else:
+					theta = 0.0
 			else:
 				theta = math.atan(dy / dx)
 			print "Theta:", theta
@@ -83,12 +91,8 @@ class Uber:
 				self.y = targetNode.y
 				self.currentNode = targetNode
 				# move to nextnode in path
-				for i in self.nodePath:
-					print "1) xcoord=", i.x, ", ycoord=", i.y
 				self.moveToNextTargetNode()
 				self.reachedDestination()
-				for i in self.nodePath:
-					print "2) xcoord=", i.x, ", ycoord=", i.y
 				print "Distance less than 1, reached node and switched to new target"
 			else:
 				self.x += moveX
