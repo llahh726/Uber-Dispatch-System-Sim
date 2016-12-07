@@ -9,7 +9,7 @@ import random
 import nodes
 import sys
 #from sys import * #trying to avoid that weirdo error (since sys is imported in graph.py)
-import sys
+from util import *
 PAS_ID = 0
 
 class Passenger:
@@ -32,7 +32,9 @@ class Passenger:
         for uber in ubers:
             #print "myUber:", myUber, "dnode=", uber.destinationNode
             if uber.destinationNode == None:
-                currDist = self.start.get_euc_dist(uber.currentNode)
+                aStarResult = a_star_search(self.start, uber.currentNode)#[1][::-1][0] # get final cost (?)
+                route, num = aStarResult[1].popitem()
+                currDist = num#self.start.get_euc_dist(uber.currentNode)
                 print "currDist=", currDist
                 if (currDist < minDist):
                     minDist = currDist
