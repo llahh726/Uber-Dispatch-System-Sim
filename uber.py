@@ -50,14 +50,26 @@ class Uber:
 
 	# Gets called at every time step
 	def setNodePath(self):
+<<<<<<< HEAD
 		#print "ASTAR", a_star_search(self.currentNode, self.destinationNode)[0]
 		self.nodePath = reconstruct_path(a_star_search(self.currentNode, self.destinationNode)[0], self.currentNode, self.destinationNode)[1:]
 		#print "Self.nodePath", self.nodePath
+=======
+		print "ASTAR", a_star_search(self.currentNode, self.destinationNode)[0]
+		self.nodePath = reconstruct_path(a_star_search(self.currentNode, self.destinationNode)[0], self.currentNode, self.destinationNode)
+		self.nodePath.pop(0)
+		print "Self.nodePath", self.nodePath
+>>>>>>> 27e3447b67c7dff65ee06ee2ab8904bd10cc4c2d
 	# In graph, for all ubers:
 	# Each time step is 1. Adds 1 to total travel cost
 	# Needs to be passed a node path
 	def uberMove(self):
+		# print "Destination node:", self.destinationNode
 		if self.destinationNode != None:
+			print "Nodepath 0:", self.nodePath[0].x, self.nodePath[0].y
+			#print "Nodepath 1:", self.nodePath[1].x, self.nodePath[1].y
+
+			print "Self.nodepath[0]", self.nodePath[0].x, self.nodePath[0].y
 			targetNode = self.nodePath[0]
 			print "My coords:", self.x, self.y
 			print "Target coords:", targetNode.x, targetNode.y
@@ -71,10 +83,15 @@ class Uber:
 			if dx == 0:
 				if dy > 0:
 					theta = math.pi/4
-				else:
+				elif dy < 0:
 					theta = math.pi/-4
+<<<<<<< HEAD
 			elif dx < 0:
 				theta = math.atan(dy / dx) + math.pi
+=======
+				else:
+					theta = 0.0
+>>>>>>> 27e3447b67c7dff65ee06ee2ab8904bd10cc4c2d
 			else:
 				theta = math.atan(dy / dx) 
 			print "Theta:", theta
@@ -89,8 +106,11 @@ class Uber:
 				self.currentNode = targetNode
 				# move to nextnode in path
 				# self.moveToNextTargetNode()
+<<<<<<< HEAD
 
 				# do we still need this?
+=======
+>>>>>>> 27e3447b67c7dff65ee06ee2ab8904bd10cc4c2d
 				self.reachedDestination()
 				print "Distance less than 1, reached node and switched to new target"
 			else:
@@ -112,6 +132,7 @@ class Uber:
 	## Check if destination has been reached
 	def reachedDestination(self):
 		if self.currentNode == self.destinationNode:
+<<<<<<< HEAD
 			if self.assigned_passenger:
 				self.pickupPassenger()
 
@@ -129,6 +150,16 @@ class Uber:
 				print 'journey done!!!!'
 			# return true
 			# print "Reached destination, dropped off passenger:", self.passengers[0], "at", (self.currentNode.x, self.currentNode.y)
+=======
+			#print "Self.pass count:", self.passengerCount
+			#self.passengerCount -= 1
+			#print "Self.pass count after:", self.passengerCount
+			self.destinationNode = None
+			#print "Reached destination, dropped off passenger:", self.passengers[0], "at", (self.currentNode.x, self.currentNode.y)
+			#print "Self.passengers:", self.passengers
+			#self.passengers.pop(0)
+			#print "Self.passengers after pop:", self.passengers
+>>>>>>> 27e3447b67c7dff65ee06ee2ab8904bd10cc4c2d
 			# print "Total time:", self.currentTotalTravelCost
 
 	def getCarId(self):
