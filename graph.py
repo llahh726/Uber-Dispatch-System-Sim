@@ -13,7 +13,7 @@ class Graph:
         self.passengers = passengers # All the passengers on the map
         self.ubers = ubers
         self.time = start_t # start time
-        self.max_time = 10 
+        self.max_time = 51
         # just noticed this doesn't support spawning two passengers at the same time
         self.spawnTimes = [1, 3, 4, 6] # maybe keep a list of times at which to spawn someone
         # commented out/replaced this because I don't want it just yet when I'm testing
@@ -73,12 +73,12 @@ class Graph:
 
                 # check dest for passenger
                 for p in uber.passengers:
-                    if uber.reachedDestination():
-                        uber.passengers.remove(p)
-                        self.passengers.remove(p)
-                        uber.destinationNode = None
-                        uber.passengerCount -= 1
-                        print 'journey done!'
+                    # if uber.reachedDestination():
+                        #uber.passengers.remove(p)
+                    self.passengers.remove(p)
+                        #uber.destinationNode = None
+                        #uber.passengerCount -= 1
+                        # print 'journey done!'
 
             for p in self.passengers:
                 p.time += 1
