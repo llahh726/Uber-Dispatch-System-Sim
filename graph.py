@@ -60,10 +60,7 @@ class Graph:
                 pass
             for passenger in self.passengers:
                 if not passenger.pickedUp:
-<<<<<<< HEAD
-=======
                     # print "self.ubers=", self.ubers
->>>>>>> 3a2ae48b1be7d7b73e62103f41ffbeefa752aab7
                     closestUber = passenger.closestUber(self.ubers)
                     if closestUber:
                         closestUber.destinationNode = passenger.start
@@ -88,10 +85,10 @@ class Graph:
                     uber.uberMove()
 
                 # check dest for passenger
-                for p in uber.passengers:
+                # for p in uber.passengers:
                     # if uber.reachedDestination():
                         #uber.passengers.remove(p)
-                    self.passengers.remove(p)
+                        #self.passengers.remove(p)
                         #uber.destinationNode = None
                         #uber.passengerCount -= 1
                         # print 'journey done!'
@@ -385,14 +382,7 @@ if __name__ == '__main__':
 
     # nodePathList = nodePathToList(path)
 
-<<<<<<< HEAD
-    g.pass_time()
-    g.pass_time()
-    g.pass_time()
-
-    print graph_map(g)
-=======
-    for i in range(1):
+    for i in range(10):
         g.pass_time()
     ubers = g.ubers
     passengers = g.passengers
@@ -408,13 +398,3 @@ if __name__ == '__main__':
         # print u.passengers
 
     print graph_map(g)
-<<<<<<< HEAD
-
-<<<<<<< HEAD
-=======
-    g.pass_time()
-    g.pass_time()
->>>>>>> 27e3447b67c7dff65ee06ee2ab8904bd10cc4c2d
->>>>>>> 3a2ae48b1be7d7b73e62103f41ffbeefa752aab7
-=======
->>>>>>> f7007059c3c695b50bf4b3221914052bddc59b26
