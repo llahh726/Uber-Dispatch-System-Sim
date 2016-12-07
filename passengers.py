@@ -22,7 +22,7 @@ class Passenger:
         self.route = [self.start] # we may not use this (can use the uber's route)
 
         global PAS_ID
-        print "INIT:", PAS_ID
+        #print "INIT:", PAS_ID
         self.ID = idInt
         PAS_ID += 1
 
@@ -30,7 +30,7 @@ class Passenger:
         minDist = sys.maxsize
         myUber = None
         for uber in ubers:
-            print "myUber:", myUber, "dnode=", uber.destinationNode
+            #print "myUber:", myUber, "dnode=", uber.destinationNode
             if uber.destinationNode == None:
                 currDist = self.start.get_euc_dist(uber.currentNode)
                 print "currDist=", currDist
@@ -58,8 +58,5 @@ def spawn(n, nodes):
 
     # return passengers
 
-def main():
-    nodes = ['a', 'b', 'c', 'd', 'e'] # random stuff just to get started
-    spawn(10, nodes)
-main()
+
 

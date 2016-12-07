@@ -60,17 +60,36 @@ class Graph:
                 pass
             for passenger in self.passengers:
                 if not passenger.pickedUp:
+<<<<<<< HEAD
+=======
+                    # print "self.ubers=", self.ubers
+>>>>>>> 3a2ae48b1be7d7b73e62103f41ffbeefa752aab7
                     closestUber = passenger.closestUber(self.ubers)
                     if closestUber:
                         closestUber.destinationNode = passenger.start
+                        closestUber.assigned_passenger = passenger
                     # how to we change the dest node later?
 
             for uber in self.ubers:
+                # check dest for passenger
+                # for p in uber.passengers:
+                #     if uber.reachedDestination():
+                #         uber.passengers.remove(p)
+                #         self.passengers.remove(p)
+                #         uber.destinationNode = None
+                #         uber.passengerCount -= 1
+                #         print 'journey done!'
+
                 if uber.destinationNode != None:
+                    print 'dest'
                     if uber.currentNode != None:
+                        print 'curr'
                         uber.setNodePath()
                     uber.uberMove()
 
+<<<<<<< HEAD
+                
+=======
                 # check dest for passenger
                 for p in uber.passengers:
                     # if uber.reachedDestination():
@@ -79,6 +98,7 @@ class Graph:
                         #uber.destinationNode = None
                         #uber.passengerCount -= 1
                         # print 'journey done!'
+>>>>>>> 27e3447b67c7dff65ee06ee2ab8904bd10cc4c2d
 
             for p in self.passengers:
                 p.time += 1
@@ -247,9 +267,9 @@ class Graph:
 
 if __name__ == '__main__':
 
-    NODE_ID = 0
-    UBER_ID = 0
-    PAS_ID = 0
+    # NODE_ID = 0
+    # UBER_ID = 0
+    # PAS_ID = 0
     n1 = Node(node_id=NODE_ID, x=0, y=0, neighbors=[], passengers=[])
     n2 = Node(node_id=NODE_ID, x=50, y=0, neighbors=[], passengers=[])
     n3 = Node(node_id=NODE_ID, x=100, y=0, neighbors=[], passengers=[])
@@ -301,44 +321,49 @@ if __name__ == '__main__':
     add_neighbor(n13, n6)
     nodes = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15, n16, n17]
 
-    # p1 = Passenger(n1, n2, PAS_ID)
-    # p2 = Passenger(n10, n12, PAS_ID)
-    # p3 = Passenger(n5, n14, PAS_ID)
-    # p4 = Passenger(n11, n1, PAS_ID)
-    # p5 = Passenger(n4, n9, PAS_ID)
-    # passengers = [p1,p2,p3,p4,p5]
+    p1 = Passenger(n1, n2, PAS_ID)
+    p2 = Passenger(n10, n12, PAS_ID)
+    p3 = Passenger(n5, n14, PAS_ID)
+    p4 = Passenger(n11, n1, PAS_ID)
+    p5 = Passenger(n4, n9, PAS_ID)
+    passengers = [p1]
 
-    # # self, carId, passengerCount, passengers, x, y, nodePath, currentNode, destinationNode, currentTotalTravelCost
+    # self, carId, passengerCount, passengers, x, y, nodePath, currentNode, destinationNode, currentTotalTravelCost
 
-    # u1 = Uber(UBER_ID, 0, [], n1.x, n1.y, n1, [], None, 0)
-    # u2 = Uber(UBER_ID, 0, [], n7.x, n7.y, n7, [], None, 0)
-    # u3 = Uber(UBER_ID, 0, [], n9.x, n9.y, n9, [], None, 0)
-    # u4 = Uber(UBER_ID, 0, [], n11.x, n11.y, n11, [], None, 0)
-    # u5 = Uber(UBER_ID, 0, [], n15.x, n15.y, n15, [], None, 0)
-    # u6 = Uber(UBER_ID, 0, [], n15.x, n15.y, n15, [], None, 0)
-    # ubers = [u1,u2,u3,u4,u5,u6]
+    u1 = Uber(UBER_ID, 0, [], n1.x, n1.y, [], n1,  None, 0, None)
+    u2 = Uber(UBER_ID, 0, [], n7.x, n7.y, [],n7,  None, 0, None)
+    u3 = Uber(UBER_ID, 0, [], n9.x, n9.y, [], n9, None, 0, None)
+    u4 = Uber(UBER_ID, 0, [], n11.x, n11.y, [], n11,  None, 0, None)
+    u5 = Uber(UBER_ID, 0, [], n15.x, n15.y, [], n15,  None, 0, None)
+    u6 = Uber(UBER_ID, 0, [], n15.x, n15.y,  [], n15, None, 0, None)
+    #ubers = [u1]
 
     # g = Graph(nodes=nodes, passengers=passengers, ubers=ubers)
 
     
 
     # Ubers
-    u1 = Uber(carId=1, passengerCount=0, passengers=[], x=0, y=0, nodePath=[], currentNode=n1, destinationNode=None, currentTotalTravelCost=0)
-    #u2 = Uber(2, 0, [], 50, 0, [], n9, None, 0)
+    u1 = Uber(carId=1, passengerCount=0, passengers=[], x=0, y=0, nodePath=[], currentNode=n1, destinationNode=None, currentTotalTravelCost=0, assigned_passenger = None)
+    #2 = Uber(2, 0, [], 100, 100, [], n9, None, 0,None)
     #u3 = Uber(3, 0, [], 100, 0, [], n14, None, 0)
-    ubers = [u1]
+    ubers = [u1, u2]
     # Passengers
+
     p1 = Passenger(n3, n7, 1)
-    # p2 = Passenger(n1, n10, 2)
+
+    p2 = Passenger(n1, n10, 2)
     # p3 = Passenger(n11, n4, 3)
     # p4 = Passenger(n15, n4, 4)
     # p5 = Passenger(n7, n2, 5)
-    passengerList = [p1]
+
+    # passengerList = [p1, p2, p3, p4, p5]
+
+    passengerList = [p1, p2]
 
     g = Graph(nodes=nodes, passengers=passengerList, ubers=ubers)
 
     # graph it
-    print graph_map(g)
+    
 
     #print "Uber1 pos:", u1.currentNode.x, u1.currentNode.y
     #print "Uber2 pos:", u2.currentNode.x, u2.currentNode.y
@@ -364,8 +389,33 @@ if __name__ == '__main__':
 
     # nodePathList = nodePathToList(path)
 
+<<<<<<< HEAD
     g.pass_time()
     g.pass_time()
     g.pass_time()
 
     print graph_map(g)
+=======
+    for i in range(1):
+        g.pass_time()
+    ubers = g.ubers
+    passengers = g.passengers
+    # for u in ubers:
+    #     path = u.nodePath
+    #     for p in path:
+    #         print p.x, p.y
+    u = ubers[1]
+    print u.x, u.y
+        #print u.currentNode.x, u.currentNode.y
+        # print u.destinationNode.x, u.destinationNode.y
+        # print u.currentTotalTravelCost
+        # print u.passengers
+
+    print graph_map(g)
+
+<<<<<<< HEAD
+=======
+    g.pass_time()
+    g.pass_time()
+>>>>>>> 27e3447b67c7dff65ee06ee2ab8904bd10cc4c2d
+>>>>>>> 3a2ae48b1be7d7b73e62103f41ffbeefa752aab7
