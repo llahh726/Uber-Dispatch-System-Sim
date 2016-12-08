@@ -38,6 +38,9 @@ class Uber:
 			self.passengers.append(self.assigned_passenger)
 			# print "Current Passenger list:", self.passengers
 
+			# print "Car's destination node:", (self.destinationNode.x, self.destinationNode.y)
+			# time can either start at 0 for the car or be initialized to passenger.time
+			self.passengerCount += 1
 
 				# pool -> if 1 passenger, if 2 passenger
 			if len(self.passengers) == 1:
@@ -58,17 +61,15 @@ class Uber:
 			else:
 				print 'error, pass >= 2!'
 
-				# print "Car's destination node:", (self.destinationNode.x, self.destinationNode.y)
-				# time can either start at 0 for the car or be initialized to passenger.time
-				self.passengerCount += 1
-				# print "Passenger count:", self.passengerCount
+			
+			# print "Passenger count:", self.passengerCount
 
-				## Set the current total time of travel to how long the passenger waited
-				## Then add on to that time during travel
-				self.currentTotalTravelCost = self.assigned_passenger.time
-				# print "Passenger wait time:", self.currentTotalTravelCost
-				self.assigned_passenger.pickedUp = True
-				self.assigned_passenger = None
+			## Set the current total time of travel to how long the passenger waited
+			## Then add on to that time during travel
+			self.currentTotalTravelCost = self.assigned_passenger.time
+			# print "Passenger wait time:", self.currentTotalTravelCost
+			self.assigned_passenger.pickedUp = True
+			self.assigned_passenger = None
 		else:
 			## run a* to get there
 			print "No passenger here to pick up"
@@ -157,8 +158,10 @@ class Uber:
 				# mark true so passenger could be removed
 				p.arrived = True
 				self.passengers.remove(p)
-
-				self.destinationNode = None
+				if self.passengers:
+					self.destinationNode = self.passengers[0].goal
+				else:
+					self.destinationNode = None
 				# print self.passengerCount
 				self.passengerCount -= 1
 				# print self.passengerCount
