@@ -12,12 +12,12 @@ class Graph:
         self.passengers = passengers # All the passengers on the map
         self.ubers = ubers
         self.time = start_t # start time
-        self.max_time = 51
+        self.max_time = 10
         # just noticed this doesn't support spawning two passengers at the same time
-        self.spawnTimes = [1, 3, 4, 6] # maybe keep a list of times at which to spawn someone
+        # self.spawnTimes = [1, 3, 4, 6] # maybe keep a list of times at which to spawn someone
         # commented out/replaced this because I don't want it just yet when I'm testing
         #self.spawnQueue = [Passenger(self.nodes[1], self.nodes[3]), Passenger(self.nodes[2], self.nodes[7]), Passenger(self.nodes[10], self.nodes[1]), Passenger(self.nodes[4], self.nodes[6])] # list of passengers that we want to spawn at above times (arrays must be same len)
-        self.spawnQueue = []
+        #self.spawnQueue = []
     
     # roads will be two-ways always
     def add_neighbor(self, node1, node2):
@@ -39,24 +39,24 @@ class Graph:
         for i in self.nodes:
             i.traffic = 1
     
-    # spawn new passengers
-    def spawn(self, newPass):
-        newPass.ID = PAS_ID # set the correct ID to new passenger
+    # spawn a new passenger with 
+    def spawn(self):
+        ran_start = np.random.choice(self.nodes)
+        tmp_nodes = list(self.nodes)
+        tmp_nodes.remove(ran_start)
+        ran_dest = np.random.choice(tmp_nodes)
+        newPass = Passenger(ran_start, ran_dest)
         self.passengers.append(newPass)
-
-        # for p in passengers:
-        #    print p.info()
 
 
     def pass_time(self):
         for step in range(self.max_time):
-            try:
-                if step == self.spawnTimes[0]: # spawn and remove from queue
-                    self.spawn(self.spawnQueue[0])
-                    del self.spawnQueue[0]
-                    del self.spawnTimes[0]
-            except:
-                pass
+            # we can spawn according to time, or just random
+            #if self.time == 5, or ...
+                # self.spawn()
+            # or just spawn at random with 1/10 chance
+            if np.random.randint(0,100) < 10:
+                self.spawn()
             for passenger in self.passengers:
                 # if arrived, delete
                 if passenger.arrived:
@@ -79,6 +79,8 @@ class Graph:
 
             for p in self.passengers:
                 p.time += 1
+            # increment self time
+            self.time += 1
 
 
     # # run spawn and time
@@ -296,12 +298,12 @@ if __name__ == '__main__':
     add_neighbor(n13, n6)
     nodes = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15, n16, n17]
 
-    p1 = Passenger(n1, n2)
-    p2 = Passenger(n10, n12)
-    p3 = Passenger(n5, n14)
-    p4 = Passenger(n11, n1)
-    p5 = Passenger(n4, n9)
-    passengers = [p1, p2, p3, p4 ,p5]
+    # p1 = Passenger(n1, n2)
+    # p2 = Passenger(n10, n12)
+    # p3 = Passenger(n5, n14)
+    # p4 = Passenger(n11, n1)
+    # p5 = Passenger(n4, n9)
+    # passengers = [p1, p2, p3, p4 ,p5]
 
     # # self, carId, passengerCount, passengers, x, y, nodePath, currentNode, destinationNode, currentTotalTravelCost
 
@@ -324,18 +326,18 @@ if __name__ == '__main__':
     # ubers = [u1, u2]
     # Passengers
 
-    # p1 = Passenger(n3, n7)
+    p1 = Passenger(n3, n7)
 
-    # p2 = Passenger(n1, n10)
-    # p3 = Passenger(n11, n4, 3)
-    # p4 = Passenger(n15, n4, 4)
-    # p5 = Passenger(n7, n2, 5)
+    p2 = Passenger(n1, n10)
+    p3 = Passenger(n11, n4, 3)
+    p4 = Passenger(n15, n4, 4)
+    p5 = Passenger(n7, n2, 5)
 
-    # passengerList = [p1, p2, p3, p4, p5]
+    passengerList = [p1, p2, p3 ,p4 ,p5]
 
     # passengerList = [p1, p2]
 
-    g = Graph(nodes=nodes, passengers=passengers, ubers=ubers)
+    g = Graph(nodes=nodes, passengers=passengerList, ubers=ubers)
 
     # graph it
     
@@ -364,7 +366,7 @@ if __name__ == '__main__':
 
     # nodePathList = nodePathToList(path)
 
-    for i in range(1):
+    for i in range(20):
         g.pass_time()
     # ubers = g.ubers
     # for u in ubers:
@@ -376,8 +378,6 @@ if __name__ == '__main__':
     #     path = u.nodePath
     #     for p in path:
     #         print p.x, p.y
-    u = ubers[1]
-    print u.x, u.y
         #print u.currentNode.x, u.currentNode.y
         # print u.destinationNode.x, u.destinationNode.y
         # print u.currentTotalTravelCost

@@ -57,53 +57,52 @@ class Uber:
 	def uberMove(self):
 		# print "Destination node:", self.destinationNode
 		if self.destinationNode != None:
-			#print "Nodepath 0:", self.nodePath[0].x, self.nodePath[0].y
-			#print "Nodepath 1:", self.nodePath[1].x, self.nodePath[1].y
-
-			#print "Self.nodepath[0]", self.nodePath[0].x, self.nodePath[0].y
-			targetNode = self.nodePath[0]
-			print "My coords:", self.x, self.y
-			print "Target coords:", targetNode.x, targetNode.y
-			dx = targetNode.x - self.x
-			dy = targetNode.y - self.y
-			print "Dx:", dx
-			print "Dy:", dy
-			c = math.sqrt(dx**2 + dy**2)
-			print "C:", c
-			# account for 0
-			if dx == 0:
-				if dy > 0:
-					theta = math.pi/4
-				elif dy < 0:
-					theta = math.pi/-4
-				else:
-					theta = 0.0
-			elif dx < 0:
-				theta = math.atan(dy / dx) + math.pi
-			else:
-				theta = math.atan(dy / dx) 
-
-			print "Theta:", theta
-			moveY = math.sin(theta)
-			moveX = math.cos(theta)
-			print "Move X:", moveX
-			print "Move Y:", moveY
-			print "Move total", math.sqrt(moveX**2 + moveY**2)
-			if c < 1.0:
-				self.x = targetNode.x
-				self.y = targetNode.y
-				self.currentNode = targetNode
-				# move to nextnode in path
-				# self.moveToNextTargetNode()
-
+			if not self.nodePath:
 				self.reachedDestination()
-				print "Distance less than 1, reached node and switched to new target"
 			else:
-				self.x += moveX
-				self.y += moveY
-				self.currentNode = None
-			print "New x:", self.x
-			print "New y:", self.y
+				targetNode = self.nodePath[0]
+				print "My coords:", self.x, self.y
+				print "Target coords:", targetNode.x, targetNode.y
+				dx = targetNode.x - self.x
+				dy = targetNode.y - self.y
+				print "Dx:", dx
+				print "Dy:", dy
+				c = math.sqrt(dx**2 + dy**2)
+				print "C:", c
+				# account for 0
+				if dx == 0:
+					if dy > 0:
+						theta = math.pi/4
+					elif dy < 0:
+						theta = math.pi/-4
+					else:
+						theta = 0.0
+				elif dx < 0:
+					theta = math.atan(dy / dx) + math.pi
+				else:
+					theta = math.atan(dy / dx) 
+
+				print "Theta:", theta
+				moveY = math.sin(theta)
+				moveX = math.cos(theta)
+				print "Move X:", moveX
+				print "Move Y:", moveY
+				print "Move total", math.sqrt(moveX**2 + moveY**2)
+				if c < 1.0:
+					self.x = targetNode.x
+					self.y = targetNode.y
+					self.currentNode = targetNode
+					# move to nextnode in path
+					# self.moveToNextTargetNode()
+
+					self.reachedDestination()
+					print "Distance less than 1, reached node and switched to new target"
+				else:
+					self.x += moveX
+					self.y += moveY
+					self.currentNode = None
+				print "New x:", self.x
+				print "New y:", self.y
 
 		self.currentTotalTravelCost += 1
 		print "-------------------------"
