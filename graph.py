@@ -55,8 +55,8 @@ class Graph:
             #if self.time == 5, or ...
                 # self.spawn()
             # or just spawn at random with 1/10 chance
-            if np.random.randint(0,100) < 3:
-                self.spawn()
+            # if np.random.randint(0,100) < 3:
+            #     self.spawn()
             for passenger in self.passengers:
                 # if arrived, delete
                 if passenger.arrived:
@@ -67,8 +67,26 @@ class Graph:
                     # print "self.ubers=", self.ubers
                     closestUber = passenger.closestUber_pool(self.ubers)
                     if closestUber:
-                        closestUber.destinationNode = passenger.start
-                        closestUber.assigned_passenger = passenger
+                        closestUber.assigned_passenger.append(passenger)
+                        # see which passenger is closer and go to the closer one
+                        if len(closestUber.assigned_passenger) == 1:
+                            closestUber.destinationNode = passenger.start
+                        elif len(closestUber.assigned_passenger) == 2:
+                            passenger1 = closestUber.assigned_passenger[0]
+                            passenger2 = closestUber.assigned_passenger[1]
+                            came_from1, _ = a_star_search(closestUber.currentNode, passenger1.start)
+                            came_from2, _ = a_star_search(closestUber.currentNode, passenger2.start)
+                            path1 = reconstruct_path(came_from1, closestUber.currentNode, passenger1.start)
+                            path2 = reconstruct_path(came_from2, closestUber.currentNode, passenger2.start)
+                            dist1 = get_path_cost(path1)
+                            dist2 = get_path_cost(path2)
+                            # print "currDist=", currDist
+                            if (dist1 <= dist2):
+                                closestUber.destinationNode = passenger1.start
+                            else:
+                                closestUber.destinationNode = passenger2.start
+                        else:
+                            print 'error here, assigned passenger len not 1 or 2'
                         passenger.got_uber = True
                     # how to we change the dest node later?
                 # ======================== search from passenger's perspective =================================
@@ -326,14 +344,14 @@ if __name__ == '__main__':
 
     # # self, carId, passengerCount, passengers, x, y, nodePath, currentNode, destinationNode, currentTotalTravelCost
 
-    u1 = Uber(0, [], n1.x, n1.y, [], n1,  None, 0, None)
-    u2 = Uber(0, [], n7.x, n7.y, [],n7,  None, 0, None)
-    u3 = Uber(0, [], n9.x, n9.y, [], n9, None, 0, None)
-    u4 = Uber(0, [], n11.x, n11.y, [], n11,  None, 0, None)
-    u5 = Uber(0, [], n15.x, n15.y, [], n15,  None, 0, None)
-    u6 = Uber(0, [], n15.x, n15.y,  [], n15, None, 0, None)
+    u1 = Uber(0, [], n1.x, n1.y, [], n1,  None, 0, [])
+    u2 = Uber(0, [], n7.x, n7.y, [],n7,  None, 0, [])
+    u3 = Uber(0, [], n9.x, n9.y, [], n9, None, 0, [])
+    u4 = Uber(0, [], n11.x, n11.y, [], n11,  None, 0, [])
+    u5 = Uber(0, [], n15.x, n15.y, [], n15,  None, 0, [])
+    u6 = Uber(0, [], n15.x, n15.y,  [], n15, None, 0, [])
     # ubers = [u1, u2, u3, u4, u5, u6]
-    ubers = [u1, u2]
+    ubers = [u1]
 
     # g = Graph(nodes=nodes, passengers=passengers, ubers=ubers)
 
@@ -353,8 +371,8 @@ if __name__ == '__main__':
     p4 = Passenger(n15, n4, 4)
     p5 = Passenger(n7, n2, 5)
 
-    passengerList = [p1, p2, p3 ,p4 ,p5]
-    # passengerList = [p1, p2]
+    # passengerList = [p1, p2, p3 ,p4 ,p5]
+    passengerList = [p1, p2, p3]
     # passengerList = [p1, p2]
 
     g = Graph(nodes=nodes, passengers=passengerList, ubers=ubers)
