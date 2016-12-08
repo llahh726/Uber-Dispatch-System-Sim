@@ -5,7 +5,7 @@ from util import *
 
 import sys
 allPassengers = []
-pool = False # or False :P
+pool = True # or False :P
 # a class to hold everything
 class Graph:
     # init
@@ -57,8 +57,8 @@ class Graph:
             #if self.time == 5, or ...
                 # self.spawn()
             # or just spawn at random with 1/10 chance
-            # if np.random.randint(0,100) < 10:
-            #     self.spawn()
+            if np.random.randint(0,100) < 10:
+                self.spawn()
             for passenger in self.passengers:
                 # if arrived, delete
                 if passenger.arrived:
