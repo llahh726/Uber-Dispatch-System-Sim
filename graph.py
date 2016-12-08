@@ -12,7 +12,7 @@ class Graph:
         self.passengers = passengers # All the passengers on the map
         self.ubers = ubers
         self.time = start_t # start time
-        self.max_time = 51
+        self.max_time = 10
         # just noticed this doesn't support spawning two passengers at the same time
         self.spawnTimes = [1, 3, 4, 6] # maybe keep a list of times at which to spawn someone
         # commented out/replaced this because I don't want it just yet when I'm testing
@@ -306,12 +306,12 @@ if __name__ == '__main__':
     add_neighbor(n13, n6)
     nodes = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15, n16, n17]
 
-    p1 = Passenger(n1, n2)
+    p1 = Passenger(n3, n2)
     p2 = Passenger(n10, n12)
     p3 = Passenger(n5, n14)
     p4 = Passenger(n11, n1)
     p5 = Passenger(n4, n9)
-    passengers = [p1, p2, p3, p4 ,p5]
+    passengers = [p1]
 
     # # self, carId, passengerCount, passengers, x, y, nodePath, currentNode, destinationNode, currentTotalTravelCost
 
@@ -321,7 +321,7 @@ if __name__ == '__main__':
     u4 = Uber(0, [], n11.x, n11.y, [], n11,  None, 0, None)
     u5 = Uber(0, [], n15.x, n15.y, [], n15,  None, 0, None)
     u6 = Uber(0, [], n15.x, n15.y,  [], n15, None, 0, None)
-    ubers = [u1, u2, u3, u4, u5, u6]
+    ubers = [u1]
 
     # g = Graph(nodes=nodes, passengers=passengers, ubers=ubers)
 
