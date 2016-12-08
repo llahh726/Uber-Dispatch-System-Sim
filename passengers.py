@@ -7,30 +7,35 @@
 
 import random
 import nodes
-#from sys import * #trying to avoid that weirdo error (since sys is imported in graph.py)
 import sys
-PAS_ID = 0
+#from sys import * #trying to avoid that weirdo error (since sys is imported in graph.py)
+from util import *
 
 class Passenger:
-    def __init__(self, node1, node2, idInt=0,  num=0):
+    PAS_ID = 0
+    def __init__(self, node1, node2, num=0):
         self.start = node1
         self.goal = node2
         self.time = num
         self.pickedUp = False
+        self.arrived = False
+        self.got_uber = False
         
         self.route = [self.start] # we may not use this (can use the uber's route)
-
-        global PAS_ID
-        print "INIT:", PAS_ID
-        self.ID = idInt
-        PAS_ID += 1
+        #print "INIT:", PAS_ID
+        self.ID = Passenger.PAS_ID
+        Passenger.PAS_ID += 1
 
     def closestUber(self, ubers):
         minDist = sys.maxsize
         myUber = None
         for uber in ubers:
+            #print "myUber:", myUber, "dnode=", uber.destinationNode
             if uber.destinationNode == None:
-                currDist = self.start.get_euc_dist(uber.currentNode)
+                came_from, _ = a_star_search(uber.currentNode, self.start)#[1][::-1][0] # get final cost (?)
+                path = reconstruct_path(came_from, uber.currentNode, self.start)
+                currDist = get_path_cost(path)
+                print "currDist=", currDist
                 if (currDist < minDist):
                     minDist = currDist
                     myUber = uber
@@ -55,8 +60,5 @@ def spawn(n, nodes):
 
     # return passengers
 
-def main():
-    nodes = ['a', 'b', 'c', 'd', 'e'] # random stuff just to get started
-    spawn(10, nodes)
-main()
+
 

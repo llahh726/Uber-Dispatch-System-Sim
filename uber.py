@@ -2,12 +2,11 @@ from nodes import Node
 from passengers import Passenger
 from util import *
 import math
-UBER_ID = 0
 
 class Uber:
-
-	def __init__(self, carId, passengerCount, passengers, x, y, nodePath, currentNode, destinationNode, currentTotalTravelCost):
-		self.carId = carId # int starting from 0
+	UBER_ID = 0
+	def __init__(self, passengerCount, passengers, x, y, nodePath, currentNode, destinationNode, currentTotalTravelCost, assigned_passenger):
+		self.carId = Uber.UBER_ID # int starting from 0
 		self.passengerCount = passengerCount # int = 0, used count if we maybe do groups later
 		self.passengers = passengers # array of passengers in car
 		self.x = x # x coord
@@ -16,16 +15,16 @@ class Uber:
 		self.currentNode = currentNode # current Node() that car is at, if any
 		self.destinationNode = destinationNode # current destination. can be passenger to pick up position or carrying passenger's end goal
 		self.currentTotalTravelCost = currentTotalTravelCost # int starting at 0 on pickup
-		global UBER_ID
-		UBER_ID += 1
+		self.assigned_passenger = assigned_passenger
+		Uber.UBER_ID += 1
 
-	def pickupPassenger(self, passenger):
-		if self.currentNode == passenger.start:	
+	def pickupPassenger(self):
+		if self.currentNode == self.assigned_passenger.start:	
 			# print "There is a passenger here at", (self.currentNode.x, self.currentNode.y)
 			# print "Picked up passenger with ID:", passenger.ID
-			self.passengers.append(passenger.ID)
+			self.passengers.append(self.assigned_passenger)
 			# print "Current Passenger list:", self.passengers
-			self.destinationNode = passenger.goal
+			self.destinationNode = self.assigned_passenger.goal
 			# print "Car's destination node:", (self.destinationNode.x, self.destinationNode.y)
 			# time can either start at 0 for the car or be initialized to passenger.time
 			self.passengerCount += 1
@@ -33,8 +32,10 @@ class Uber:
 
 			## Set the current total time of travel to how long the passenger waited
 			## Then add on to that time during travel
-			self.currentTotalTravelCost = passenger.time
+			self.currentTotalTravelCost = self.assigned_passenger.time
 			# print "Passenger wait time:", self.currentTotalTravelCost
+			self.assigned_passenger.pickedUp = True
+			self.assigned_passenger = None
 
 		else:
 			## run a* to get there
@@ -47,14 +48,19 @@ class Uber:
 
 	# Gets called at every time step
 	def setNodePath(self):
-		print "ASTAR", a_star_search(self.currentNode, self.destinationNode)[0]
-		self.nodePath = reconstruct_path(a_star_search(self.currentNode, self.destinationNode)[0], self.currentNode, self.destinationNode)
-		print "Self.nodePath", self.nodePath
+		#print "ASTAR", a_star_search(self.currentNode, self.destinationNode)[0]
+		self.nodePath = reconstruct_path(a_star_search(self.currentNode, self.destinationNode)[0], self.currentNode, self.destinationNode)[1:]
+		#print "Self.nodePath", self.nodePath
 	# In graph, for all ubers:
 	# Each time step is 1. Adds 1 to total travel cost
 	# Needs to be passed a node path
 	def uberMove(self):
+		# print "Destination node:", self.destinationNode
 		if self.destinationNode != None:
+			#print "Nodepath 0:", self.nodePath[0].x, self.nodePath[0].y
+			#print "Nodepath 1:", self.nodePath[1].x, self.nodePath[1].y
+
+			#print "Self.nodepath[0]", self.nodePath[0].x, self.nodePath[0].y
 			targetNode = self.nodePath[0]
 			print "My coords:", self.x, self.y
 			print "Target coords:", targetNode.x, targetNode.y
@@ -66,21 +72,30 @@ class Uber:
 			print "C:", c
 			# account for 0
 			if dx == 0:
-				theta = math.pi/4
+				if dy > 0:
+					theta = math.pi/4
+				elif dy < 0:
+					theta = math.pi/-4
+				else:
+					theta = 0.0
+			elif dx < 0:
+				theta = math.atan(dy / dx) + math.pi
 			else:
-				theta = math.atan(dy / dx)
+				theta = math.atan(dy / dx) 
+
 			print "Theta:", theta
 			moveY = math.sin(theta)
 			moveX = math.cos(theta)
 			print "Move X:", moveX
 			print "Move Y:", moveY
 			print "Move total", math.sqrt(moveX**2 + moveY**2)
-			if c <= 1.0:
+			if c < 1.0:
 				self.x = targetNode.x
 				self.y = targetNode.y
 				self.currentNode = targetNode
 				# move to nextnode in path
-				self.moveToNextTargetNode()
+				# self.moveToNextTargetNode()
+
 				self.reachedDestination()
 				print "Distance less than 1, reached node and switched to new target"
 			else:
@@ -101,9 +116,31 @@ class Uber:
 	## For all cars that have 1 or more passengers,
 	## Check if destination has been reached
 	def reachedDestination(self):
-		return self.currentNode == self.destinationNode
+		if self.currentNode == self.destinationNode:
+			if self.assigned_passenger:
+				self.pickupPassenger()
+
+			# dropping passenger off
+		for p in self.passengers:
+			if self.currentNode == p.goal:
+				# mark true so passenger could be removed
+				p.arrived = True
+				self.passengers.remove(p)
+
+				self.destinationNode = None
+				# print self.passengerCount
+				self.passengerCount -= 1
+				# print self.passengerCount
+				print 'journey done!!!!'
 			# return true
 			# print "Reached destination, dropped off passenger:", self.passengers[0], "at", (self.currentNode.x, self.currentNode.y)
+			#print "Self.pass count:", self.passengerCount
+			#self.passengerCount -= 1
+			#print "Self.pass count after:", self.passengerCount
+			#print "Reached destination, dropped off passenger:", self.passengers[0], "at", (self.currentNode.x, self.currentNode.y)
+			#print "Self.passengers:", self.passengers
+			#self.passengers.pop(0)
+			#print "Self.passengers after pop:", self.passengers
 			# print "Total time:", self.currentTotalTravelCost
 
 	def getCarId(self):

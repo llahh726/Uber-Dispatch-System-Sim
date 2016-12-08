@@ -9,19 +9,18 @@ Node -> intersection of rodes
 '''
 import numpy as np
 import passengers
-NODE_ID = 0
 
 class Node:
     # init values
-    def __init__(self, node_id, neighbors, passengers, x=0, y=0, traffic=1):
-        self.node_id = node_id
+    NODE_ID = 0
+    def __init__(self, neighbors, passengers, x=0, y=0, traffic=1):
+        self.node_id = Node.NODE_ID
         self.x = x
         self.y = y
         self.traffic = traffic
         self.neighbors = neighbors
         self.passengers = passengers
-        global NODE_ID
-        NODE_ID += 1
+        Node.NODE_ID += 1
     
     # return neighbors
     def get_neighbors(self):
