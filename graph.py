@@ -56,8 +56,8 @@ class Graph:
             #if self.time == 5, or ...
                 # self.spawn()
             # or just spawn at random with 1/10 chance
-            # if np.random.randint(0,100) < 10:
-            #     self.spawn()
+            if np.random.randint(0,100) < 3:
+                self.spawn()
             for passenger in self.passengers:
                 # if arrived, delete
                 if passenger.arrived:
@@ -346,7 +346,9 @@ if __name__ == '__main__':
     u5 = Uber(0, [], n15.x, n15.y, [], n15,  None, 0, None)
     u6 = Uber(0, [], n15.x, n15.y,  [], n15, None, 0, None)
 
-    ubers = [u1]
+    # ubers = [u1, u2, u3, u4, u5, u6]
+    ubers = [u1, u2]
+
 
     # g = Graph(nodes=nodes, passengers=passengers, ubers=ubers)
 
@@ -366,8 +368,8 @@ if __name__ == '__main__':
     p4 = Passenger(n15, n4, 4)
     p5 = Passenger(n7, n2, 5)
 
-    # passengerList = [p1, p2, p3 ,p4 ,p5]
-    passengerList = [p1, p2]
+    passengerList = [p1, p2, p3 ,p4 ,p5]
+    # passengerList = [p1, p2]
     # passengerList = [p1, p2]
 
     g = Graph(nodes=nodes, passengers=passengerList, ubers=ubers)
@@ -399,8 +401,10 @@ if __name__ == '__main__':
 
     # nodePathList = nodePathToList(path)
 
+
     for i in range(15):
         #print graph_map(g)
+
         g.pass_time()
     # ubers = g.ubers
     # for u in ubers:
