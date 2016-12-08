@@ -12,7 +12,7 @@ class Graph:
         self.passengers = passengers # All the passengers on the map
         self.ubers = ubers
         self.time = start_t # start time
-        self.max_time = 40 # time step len
+        self.max_time = 10 # time step len
         # just noticed this doesn't support spawning two passengers at the same time
         # self.spawnTimes = [1, 3, 4, 6] # maybe keep a list of times at which to spawn someone
         # commented out/replaced this because I don't want it just yet when I'm testing
@@ -403,7 +403,7 @@ if __name__ == '__main__':
 
 
     for i in range(15):
-        #print graph_map(g)
+        print graph_map(g)
 
         g.pass_time()
     # ubers = g.ubers

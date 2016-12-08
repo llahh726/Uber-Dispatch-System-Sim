@@ -270,6 +270,9 @@ def get_path_cost(path):
         cursor += 1
     return cost
 
+# passed list of all nodes in graph
+# function called at every time step
+# Higher node.traffic means more traffic and cars wont move as much per turn
 def varyCostOfNodes(nodes):
     # traffic value affects the c value in ubermove
     for node in nodes:
@@ -287,4 +290,5 @@ def varyCostOfNodes(nodes):
         if node.traffic > 1.5:
             node.traffic = 1.5
         print "Nodeid, traffic:", node.node_id, node.traffic
+
 

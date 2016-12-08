@@ -112,12 +112,18 @@ class Uber:
 					theta = math.atan(dy / dx) 
 
 				print "Theta:", theta
-				moveY = math.sin(theta)
-				moveX = math.cos(theta)
+				# VARYING NODE COST TESTING
+				moveY = math.sin(theta) / targetNode.traffic
+				moveX = math.cos(theta) / targetNode.traffic
+
+				# Old working version
+				# moveY = math.sin(theta)
+				# moveX = math.cos(theta)
 				print "Move X:", moveX
 				print "Move Y:", moveY
 				print "Move total", math.sqrt(moveX**2 + moveY**2)
-				if c < 1.0:
+				# if c < 1.0:
+				if c < (1.0 / targetNode.traffic):
 					self.x = targetNode.x
 					self.y = targetNode.y
 					self.currentNode = targetNode
