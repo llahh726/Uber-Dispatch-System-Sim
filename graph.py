@@ -62,20 +62,31 @@ class Graph:
                 if passenger.arrived:
                     self.passengers.remove(passenger)
 
-                if not passenger.got_uber:
+                # ======================== search from passenger's perspective =================================
+                #if not passenger.got_uber:
                     # print "self.ubers=", self.ubers
-                    closestUber = passenger.closestUber(self.ubers)
-                    if closestUber:
-                        closestUber.destinationNode = passenger.start
-                        closestUber.assigned_passenger = passenger
-                        passenger.got_uber = True
+                #    closestUber = passenger.closestUber(self.ubers)
+                #    if closestUber:
+                #        closestUber.destinationNode = passenger.start
+                #        closestUber.assigned_passenger = passenger
+                #        passenger.got_uber = True
                     # how to we change the dest node later?
+                # ======================== search from passenger's perspective =================================
 
             for uber in self.ubers:
                 if uber.destinationNode != None:
                     if uber.currentNode != None:
                         uber.setNodePath()
                     uber.uberMove()
+                # ======================== search from uber's perspective =================================
+                else:
+                    closestPass = uber.closestPassenger(self.passengers)
+                    if closestPass:
+                        uber.destinationNode = closestPass.start
+                        uber.assigned_passenger = closestPass
+                        closestPass.got_uber = True
+                # ======================== search from uber's perspective =================================
+
 
             for p in self.passengers:
                 p.time += 1
@@ -375,6 +386,7 @@ if __name__ == '__main__':
     # nodePathList = nodePathToList(path)
 
     for i in range(20):
+        print graph_map(g)
         g.pass_time()
     # ubers = g.ubers
     # for u in ubers:

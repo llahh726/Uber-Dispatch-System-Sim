@@ -1,8 +1,7 @@
 from nodes import Node
 from passengers import Passenger
-from sys import *
 from util import *
-import math
+import math, sys
 
 class Uber:
 	UBER_ID = 0
