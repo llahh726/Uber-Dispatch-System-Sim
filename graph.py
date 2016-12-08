@@ -5,7 +5,7 @@ from util import *
 
 import sys
 allPassengers = []
-pool = True # or False :P
+pool = False # or False :P
 # a class to hold everything
 class Graph:
     # init
