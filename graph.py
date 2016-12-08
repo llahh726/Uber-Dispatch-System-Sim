@@ -52,8 +52,8 @@ class Graph:
         allPassengers.append(newPass)
 
     def pass_time(self):
+        varyCostOfNodes(self.nodes)
         for step in range(self.max_time):
-            # varyCostOfNodes(self.nodes)
 
             # we can spawn according to time, or just random
             #if self.time == 5, or ...
@@ -79,8 +79,8 @@ class Graph:
                         elif len(closestUber.assigned_passenger) == 2:
                             passenger1 = closestUber.assigned_passenger[0]
                             passenger2 = closestUber.assigned_passenger[1]
-                            came_from1, _ = a_star_search(closestUber.currentNode, passenger1.start)
-                            came_from2, _ = a_star_search(closestUber.currentNode, passenger2.start)
+                            came_from1, _ = a_star_search(closestUber.currentNode, passenger1.start, True)
+                            came_from2, _ = a_star_search(closestUber.currentNode, passenger2.start, True)
                             path1 = reconstruct_path(came_from1, closestUber.currentNode, passenger1.start)
                             path2 = reconstruct_path(came_from2, closestUber.currentNode, passenger2.start)
                             dist1 = get_path_cost(path1)
@@ -418,23 +418,23 @@ if __name__ == '__main__':
     #print "Path:", path(1)
 
     # nodePathList = nodePathToList(path)
-    allPassengers += passengerList
+    # allPassengers += passengerList
 
     for i in range(40):
         print graph_map(g)
         g.pass_time()
-    # print out passengers' waiting time
-    totalWait = 0
-    for p in allPassengers:
-        print "Wait time for", p.ID, " was", p.time
-        totalWait += p.time
-    print "avg wait time =", (1.0*totalWait/len(allPassengers))
-    if pool:
-        f = open("pool.txt", "a")
-    else:
-         f = open("noPool.txt", "a")
-    f.write(str(1.0*totalWait/len(allPassengers))+"\n")
-    f.close()
+    # # print out passengers' waiting time
+    # totalWait = 0
+    # for p in allPassengers:
+    #     print "Wait time for", p.ID, " was", p.time
+    #     totalWait += p.time
+    # print "avg wait time =", (1.0*totalWait/len(allPassengers))
+    # if pool:
+    #     f = open("pool.txt", "a")
+    # else:
+    #      f = open("noPool.txt", "a")
+    # f.write(str(1.0*totalWait/len(allPassengers))+"\n")
+    # f.close()
     # ubers = g.ubers
     # for u in ubers:
     #     print u.carId
@@ -450,5 +450,5 @@ if __name__ == '__main__':
         # print u.currentTotalTravelCost
         # print u.passengers
 
-    print graph_map(g)
+    # print graph_map(g)
 
