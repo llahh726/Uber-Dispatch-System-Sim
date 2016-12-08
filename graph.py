@@ -13,7 +13,7 @@ class Graph:
         self.passengers = passengers # All the passengers on the map
         self.ubers = ubers
         self.time = start_t # start time
-        self.max_time = 10
+        self.max_time = 40 # time step len
         # just noticed this doesn't support spawning two passengers at the same time
         # self.spawnTimes = [1, 3, 4, 6] # maybe keep a list of times at which to spawn someone
         # commented out/replaced this because I don't want it just yet when I'm testing
@@ -56,8 +56,8 @@ class Graph:
             #if self.time == 5, or ...
                 # self.spawn()
             # or just spawn at random with 1/10 chance
-            if np.random.randint(0,100) < 10:
-                self.spawn()
+            # if np.random.randint(0,100) < 10:
+            #     self.spawn()
             for passenger in self.passengers:
                 # if arrived, delete
                 if passenger.arrived:
@@ -66,7 +66,7 @@ class Graph:
                 # ======================== search from passenger's perspective =================================
                 if not passenger.got_uber:
                     # print "self.ubers=", self.ubers
-                    closestUber = passenger.closestUber(self.ubers)
+                    closestUber = passenger.closestUber_pool(self.ubers)
                     if closestUber:
                         closestUber.destinationNode = passenger.start
                         closestUber.assigned_passenger = passenger
@@ -80,12 +80,21 @@ class Graph:
                         uber.setNodePath()
                     uber.uberMove()
                 # ======================== search from uber's perspective =================================
+<<<<<<< HEAD
                 #else:
                 #    closestPass = uber.closestPassenger(self.passengers)
                 #    if closestPass:
                 #        uber.destinationNode = closestPass.start
                 #        uber.assigned_passenger = closestPass
                 #        closestPass.got_uber = True
+=======
+                # else:
+                #     closestPass = uber.closestPassenger(self.passengers)
+                #     if closestPass:
+                #         uber.destinationNode = closestPass.start
+                #         uber.assigned_passenger = closestPass
+                #         closestPass.got_uber = True
+>>>>>>> 9f06e9fa358be018d20ab552ca9e433cb94643f6
                 # ======================== search from uber's perspective =================================
 
 
@@ -333,7 +342,8 @@ if __name__ == '__main__':
     u4 = Uber(0, [], n11.x, n11.y, [], n11,  None, 0, None)
     u5 = Uber(0, [], n15.x, n15.y, [], n15,  None, 0, None)
     u6 = Uber(0, [], n15.x, n15.y,  [], n15, None, 0, None)
-    ubers = [u1, u2, u3, u4, u5, u6]
+    # ubers = [u1, u2, u3, u4, u5, u6]
+    ubers = [u1]
 
     # g = Graph(nodes=nodes, passengers=passengers, ubers=ubers)
 
@@ -353,8 +363,8 @@ if __name__ == '__main__':
     p4 = Passenger(n15, n4, 4)
     p5 = Passenger(n7, n2, 5)
 
-    passengerList = [p1, p2, p3 ,p4 ,p5]
-
+    # passengerList = [p1, p2, p3 ,p4 ,p5]
+    passengerList = [p1, p2]
     # passengerList = [p1, p2]
 
     g = Graph(nodes=nodes, passengers=passengerList, ubers=ubers)
@@ -387,8 +397,13 @@ if __name__ == '__main__':
     # nodePathList = nodePathToList(path)
     allPassengers += passengerList
 
+<<<<<<< HEAD
     for i in range(20):
         #print graph_map(g)
+=======
+    for i in range(15):
+        print graph_map(g)
+>>>>>>> 9f06e9fa358be018d20ab552ca9e433cb94643f6
         g.pass_time()
     # print out passengers' waiting time
     for p in allPassengers:
