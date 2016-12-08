@@ -12,7 +12,7 @@ class Graph:
         self.passengers = passengers # All the passengers on the map
         self.ubers = ubers
         self.time = start_t # start time
-        self.max_time = 40 # time step len
+        self.max_time = 10 # time step len
         # just noticed this doesn't support spawning two passengers at the same time
         # self.spawnTimes = [1, 3, 4, 6] # maybe keep a list of times at which to spawn someone
         # commented out/replaced this because I don't want it just yet when I'm testing
@@ -51,13 +51,13 @@ class Graph:
 
     def pass_time(self):
         for step in range(self.max_time):
-            varyCostOfNodes(self.nodes)
+            # varyCostOfNodes(self.nodes)
 
             # we can spawn according to time, or just random
             #if self.time == 5, or ...
                 # self.spawn()
-            # or just spawn at random with 1/10 chance
-            if np.random.randint(0,100) < 3:
+            # or just spawn at random with 4/100 chance
+            if np.random.randint(0,100) < 4:
                 self.spawn()
             for passenger in self.passengers:
                 # if arrived, delete
@@ -421,7 +421,7 @@ if __name__ == '__main__':
     # nodePathList = nodePathToList(path)
 
 
-    for i in range(15):
+    for i in range(40):
         print graph_map(g)
 
         g.pass_time()
