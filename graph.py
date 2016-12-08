@@ -14,7 +14,7 @@ class Graph:
         self.passengers = passengers # All the passengers on the map
         self.ubers = ubers
         self.time = start_t # start time
-        self.max_time = 40 # time step len
+        self.max_time = 10 # time step len
         # just noticed this doesn't support spawning two passengers at the same time
         # self.spawnTimes = [1, 3, 4, 6] # maybe keep a list of times at which to spawn someone
         # commented out/replaced this because I don't want it just yet when I'm testing
@@ -53,11 +53,12 @@ class Graph:
 
     def pass_time(self):
         for step in range(self.max_time):
+            varyCostOfNodes(self.nodes)
             # we can spawn according to time, or just random
             #if self.time == 5, or ...
                 # self.spawn()
             # or just spawn at random with 1/10 chance
-            if np.random.randint(0,100) < 10:
+            if np.random.randint(0,100) < 3:
                 self.spawn()
             for passenger in self.passengers:
                 # if arrived, delete
@@ -90,6 +91,16 @@ class Graph:
                 #         closestPass.got_uber = True
                 # ======================== search from uber's perspective =================================
 
+
+                # check dest for passenger
+                # for p in uber.passengers:
+                    # if uber.reachedDestination():
+                        #uber.passengers.remove(p)
+                        #self.passengers.remove(p)
+                        #uber.destinationNode = None
+                        #uber.passengerCount -= 1
+                        # print 'journey done!'
+# 
 
             for p in self.passengers:
                 p.time += 1
@@ -314,6 +325,7 @@ if __name__ == '__main__':
     add_neighbor(n15, n9)
     add_neighbor(n8, n13)
     add_neighbor(n13, n6)
+
     add_neighbor(n11, n18)
     add_neighbor(n10, n19)
     add_neighbor(n12, n20)
@@ -327,6 +339,7 @@ if __name__ == '__main__':
     # p5 = Passenger(n4, n9)
     # passengers = [p1, p2, p3, p4 ,p5]
 
+
     # # self, carId, passengerCount, passengers, x, y, nodePath, currentNode, destinationNode, currentTotalTravelCost
 
     u1 = Uber(0, [], n1.x, n1.y, [], n1,  None, 0, None)
@@ -335,8 +348,10 @@ if __name__ == '__main__':
     u4 = Uber(0, [], n11.x, n11.y, [], n11,  None, 0, None)
     u5 = Uber(0, [], n15.x, n15.y, [], n15,  None, 0, None)
     u6 = Uber(0, [], n15.x, n15.y,  [], n15, None, 0, None)
+
     # ubers = [u1, u2, u3, u4, u5, u6]
-    ubers = [u1]
+    ubers = [u1, u2]
+
 
     # g = Graph(nodes=nodes, passengers=passengers, ubers=ubers)
 
@@ -354,8 +369,8 @@ if __name__ == '__main__':
     p4 = Passenger(n15, n4, 4)
     p5 = Passenger(n7, n2, 5)
 
-    # passengerList = [p1, p2, p3 ,p4 ,p5]
-    passengerList = [p1, p2]
+    passengerList = [p1, p2, p3 ,p4 ,p5]
+    # passengerList = [p1, p2]
     # passengerList = [p1, p2]
 
     g = Graph(nodes=nodes, passengers=passengerList, ubers=ubers)
@@ -386,8 +401,14 @@ if __name__ == '__main__':
     # nodePathList = nodePathToList(path)
     allPassengers += passengerList
 
+
     for i in range(15):
+<<<<<<< HEAD
         #print graph_map(g)
+=======
+        print graph_map(g)
+
+>>>>>>> d0b97d63a92b1e044bad44b369b9acfdd546f194
         g.pass_time()
     # print out passengers' waiting time
     totalWait = 0
@@ -411,3 +432,4 @@ if __name__ == '__main__':
         # print u.passengers
 
     print graph_map(g)
+
