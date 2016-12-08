@@ -32,15 +32,33 @@ class Passenger:
         for uber in ubers:
             #print "myUber:", myUber, "dnode=", uber.destinationNode
             if uber.destinationNode == None:
-                came_from, _ = a_star_search(uber.currentNode, self.start)#[1][::-1][0] # get final cost (?)
+                came_from, _ = a_star_search(uber.currentNode, self.start)
                 path = reconstruct_path(came_from, uber.currentNode, self.start)
                 currDist = get_path_cost(path)
-                print "currDist=", currDist
+                # print "currDist=", currDist
                 if (currDist < minDist):
                     minDist = currDist
                     myUber = uber
         # optional: change pickedUp value here?
         return myUber
+
+    # returns the uber that has the potential to pool
+    def closestUber_pool(self, ubers):
+        minDist = sys.maxsize
+        myUber = None
+        for uber in ubers:
+            #print "myUber:", myUber, "dnode=", uber.destinationNode
+            if (uber.destinationNode) == None or (uber.assigned_passenger == None and uber.passengerCount <= 1):
+                came_from, _ = a_star_search(uber.currentNode, self.start)
+                path = reconstruct_path(came_from, uber.currentNode, self.start)
+                currDist = get_path_cost(path)
+                # print "currDist=", currDist
+                if (currDist < minDist):
+                    minDist = currDist
+                    myUber = uber
+        # optional: change pickedUp value here?
+        return myUber
+
 
     def info(self):
         return [self.ID, self.start, self.goal, self.time, self.pickedUp, self.route]
