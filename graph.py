@@ -5,6 +5,7 @@ from util import *
 
 import sys
 allPassengers = []
+pool = True # or False :P
 # a class to hold everything
 class Graph:
     # init
@@ -66,7 +67,8 @@ class Graph:
                 # ======================== search from passenger's perspective =================================
                 if not passenger.got_uber:
                     # print "self.ubers=", self.ubers
-                    closestUber = passenger.closestUber_pool(self.ubers)
+                    if pool: closestUber = passenger.closestUber_pool(self.ubers)
+                    else: closestUber = passenger.closestUber(self.ubers)
                     if closestUber:
                         closestUber.destinationNode = passenger.start
                         closestUber.assigned_passenger = passenger
@@ -80,21 +82,12 @@ class Graph:
                         uber.setNodePath()
                     uber.uberMove()
                 # ======================== search from uber's perspective =================================
-<<<<<<< HEAD
-                #else:
-                #    closestPass = uber.closestPassenger(self.passengers)
-                #    if closestPass:
-                #        uber.destinationNode = closestPass.start
-                #        uber.assigned_passenger = closestPass
-                #        closestPass.got_uber = True
-=======
                 # else:
                 #     closestPass = uber.closestPassenger(self.passengers)
                 #     if closestPass:
                 #         uber.destinationNode = closestPass.start
                 #         uber.assigned_passenger = closestPass
                 #         closestPass.got_uber = True
->>>>>>> 9f06e9fa358be018d20ab552ca9e433cb94643f6
                 # ======================== search from uber's perspective =================================
 
 
@@ -347,8 +340,6 @@ if __name__ == '__main__':
 
     # g = Graph(nodes=nodes, passengers=passengers, ubers=ubers)
 
-    
-
     # Ubers
     #u1 = Uber(carId=1, passengerCount=0, passengers=[], x=0, y=0, nodePath=[], currentNode=n1, destinationNode=None, currentTotalTravelCost=0, assigned_passenger = None)
     #2 = Uber(2, 0, [], 100, 100, [], n9, None, 0,None)
@@ -370,8 +361,6 @@ if __name__ == '__main__':
     g = Graph(nodes=nodes, passengers=passengerList, ubers=ubers)
 
     # graph it
-    
-
     #print "Uber1 pos:", u1.currentNode.x, u1.currentNode.y
     #print "Uber2 pos:", u2.currentNode.x, u2.currentNode.y
     #print "Uber3 pos:", u3.currentNode.x, u3.currentNode.y
@@ -397,17 +386,15 @@ if __name__ == '__main__':
     # nodePathList = nodePathToList(path)
     allPassengers += passengerList
 
-<<<<<<< HEAD
-    for i in range(20):
-        #print graph_map(g)
-=======
     for i in range(15):
-        print graph_map(g)
->>>>>>> 9f06e9fa358be018d20ab552ca9e433cb94643f6
+        #print graph_map(g)
         g.pass_time()
     # print out passengers' waiting time
+    totalWait = 0
     for p in allPassengers:
         print "Wait time for", p.ID, " was", p.time
+        totalWait += p.time
+    print "avg wait time =", (1.0*totalWait/len(allPassengers))
     # ubers = g.ubers
     # for u in ubers:
     #     print u.carId
