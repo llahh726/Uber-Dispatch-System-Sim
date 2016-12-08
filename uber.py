@@ -94,21 +94,21 @@ class Uber:
 	# Each time step is 1. Adds 1 to total travel cost
 	# Needs to be passed a node path
 	def uberMove(self):
-		print "Uber passengers", self.passengers
+		#print "Uber passengers", self.passengers
 		# print "Destination node:", self.destinationNode
 		if self.destinationNode != None:
 			if not self.nodePath:
 				self.reachedDestination()
 			else:
 				targetNode = self.nodePath[0]
-				print "My coords:", self.x, self.y
-				print "Target coords:", targetNode.x, targetNode.y
+				#print "My coords:", self.x, self.y
+				#print "Target coords:", targetNode.x, targetNode.y
 				dx = targetNode.x - self.x
 				dy = targetNode.y - self.y
-				print "Dx:", dx
-				print "Dy:", dy
+				#print "Dx:", dx
+				#print "Dy:", dy
 				c = math.sqrt(dx**2 + dy**2)
-				print "C:", c
+				#print "C:", c
 				# account for 0
 				if dx == 0:
 					if dy > 0:
@@ -122,7 +122,7 @@ class Uber:
 				else:
 					theta = math.atan(dy / dx) 
 
-				print "Theta:", theta
+				#print "Theta:", theta
 				# VARYING NODE COST TESTING
 				moveY = math.sin(theta) / targetNode.traffic
 				moveX = math.cos(theta) / targetNode.traffic
@@ -130,9 +130,9 @@ class Uber:
 				# Old working version
 				# moveY = math.sin(theta)
 				# moveX = math.cos(theta)
-				print "Move X:", moveX
-				print "Move Y:", moveY
-				print "Move total", math.sqrt(moveX**2 + moveY**2)
+				#print "Move X:", moveX
+				#print "Move Y:", moveY
+				#print "Move total", math.sqrt(moveX**2 + moveY**2)
 				# if c < 1.0:
 				if c < (1.0 / targetNode.traffic):
 					self.x = targetNode.x
@@ -142,16 +142,16 @@ class Uber:
 					# self.moveToNextTargetNode()
 
 					self.reachedDestination()
-					print "Distance less than 1, reached node and switched to new target"
+					#print "Distance less than 1, reached node and switched to new target"
 				else:
 					self.x += moveX
 					self.y += moveY
 					self.currentNode = None
-				print "New x:", self.x
-				print "New y:", self.y
+				#print "New x:", self.x
+				#print "New y:", self.y
 
 		self.currentTotalTravelCost += 1
-		print "-------------------------"
+		#print "-------------------------"
 
 	def moveToNextTargetNode(self):
 		if len(self.nodePath) > 0:
@@ -178,7 +178,7 @@ class Uber:
 				# print self.passengerCount
 				self.passengerCount -= 1
 				# print self.passengerCount
-				print 'journey done!!!!'
+				#print 'journey done!!!!'
 			# return true
 			# print "Reached destination, dropped off passenger:", self.passengers[0], "at", (self.currentNode.x, self.currentNode.y)
 			#print "Self.pass count:", self.passengerCount

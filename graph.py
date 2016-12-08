@@ -5,7 +5,7 @@ from util import *
 
 import sys
 allPassengers = []
-pool = False # or False :P
+pool = False# or False :P
 # a class to hold everything
 class Graph:
     # init
@@ -14,7 +14,7 @@ class Graph:
         self.passengers = passengers # All the passengers on the map
         self.ubers = ubers
         self.time = start_t # start time
-        self.max_time = 10 # time step len
+        self.max_time = 40 # time step len
         # just noticed this doesn't support spawning two passengers at the same time
         # self.spawnTimes = [1, 3, 4, 6] # maybe keep a list of times at which to spawn someone
         # commented out/replaced this because I don't want it just yet when I'm testing
@@ -125,59 +125,6 @@ class Graph:
                 p.time += 1
             # increment self time
             self.time += 1
-
-
-    # # run spawn and time
-    # def pass_time(self):
-    #     for step in range(self.max_time):
-    #         try:
-    #             if step == self.spawnTimes[0]: # spawn and remove from queue
-    #                 self.spawn(self.spawnQueue[0])
-    #                 del self.spawnQueue[0]
-    #                 del self.spawnTimes[0]
-    #         except:
-    #             pass
-
-    #         # assign unassigned cars to nearest passengers
-    #         for uber in self.ubers:
-    #             if uber.currentNode != None:
-    #                 if uber.passengerCount == 0:
-    #                     minDist = sys.maxsize
-    #                     assignedTo = False
-    #                     for p in self.passengers:
-    #                         if (not p.pickedUp): # just look at passengers who need a ride
-    #                             currDist = uber.currentNode.get_euc_dist(p.start)
-    #                             if (minDist > currDist):
-    #                                 print "REACHED CONDITION: New assignment is pass_id:", p.ID
-    #                                 minDist = currDist
-    #                                 assignedTo = p
-    #                     if not assignedTo:
-    #                         uber.pickupPassenger(assignedTo)
-    #                         print "ASSIGNED Uber", uber.carId, "to", assignedTo.ID
-    #                         assignedTo.pickedUp = True
-    #                     else:
-    #                         print "No one was assigned! (Could mean everyone has been picked up)"
-    #                         #print "self.passengers is", self.passengers
-    #                         #for p in self.passengers:
-    #                         #    print "status is", p.pickedUp
-    #                         #print ">>>"
-    #                 else:
-    #                     # check for arrivals and kill passengers who are done
-    #                     print "Check if reached destination"
-    #                     for uber in self.ubers:
-    #                         retval = uber.reachedDestination()
-    #                         if retval >= 0:
-    #                             del self.passengers[retval]
-    #                 if len(uber.nodePath) == 0:
-    #                     uber.setNodePath()
-    #                 try:
-    #                     uber.uberMove(uber.nodePath[0]) # get next node from the route returned by search alg  
-    #                     del uber.nodePath[0]
-    #                 except:
-    #                     print "nodePath[] empty"
-
-    #         for p in self.passengers: # increment their time in the system
-    #             p.time += 1
 
     # euclidian 
     def euclidian_heuristic(self, node1, node2):
@@ -371,16 +318,6 @@ if __name__ == '__main__':
     # ubers = [u1, u2, u3, u4, u5, u6]
     ubers = [u1, u2, u3, u4, u5]
 
-
-    # g = Graph(nodes=nodes, passengers=passengers, ubers=ubers)
-
-    # Ubers
-    #u1 = Uber(carId=1, passengerCount=0, passengers=[], x=0, y=0, nodePath=[], currentNode=n1, destinationNode=None, currentTotalTravelCost=0, assigned_passenger = None)
-    #2 = Uber(2, 0, [], 100, 100, [], n9, None, 0,None)
-    #u3 = Uber(3, 0, [], 100, 0, [], n14, None, 0)
-    # ubers = [u1, u2]
-    # Passengers
-
     p1 = Passenger(n3, n7)
 
     p2 = Passenger(n1, n10)
@@ -399,56 +336,27 @@ if __name__ == '__main__':
     #print "Uber2 pos:", u2.currentNode.x, u2.currentNode.y
     #print "Uber3 pos:", u3.currentNode.x, u3.currentNode.y
 
-    # print passengerList
-    # print "Passengers", g.passengers
-
-    # tuple = g.a_star_search(n10, n6)
-    # path = tuple[0]
-    # cost = tuple[1]
-    # print "Path:", path.items()[0][0]
-    # for x in path:
-    #     print x.node_id, x.x, x.y
-    # print cost
-    # #for x in cost:
-    # print x.node_id
-
-    # Get cost at each step
-    # for i in cost:
-    #     print cost[i]
-    #print "Path:", path(1)
-
     # nodePathList = nodePathToList(path)
     allPassengers += passengerList
 
-    for i in range(40):
-        print graph_map(g)
+    for i in range(50):
+        #print graph_map(g)
         g.pass_time()
     # print out passengers' waiting time
-    totalWait = 0
+    remaining = 0
+    transported = 0
+    waitingTime = 0
     for p in allPassengers:
-        print "Wait time for", p.ID, " was", p.time
-        totalWait += p.time
-    print "avg wait time =", (1.0*totalWait/len(allPassengers))
+        if not p.pickedUp:
+            remaining += 1
+            waitingTime += p.time
+        if p.arrived:
+            transported += 1
     if pool:
         f = open("pool.txt", "a")
     else:
          f = open("noPool.txt", "a")
-    f.write(str(1.0*totalWait/len(allPassengers))+"\n")
+    f.write("Remaining: "+str(remaining)+"\tTransported: "+str(transported)+"\tWaiting: "+str(waitingTime)+"\n")
     f.close()
-    # ubers = g.ubers
-    # for u in ubers:
-    #     print u.carId
-    # passengers = g.passengers
-    # for p in passengers:
-    #     print p.ID
-    # for u in ubers:
-    #     path = u.nodePath
-    #     for p in path:
-    #         print p.x, p.y
-        #print u.currentNode.x, u.currentNode.y
-        # print u.destinationNode.x, u.destinationNode.y
-        # print u.currentTotalTravelCost
-        # print u.passengers
-
-    print graph_map(g)
+    #print graph_map(g)
 

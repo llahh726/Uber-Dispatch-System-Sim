@@ -58,7 +58,7 @@ class Passenger:
                     if (currDist < minDist):
                         minDist = currDist
                         myUber = uber
-                    print "there is a uber being assigned!!!!!!!!"
+                    #print "there is a uber being assigned!!!!!!!!"
 
         # optional: change pickedUp value here?
         return myUber
