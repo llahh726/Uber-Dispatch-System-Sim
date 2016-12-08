@@ -82,23 +82,24 @@ class Uber:
 			# to pick up the other guy
 			self.destinationNode = self.assigned_passenger[0].start
 		else:
+<<<<<<< HEAD
 			print 'len of assigned_passenger not 1 or 2, error'
 
-
-	# holding off on deleting this so far, but I think it's sufficient to put into graphs.py
-	# def travelToPassengerToPickup(self, node):
-	# 	# receive node location of passenger to pickup
-	# 	a_star_search()
+=======
+			print "No passenger here to pick up"
+>>>>>>> d0b97d63a92b1e044bad44b369b9acfdd546f194
 
 	# Gets called at every time step
 	def setNodePath(self):
 		#print "ASTAR", a_star_search(self.currentNode, self.destinationNode)[0]
 		self.nodePath = reconstruct_path(a_star_search(self.currentNode, self.destinationNode)[0], self.currentNode, self.destinationNode)[1:]
 		#print "Self.nodePath", self.nodePath
+
 	# In graph, for all ubers:
 	# Each time step is 1. Adds 1 to total travel cost
 	# Needs to be passed a node path
 	def uberMove(self):
+		print "Uber passengers", self.passengers
 		# print "Destination node:", self.destinationNode
 		if self.destinationNode != None:
 			if not self.nodePath:
@@ -127,12 +128,18 @@ class Uber:
 					theta = math.atan(dy / dx) 
 
 				print "Theta:", theta
-				moveY = math.sin(theta)
-				moveX = math.cos(theta)
+				# VARYING NODE COST TESTING
+				moveY = math.sin(theta) / targetNode.traffic
+				moveX = math.cos(theta) / targetNode.traffic
+
+				# Old working version
+				# moveY = math.sin(theta)
+				# moveX = math.cos(theta)
 				print "Move X:", moveX
 				print "Move Y:", moveY
 				print "Move total", math.sqrt(moveX**2 + moveY**2)
-				if c < 1.0:
+				# if c < 1.0:
+				if c < (1.0 / targetNode.traffic):
 					self.x = targetNode.x
 					self.y = targetNode.y
 					self.currentNode = targetNode
@@ -177,7 +184,18 @@ class Uber:
 				self.passengerCount -= 1
 				# print self.passengerCount
 				print 'journey done!!!!'
+			# return true
+			# print "Reached destination, dropped off passenger:", self.passengers[0], "at", (self.currentNode.x, self.currentNode.y)
+			#print "Self.pass count:", self.passengerCount
+			#self.passengerCount -= 1
+			#print "Self.pass count after:", self.passengerCount
+			# self.destinationNode = None
 
+			#print "Reached destination, dropped off passenger:", self.passengers[0], "at", (self.currentNode.x, self.currentNode.y)
+			#print "Self.passengers:", self.passengers
+			#self.passengers.pop(0)
+			#print "Self.passengers after pop:", self.passengers
+			# print "Total time:", self.currentTotalTravelCost
 
 	def getCarId(self):
 		return self.carId
@@ -196,22 +214,6 @@ class Uber:
 
 	def getCurrTravelCost(self):
 		return self.currentTotalTravelCost
-
-
-
-
-	# def graphSearch(problem, frontier):
-
-	# def heuristic(a, b):
-	# 	return abs(a.x - b.x) + abs(a.y - b.y)
-
-	# # we have a graph setup right? nodes and edges
-	# def aStarSearch(problem, heuristic = nullheuristic):
-	# 	frontier = PriorityQueue()
-	# 	frontier.push(start)
-	# 	visited = {}
-	# 	visited[start] = True
-	# 	return frontier
 
 ##############################################################
 # Testing
