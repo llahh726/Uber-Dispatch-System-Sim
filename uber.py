@@ -37,19 +37,38 @@ class Uber:
 			# print "Picked up passenger with ID:", passenger.ID
 			self.passengers.append(self.assigned_passenger)
 			# print "Current Passenger list:", self.passengers
-			self.destinationNode = self.assigned_passenger.goal
-			# print "Car's destination node:", (self.destinationNode.x, self.destinationNode.y)
-			# time can either start at 0 for the car or be initialized to passenger.time
-			self.passengerCount += 1
-			# print "Passenger count:", self.passengerCount
 
-			## Set the current total time of travel to how long the passenger waited
-			## Then add on to that time during travel
-			self.currentTotalTravelCost = self.assigned_passenger.time
-			# print "Passenger wait time:", self.currentTotalTravelCost
-			self.assigned_passenger.pickedUp = True
-			self.assigned_passenger = None
 
+				# pool -> if 1 passenger, if 2 passenger
+			if len(self.passengers) == 1:
+				self.destinationNode = self.assigned_passenger.goal
+			elif len(self.passengers) == 2:
+				# the closer one of the two
+				came_from1, _ = a_star_search(self.currentNode, self.passengers[0].goal)
+				came_from2, _ = a_star_search(self.currentNode, self.passengers[1].goal)
+				path1 = reconstruct_path(came_from1, self.currentNode, self.passengers[0].goal)
+				path2 = reconstruct_path(came_from2, self.currentNode, self.passengers[1].goal)
+				dist1 = get_path_cost(path1)
+				dist2 = get_path_cost(path2)
+				# print "currDist=", currDist
+				if (dist1 <= dist2):
+				    self.destinationNode = self.passengers[0].goal
+				else:
+					self.destinationNode = self.passengers[1].goal
+			else:
+				print 'error, pass >= 2!'
+
+				# print "Car's destination node:", (self.destinationNode.x, self.destinationNode.y)
+				# time can either start at 0 for the car or be initialized to passenger.time
+				self.passengerCount += 1
+				# print "Passenger count:", self.passengerCount
+
+				## Set the current total time of travel to how long the passenger waited
+				## Then add on to that time during travel
+				self.currentTotalTravelCost = self.assigned_passenger.time
+				# print "Passenger wait time:", self.currentTotalTravelCost
+				self.assigned_passenger.pickedUp = True
+				self.assigned_passenger = None
 		else:
 			## run a* to get there
 			print "No passenger here to pick up"
@@ -144,16 +163,7 @@ class Uber:
 				self.passengerCount -= 1
 				# print self.passengerCount
 				print 'journey done!!!!'
-			# return true
-			# print "Reached destination, dropped off passenger:", self.passengers[0], "at", (self.currentNode.x, self.currentNode.y)
-			#print "Self.pass count:", self.passengerCount
-			#self.passengerCount -= 1
-			#print "Self.pass count after:", self.passengerCount
-			#print "Reached destination, dropped off passenger:", self.passengers[0], "at", (self.currentNode.x, self.currentNode.y)
-			#print "Self.passengers:", self.passengers
-			#self.passengers.pop(0)
-			#print "Self.passengers after pop:", self.passengers
-			# print "Total time:", self.currentTotalTravelCost
+
 
 	def getCarId(self):
 		return self.carId
