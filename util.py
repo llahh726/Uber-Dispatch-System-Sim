@@ -268,3 +268,5 @@ def get_path_cost(path):
         cost += path[cursor-1].get_euc_dist(path[cursor]) + path[cursor-1].traffic + path[cursor].traffic
         cursor += 1
     return cost
+
+def varyCostOfNodes(passengers):
