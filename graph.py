@@ -12,7 +12,7 @@ class Graph:
         self.passengers = passengers # All the passengers on the map
         self.ubers = ubers
         self.time = start_t # start time
-        self.max_time = 10 # time step len
+        self.max_time = 40 # time step len
         # just noticed this doesn't support spawning two passengers at the same time
         # self.spawnTimes = [1, 3, 4, 6] # maybe keep a list of times at which to spawn someone
         # commented out/replaced this because I don't want it just yet when I'm testing
@@ -52,12 +52,13 @@ class Graph:
     def pass_time(self):
         for step in range(self.max_time):
             varyCostOfNodes(self.nodes)
+
             # we can spawn according to time, or just random
             #if self.time == 5, or ...
                 # self.spawn()
             # or just spawn at random with 1/10 chance
-            # if np.random.randint(0,100) < 3:
-            #     self.spawn()
+            if np.random.randint(0,100) < 3:
+                self.spawn()
             for passenger in self.passengers:
                 # if arrived, delete
                 if passenger.arrived:
@@ -357,24 +358,15 @@ if __name__ == '__main__':
 
     # # self, carId, passengerCount, passengers, x, y, nodePath, currentNode, destinationNode, currentTotalTravelCost
 
-<<<<<<< HEAD
     u1 = Uber(0, [], n1.x, n1.y, [], n1,  None, 0, [])
     u2 = Uber(0, [], n7.x, n7.y, [],n7,  None, 0, [])
     u3 = Uber(0, [], n9.x, n9.y, [], n9, None, 0, [])
     u4 = Uber(0, [], n11.x, n11.y, [], n11,  None, 0, [])
     u5 = Uber(0, [], n15.x, n15.y, [], n15,  None, 0, [])
     u6 = Uber(0, [], n15.x, n15.y,  [], n15, None, 0, [])
-=======
-    u1 = Uber(0, [], n1.x, n1.y, [], n1,  None, 0, None)
-    u2 = Uber(0, [], n7.x, n7.y, [],n7,  None, 0, None)
-    u3 = Uber(0, [], n9.x, n9.y, [], n9, None, 0, None)
-    u4 = Uber(0, [], n11.x, n11.y, [], n11,  None, 0, None)
-    u5 = Uber(0, [], n15.x, n15.y, [], n15,  None, 0, None)
-    u6 = Uber(0, [], n15.x, n15.y,  [], n15, None, 0, None)
 
->>>>>>> d0b97d63a92b1e044bad44b369b9acfdd546f194
     # ubers = [u1, u2, u3, u4, u5, u6]
-    ubers = [u1]
+    ubers = [u1, u2, u3, u4, u5]
 
 
     # g = Graph(nodes=nodes, passengers=passengers, ubers=ubers)
@@ -391,12 +383,12 @@ if __name__ == '__main__':
     p1 = Passenger(n3, n7)
 
     p2 = Passenger(n1, n10)
-    p3 = Passenger(n11, n4, 3)
-    p4 = Passenger(n15, n4, 4)
-    p5 = Passenger(n7, n2, 5)
+    p3 = Passenger(n11, n1)
+    p4 = Passenger(n15, n4)
+    p5 = Passenger(n7, n2)
 
     # passengerList = [p1, p2, p3 ,p4 ,p5]
-    passengerList = [p1, p2, p3]
+    passengerList = [p1, p2, p3, p4, p5]
     # passengerList = [p1, p2]
 
     g = Graph(nodes=nodes, passengers=passengerList, ubers=ubers)

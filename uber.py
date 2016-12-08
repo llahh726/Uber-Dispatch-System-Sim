@@ -82,12 +82,7 @@ class Uber:
 			# to pick up the other guy
 			self.destinationNode = self.assigned_passenger[0].start
 		else:
-<<<<<<< HEAD
 			print 'len of assigned_passenger not 1 or 2, error'
-
-=======
-			print "No passenger here to pick up"
->>>>>>> d0b97d63a92b1e044bad44b369b9acfdd546f194
 
 	# Gets called at every time step
 	def setNodePath(self):
