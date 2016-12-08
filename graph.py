@@ -5,7 +5,7 @@ from util import *
 
 import sys
 allPassengers = []
-pool = True # or False :P
+pool = False# or False :P
 # a class to hold everything
 class Graph:
     # init
@@ -401,14 +401,8 @@ if __name__ == '__main__':
     # nodePathList = nodePathToList(path)
     allPassengers += passengerList
 
-
     for i in range(15):
-<<<<<<< HEAD
         #print graph_map(g)
-=======
-        print graph_map(g)
-
->>>>>>> d0b97d63a92b1e044bad44b369b9acfdd546f194
         g.pass_time()
     # print out passengers' waiting time
     totalWait = 0
@@ -416,6 +410,12 @@ if __name__ == '__main__':
         print "Wait time for", p.ID, " was", p.time
         totalWait += p.time
     print "avg wait time =", (1.0*totalWait/len(allPassengers))
+    if pool:
+        f = open("pool.txt", "a")
+    else:
+         f = open("noPool.txt", "a")
+    f.write(str(1.0*totalWait/len(allPassengers))+"\n")
+    f.close()
     # ubers = g.ubers
     # for u in ubers:
     #     print u.carId
