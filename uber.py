@@ -82,6 +82,7 @@ class Uber:
 	# Each time step is 1. Adds 1 to total travel cost
 	# Needs to be passed a node path
 	def uberMove(self):
+		print "Uber passengers", self.passengers
 		# print "Destination node:", self.destinationNode
 		if self.destinationNode != None:
 			if not self.nodePath:

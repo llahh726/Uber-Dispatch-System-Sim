@@ -1,6 +1,7 @@
 # all util helper class and functions 
 import collections
 import heapq
+import random
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
@@ -269,4 +270,21 @@ def get_path_cost(path):
         cursor += 1
     return cost
 
-def varyCostOfNodes(passengers):
+def varyCostOfNodes(nodes):
+    # traffic value affects the c value in ubermove
+    for node in nodes:
+        increaseDecrease = random.randint(0,1)
+        if increaseDecrease == 0:
+            # Increase
+            trafficModifier = random.uniform(0.0, 0.2)
+        else:
+            # Decrease
+            trafficModifier = -random.uniform(0.0, 0.2)
+        
+        node.traffic += trafficModifier
+        if node.traffic < 0.5:
+            node.traffic = 0.5
+        if node.traffic > 1.5:
+            node.traffic = 1.5
+        print "Nodeid, traffic:", node.node_id, node.traffic
+

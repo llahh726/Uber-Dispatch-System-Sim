@@ -51,6 +51,7 @@ class Graph:
 
     def pass_time(self):
         for step in range(self.max_time):
+            varyCostOfNodes(self.nodes)
             # we can spawn according to time, or just random
             #if self.time == 5, or ...
                 # self.spawn()
@@ -399,7 +400,7 @@ if __name__ == '__main__':
     # nodePathList = nodePathToList(path)
 
     for i in range(15):
-        print graph_map(g)
+        #print graph_map(g)
         g.pass_time()
     # ubers = g.ubers
     # for u in ubers:
