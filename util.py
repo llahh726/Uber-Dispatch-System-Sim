@@ -164,7 +164,7 @@ def euclidian_heuristic(node1, node2):
     return np.sqrt(np.sum((a-b)**2))
 
 # a star search for finding a best route
-def a_star_search(start, goal):
+def a_star_search(start, goal, traffic = False):
     # print "Start", start
     # print "Goal", goal
     frontier = PriorityQueue()
@@ -182,13 +182,16 @@ def a_star_search(start, goal):
 
         for neighbor in current.get_neighbors():
             # cost = current cost + dist + current traffic + neighbor traffic
-            new_cost = cost_so_far[current] + current.get_euc_dist(neighbor) + current.traffic + neighbor.traffic
+            new_cost = cost_so_far[current] + current.get_euc_dist(neighbor) 
             # a star
             if neighbor not in cost_so_far or new_cost < cost_so_far[neighbor]:
                 cost_so_far[neighbor] = new_cost
                 # print "Goal:", goal
                 # print "Neighbor:", neighbor
-                priority = new_cost + euclidian_heuristic(goal, neighbor)
+                if traffic:
+                    priority = new_cost + euclidian_heuristic(goal, neighbor)*neighbor.traffic
+                else:
+                    priority = new_cost + euclidian_heuristic(goal, neighbor)
                 frontier.put(neighbor, priority)
                 came_from[neighbor] = current
 
@@ -280,16 +283,16 @@ def varyCostOfNodes(nodes):
         increaseDecrease = random.randint(0,1)
         if increaseDecrease == 0:
             # Increase
-            trafficModifier = random.uniform(0.0, 0.2)
+            trafficModifier = random.uniform(0.0, 2.)
         else:
             # Decrease
-            trafficModifier = -random.uniform(0.0, 0.2)
+            trafficModifier = -random.uniform(0.0, 2.)
         
         node.traffic += trafficModifier
-        if node.traffic < 0.5:
-            node.traffic = 0.5
-        if node.traffic > 1.5:
-            node.traffic = 1.5
+        if node.traffic < 1.:
+            node.traffic = 1.
+        if node.traffic > 5.:
+            node.traffic = 5.
         print "Nodeid, traffic:", node.node_id, node.traffic
 
 
