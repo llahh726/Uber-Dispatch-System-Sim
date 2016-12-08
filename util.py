@@ -88,23 +88,40 @@ def graph_map(graph):
     for edge in edges:
         plt.plot(edge[:2], edge[2:], '-', color = 'blue', alpha = 0.3)   
     
-    # print ubers
-    uxs = []
-    uys = []
-    uids = []
+    # print ubers that don't have passengers
+    uxs1 = []
+    uys1 = []
+    uids1 = []
+    uxs2 = []
+    uys2 = []
+    uids2 = []
     for u in graph.ubers:
-        uxs.append(u.x)
-        uys.append(u.y)
-        uids.append(u.carId)
+        if not u.passengers:
+            uxs1.append(u.x)
+            uys1.append(u.y)
+            uids1.append(u.carId)
+        else:
+            uxs2.append(u.x)
+            uys2.append(u.y)
+            uids2.append(u.carId)
     # plot again
-    ax = plt.scatter(uxs, uys, marker='s', alpha = 0.6, s = 50, color = 'red', label='Ubers')
+    ax = plt.scatter(uxs1, uys1, marker='s', alpha = 0.6, s = 50, color = 'red', label='Ubers without Passengers')
+    ax = plt.scatter(uxs2, uys2, marker='D', alpha = 0.6, s = 50, color = 'crimson', label='Ubers with Passengers')
     # labels
-    for label, x, y in zip(uids, uxs, uys):
+    for label, x, y in zip(uids1, uxs1, uys1):
         plt.annotate(
             label, 
             xy = (x, y), xytext = (20, 20),
             textcoords = 'offset points', ha = 'right', va = 'bottom',
             bbox = dict(boxstyle = 'round,pad=0.2', fc = 'red', alpha = 0.1),
+            arrowprops = dict(arrowstyle = '-', connectionstyle = 'arc3,rad=0'))
+    # labels
+    for label, x, y in zip(uids2, uxs2, uys2):
+        plt.annotate(
+            label, 
+            xy = (x, y), xytext = (20, 20),
+            textcoords = 'offset points', ha = 'right', va = 'bottom',
+            bbox = dict(boxstyle = 'round,pad=0.2', fc = 'orange', alpha = 0.1),
             arrowprops = dict(arrowstyle = '-', connectionstyle = 'arc3,rad=0'))
         
     # now graph passengers
@@ -127,7 +144,7 @@ def graph_map(graph):
             bbox = dict(boxstyle = 'round,pad=0.1', fc = 'blue', alpha = 0.1),
             arrowprops = dict(arrowstyle = '-', connectionstyle = 'arc3,rad=0'))
     
-    plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)    
+    plt.legend(bbox_to_anchor=(0, 1), loc=2, borderaxespad=0.)    
     plt.show()
 
 
