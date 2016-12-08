@@ -264,6 +264,10 @@ if __name__ == '__main__':
     n15 = Node(x=90, y=90, neighbors=[], passengers=[])
     n16 = Node(x=10, y=90, neighbors=[], passengers=[])
     n17 = Node(x=90, y=10, neighbors=[], passengers=[])
+    n18 = Node(x=25, y=60, neighbors=[], passengers=[])
+    n19 = Node(x=40, y=25, neighbors=[], passengers=[])
+    n20 = Node(x=75, y=40, neighbors=[], passengers=[])
+    n21 = Node(x=60, y=75, neighbors=[], passengers=[])
     add_neighbor(n1, n2)
     add_neighbor(n2, n3)
     add_neighbor(n1, n4)
@@ -296,7 +300,11 @@ if __name__ == '__main__':
     add_neighbor(n15, n9)
     add_neighbor(n8, n13)
     add_neighbor(n13, n6)
-    nodes = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15, n16, n17]
+    add_neighbor(n11, n18)
+    add_neighbor(n10, n19)
+    add_neighbor(n12, n20)
+    add_neighbor(n13, n21)
+    nodes = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15, n16, n17, n18, n19, n20, n21]
 
     # p1 = Passenger(n1, n2)
     # p2 = Passenger(n10, n12)
