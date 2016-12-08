@@ -145,8 +145,9 @@ def graph_map(graph):
             bbox = dict(boxstyle = 'round,pad=0.1', fc = 'blue', alpha = 0.1),
             arrowprops = dict(arrowstyle = '-', connectionstyle = 'arc3,rad=0'))
     
-    plt.legend(bbox_to_anchor=(-0.1, -0.1), loc=2, borderaxespad=0.)    
-    plt.show()
+    plt.legend(bbox_to_anchor=(0, 0), loc=2, borderaxespad=0.)    
+    plt.show(block=False)
+
 
 
 def getNextNodeInPath(nodePathList):
