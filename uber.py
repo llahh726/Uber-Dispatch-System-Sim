@@ -32,46 +32,57 @@ class Uber:
 		return myPass
 
 	def pickupPassenger(self):
-		if self.currentNode == self.assigned_passenger.start:	
-			# print "There is a passenger here at", (self.currentNode.x, self.currentNode.y)
-			# print "Picked up passenger with ID:", passenger.ID
-			self.passengers.append(self.assigned_passenger)
-			# print "Current Passenger list:", self.passengers
+		if len(self.assigned_passenger) == 1:
+			asseigned_p = self.assigned_passenger[0]
+			if self.currentNode == asseigned_p.start:	
+				# print "There is a passenger here at", (self.currentNode.x, self.currentNode.y)
+				# print "Picked up passenger with ID:", passenger.ID
+				self.passengers.append(asseigned_p)
+				# print "Current Passenger list:", self.passengers
 
-			# print "Car's destination node:", (self.destinationNode.x, self.destinationNode.y)
-			# time can either start at 0 for the car or be initialized to passenger.time
-			self.passengerCount += 1
+				# print "Car's destination node:", (self.destinationNode.x, self.destinationNode.y)
+				# time can either start at 0 for the car or be initialized to passenger.time
+				self.passengerCount += 1
 
-				# pool -> if 1 passenger, if 2 passenger
-			if len(self.passengers) == 1:
-				self.destinationNode = self.assigned_passenger.goal
-			elif len(self.passengers) == 2:
-				# the closer one of the two
-				came_from1, _ = a_star_search(self.currentNode, self.passengers[0].goal)
-				came_from2, _ = a_star_search(self.currentNode, self.passengers[1].goal)
-				path1 = reconstruct_path(came_from1, self.currentNode, self.passengers[0].goal)
-				path2 = reconstruct_path(came_from2, self.currentNode, self.passengers[1].goal)
-				dist1 = get_path_cost(path1)
-				dist2 = get_path_cost(path2)
-				# print "currDist=", currDist
-				if (dist1 <= dist2):
-				    self.destinationNode = self.passengers[0].goal
+					# pool -> if 1 passenger, if 2 passenger
+				if len(self.passengers) == 1:
+					self.destinationNode = asseigned_p.goal
+				elif len(self.passengers) == 2:
+					# the closer one of the two
+					came_from1, _ = a_star_search(self.currentNode, self.passengers[0].goal)
+					came_from2, _ = a_star_search(self.currentNode, self.passengers[1].goal)
+					path1 = reconstruct_path(came_from1, self.currentNode, self.passengers[0].goal)
+					path2 = reconstruct_path(came_from2, self.currentNode, self.passengers[1].goal)
+					dist1 = get_path_cost(path1)
+					dist2 = get_path_cost(path2)
+					# print "currDist=", currDist
+					if (dist1 <= dist2):
+					    self.destinationNode = self.passengers[0].goal
+					else:
+						self.destinationNode = self.passengers[1].goal
 				else:
-					self.destinationNode = self.passengers[1].goal
-			else:
-				print 'error, pass >= 2!'
+					print 'error, pass >= 2!'
 
-			
-			# print "Passenger count:", self.passengerCount
+				self.currentTotalTravelCost = asseigned_p.time
+				# print "Passenger wait time:", self.currentTotalTravelCost
+				asseigned_p.pickedUp = True
+				self.assigned_passenger.remove(asseigned_p)
 
-			## Set the current total time of travel to how long the passenger waited
-			## Then add on to that time during travel
-			self.currentTotalTravelCost = self.assigned_passenger.time
-			# print "Passenger wait time:", self.currentTotalTravelCost
-			self.assigned_passenger.pickedUp = True
-			self.assigned_passenger = None
+		elif len(self.assigned_passenger) == 2:
+			for asseigned_p in self.assigned_passenger:
+				if self.currentNode == asseigned_p.start:
+					self.passengers.append(asseigned_p)
+					self.passengerCount += 1
+					# check
+					if self.passengerCount != 1:
+						print 'error here in number of passengers to pick up'
+					self.currentTotalTravelCost = asseigned_p.time
+					asseigned_p.pickedUp = True
+					self.assigned_passenger.remove(asseigned_p)
+			# to pick up the other guy
+			self.destinationNode = self.assigned_passenger[0].start
 		else:
-			print "No passenger here to pick up"
+			print 'len of assigned_passenger not 1 or 2, error'
 
 	# Gets called at every time step
 	def setNodePath(self):

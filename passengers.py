@@ -48,7 +48,8 @@ class Passenger:
         myUber = None
         for uber in ubers:
             #print "myUber:", myUber, "dnode=", uber.destinationNode
-            if (uber.destinationNode) == None or (uber.assigned_passenger == None and uber.passengerCount <= 1):
+            if (uber.destinationNode) == None or (len(uber.assigned_passenger) <= 1  and 
+                uber.passengerCount <= 1) and (len(uber.assigned_passenger) + uber.passengerCount  < 2):
                 if uber.currentNode:
                     came_from, _ = a_star_search(uber.currentNode, self.start)
                     path = reconstruct_path(came_from, uber.currentNode, self.start)
