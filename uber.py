@@ -1,5 +1,6 @@
 from nodes import Node
 from passengers import Passenger
+from sys import *
 from util import *
 import math
 
@@ -17,6 +18,19 @@ class Uber:
 		self.currentTotalTravelCost = currentTotalTravelCost # int starting at 0 on pickup
 		self.assigned_passenger = assigned_passenger
 		Uber.UBER_ID += 1
+
+	def closestPassenger(self, passengers):
+		minDist = sys.maxsize
+		myPass = None
+		for p in passengers:
+			if not p.got_uber:
+				came_from, _ = a_star_search(self.currentNode, p.start)
+				path = reconstruct_path(came_from, self.currentNode, p.start)
+				currDist = get_path_cost(path)
+				if (currDist < minDist):
+					minDist = currDist
+					myPass = p
+		return myPass
 
 	def pickupPassenger(self):
 		if self.currentNode == self.assigned_passenger.start:	
