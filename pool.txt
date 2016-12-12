@@ -1,0 +1,10 @@
+Remaining: 93	Transported: 75	Waiting: 147961
+Remaining: 83	Transported: 83	Waiting: 109363
+Remaining: 102	Transported: 77	Waiting: 141245
+Remaining: 95	Transported: 79	Waiting: 129582
+Remaining: 86	Transported: 88	Waiting: 136782
+Remaining: 106	Transported: 77	Waiting: 219836
+Remaining: 101	Transported: 74	Waiting: 173134
+Remaining: 95	Transported: 77	Waiting: 163465
+Remaining: 104	Transported: 79	Waiting: 197433
+Remaining: 109	Transported: 82	Waiting: 191102

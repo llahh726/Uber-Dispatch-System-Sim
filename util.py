@@ -283,16 +283,16 @@ def varyCostOfNodes(nodes):
         increaseDecrease = random.randint(0,1)
         if increaseDecrease == 0:
             # Increase
-            trafficModifier = random.uniform(0.0, 2.)
+            trafficModifier = random.uniform(0.0, 5.)
         else:
             # Decrease
-            trafficModifier = -random.uniform(0.0, 2.)
+            trafficModifier = -random.uniform(0.0, 5.)
         
         node.traffic += trafficModifier
         if node.traffic < 1.:
             node.traffic = 1.
         if node.traffic > 5.:
             node.traffic = 5.
-        print "Nodeid, traffic:", node.node_id, node.traffic
+        #print "Nodeid, traffic:", node.node_id, node.traffic
 
 
