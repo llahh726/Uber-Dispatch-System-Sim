@@ -79,8 +79,8 @@ class Graph:
                         elif len(closestUber.assigned_passenger) == 2:
                             passenger1 = closestUber.assigned_passenger[0]
                             passenger2 = closestUber.assigned_passenger[1]
-                            came_from1, _ = a_star_search(closestUber.currentNode, passenger1.start)
-                            came_from2, _ = a_star_search(closestUber.currentNode, passenger2.start)
+                            came_from1, _ = a_star_search(closestUber.currentNode, passenger1.start, True)
+                            came_from2, _ = a_star_search(closestUber.currentNode, passenger2.start, True)
                             path1 = reconstruct_path(came_from1, closestUber.currentNode, passenger1.start)
                             path2 = reconstruct_path(came_from2, closestUber.currentNode, passenger2.start)
                             dist1 = get_path_cost(path1)
@@ -337,7 +337,7 @@ if __name__ == '__main__':
     #print "Uber3 pos:", u3.currentNode.x, u3.currentNode.y
 
     # nodePathList = nodePathToList(path)
-    allPassengers += passengerList
+    # allPassengers += passengerList
 
     for i in range(50):
         #print graph_map(g)
@@ -358,5 +358,4 @@ if __name__ == '__main__':
          f = open("noPool.txt", "a")
     f.write("Remaining: "+str(remaining)+"\tTransported: "+str(transported)+"\tWaiting: "+str(waitingTime)+"\n")
     f.close()
-    #print graph_map(g)
 

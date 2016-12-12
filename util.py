@@ -164,7 +164,7 @@ def euclidian_heuristic(node1, node2):
     return np.sqrt(np.sum((a-b)**2))
 
 # a star search for finding a best route
-def a_star_search(start, goal, traffic = False):
+def a_star_search(start, goal, traffic = True):
     # print "Start", start
     # print "Goal", goal
     frontier = PriorityQueue()

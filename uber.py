@@ -23,7 +23,7 @@ class Uber:
 		myPass = None
 		for p in passengers:
 			if not p.got_uber:
-				came_from, _ = a_star_search(self.currentNode, p.start)
+				came_from, _ = a_star_search(self.currentNode, p.start, True)
 				path = reconstruct_path(came_from, self.currentNode, p.start)
 				currDist = get_path_cost(path)
 				if (currDist < minDist):
@@ -49,8 +49,8 @@ class Uber:
 					self.destinationNode = asseigned_p.goal
 				elif len(self.passengers) == 2:
 					# the closer one of the two
-					came_from1, _ = a_star_search(self.currentNode, self.passengers[0].goal)
-					came_from2, _ = a_star_search(self.currentNode, self.passengers[1].goal)
+					came_from1, _ = a_star_search(self.currentNode, self.passengers[0].goal, True)
+					came_from2, _ = a_star_search(self.currentNode, self.passengers[1].goal, True)
 					path1 = reconstruct_path(came_from1, self.currentNode, self.passengers[0].goal)
 					path2 = reconstruct_path(came_from2, self.currentNode, self.passengers[1].goal)
 					dist1 = get_path_cost(path1)
