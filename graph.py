@@ -303,13 +303,6 @@ if __name__ == '__main__':
     add_neighbor(n13, n21)
     nodes = [n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15, n16, n17, n18, n19, n20, n21]
 
-    # p1 = Passenger(n1, n2)
-    # p2 = Passenger(n10, n12)
-    # p3 = Passenger(n5, n14)
-    # p4 = Passenger(n11, n1)
-    # p5 = Passenger(n4, n9)
-    # passengers = [p1, p2, p3, p4 ,p5]
-
 
     # # self, carId, passengerCount, passengers, x, y, nodePath, currentNode, destinationNode, currentTotalTravelCost
 
@@ -324,14 +317,6 @@ if __name__ == '__main__':
     ubers = [u1, u2, u3, u4, u5]
 
 
-    # g = Graph(nodes=nodes, passengers=passengers, ubers=ubers)
-
-    # Ubers
-    #u1 = Uber(carId=1, passengerCount=0, passengers=[], x=0, y=0, nodePath=[], currentNode=n1, destinationNode=None, currentTotalTravelCost=0, assigned_passenger = None)
-    #2 = Uber(2, 0, [], 100, 100, [], n9, None, 0,None)
-    #u3 = Uber(3, 0, [], 100, 0, [], n14, None, 0)
-    # ubers = [u1, u2]
-    # Passengers
 
     p1 = Passenger(n3, n7)
 
@@ -346,61 +331,10 @@ if __name__ == '__main__':
 
     g = Graph(nodes=nodes, passengers=passengerList, ubers=ubers)
 
-    # graph it
-    #print "Uber1 pos:", u1.currentNode.x, u1.currentNode.y
-    #print "Uber2 pos:", u2.currentNode.x, u2.currentNode.y
-    #print "Uber3 pos:", u3.currentNode.x, u3.currentNode.y
 
-    # print passengerList
-    # print "Passengers", g.passengers
-
-    # tuple = g.a_star_search(n10, n6)
-    # path = tuple[0]
-    # cost = tuple[1]
-    # print "Path:", path.items()[0][0]
-    # for x in path:
-    #     print x.node_id, x.x, x.y
-    # print cost
-    # #for x in cost:
-    # print x.node_id
-
-    # Get cost at each step
-    # for i in cost:
-    #     print cost[i]
-    #print "Path:", path(1)
-
-    # nodePathList = nodePathToList(path)
-    # allPassengers += passengerList
 
     for i in range(40):
         print graph_map(g)
         g.pass_time()
-    # # print out passengers' waiting time
-    # totalWait = 0
-    # for p in allPassengers:
-    #     print "Wait time for", p.ID, " was", p.time
-    #     totalWait += p.time
-    # print "avg wait time =", (1.0*totalWait/len(allPassengers))
-    # if pool:
-    #     f = open("pool.txt", "a")
-    # else:
-    #      f = open("noPool.txt", "a")
-    # f.write(str(1.0*totalWait/len(allPassengers))+"\n")
-    # f.close()
-    # ubers = g.ubers
-    # for u in ubers:
-    #     print u.carId
-    # passengers = g.passengers
-    # for p in passengers:
-    #     print p.ID
-    # for u in ubers:
-    #     path = u.nodePath
-    #     for p in path:
-    #         print p.x, p.y
-        #print u.currentNode.x, u.currentNode.y
-        # print u.destinationNode.x, u.destinationNode.y
-        # print u.currentTotalTravelCost
-        # print u.passengers
 
-    # print graph_map(g)
 
