@@ -3,9 +3,6 @@
     CS182 Final Project
     Ying-ke Chin-Lee, Chris Rodowicz, and Jiacheng Zhao
 '''
-from nodes import *
-from passengers import *
-from uber import *
 from util import *
 
 import sys
@@ -19,7 +16,7 @@ class Graph:
         self.passengers = passengers # All the passengers on the map
         self.ubers = ubers
         self.time = start_t # start time
-        self.max_time = 10 # time step len
+        self.max_time = 30 # time step len
         # just noticed this doesn't support spawning two passengers at the same time
         # self.spawnTimes = [1, 3, 4, 6] # maybe keep a list of times at which to spawn someone
         # commented out/replaced this because I don't want it just yet when I'm testing
@@ -131,112 +128,6 @@ class Graph:
             # increment self time
             self.time += 1
 
-    # euclidian 
-    def euclidian_heuristic(self, node1, node2):
-        a = np.array([node1.x, node1.y])
-        b = np.array([node2.x, node2.y])
-        return np.sqrt(np.sum((a-b)**2))
-    
-    # a star search for finding a best route
-    def a_star_search(self, start, goal):
-        frontier = PriorityQueue()
-        frontier.put(start, 0)
-        came_from = collections.OrderedDict()
-        cost_so_far = collections.OrderedDict()
-        came_from[start] = None
-        cost_so_far[start] = 0
-
-        while not frontier.empty():
-            current = frontier.get()
-
-            if current == goal:
-                break
-
-            for neighbor in current.get_neighbors():
-                # cost = current cost + dist + current traffic + neighbor traffic
-                new_cost = cost_so_far[current] + current.get_euc_dist(neighbor) + current.traffic + neighbor.traffic
-                # a star
-                if neighbor not in cost_so_far or new_cost < cost_so_far[neighbor]:
-                    cost_so_far[neighbor] = new_cost
-                    priority = new_cost + self.euclidian_heuristic(goal, neighbor)
-                    frontier.put(neighbor, priority)
-                    came_from[neighbor] = current
-
-        return came_from, cost_so_far
-
-    # DFS / BFS, method -> 'DFS', 'BFS'
-    def depth_breadth_first_search(self, method, start, goal):
-        if method == 'BFS':
-            frontier = Queue()
-        elif method == 'DFS':
-            frontier = Stack()
-        else:
-            print 'method invalid'
-        # init frontier
-        frontier.put(start)
-        came_from = collections.OrderedDict()
-        came_from[start] = None
-        
-        # run search
-        while not frontier.empty():
-            current = frontier.get()
-            
-            if current == goal:
-                break
-            
-            for neighbor in current.get_neighbors():
-                if neighbor not in came_from:
-                    frontier.put(neighbor)
-                    came_from[neighbor] = current
-        
-        return came_from
-
-    # some tiny modification from A star
-    def uniform_cost_search(self, start, goal):
-        frontier = PriorityQueue()
-        frontier.put(start, 0)
-        came_from = collections.OrderedDict()
-        cost_so_far = collections.OrderedDict()
-        came_from[start] = None
-        cost_so_far[start] = 0
-        
-        while not frontier.empty():
-            current = frontier.get()
-            
-            if current == goal:
-                break
-            
-            for neighbor in current.get_neighbors():
-                new_cost = cost_so_far[current] + current.get_euc_dist(neighbor) + current.traffic + neighbor.traffic
-                if neighbor not in cost_so_far or new_cost < cost_so_far[neighbor]:
-                    cost_so_far[neighbor] = new_cost
-                    priority = new_cost
-                    frontier.put(neighbor, priority)
-                    came_from[neighbor] = current
-        
-        return came_from, cost_so_far
-
-
-    # a helper function to get the path
-    # return path from start to final in a list of nodes
-    def reconstruct_path(self, came_from, start, goal):
-        current = goal
-        path = [current]
-        while current != start:
-            current = came_from[current]
-            path.append(current)
-        path.reverse() 
-        return path
-
-
-    # pass it path from the above function, it will return the cost of the path
-    def get_path_cost(self, path):
-        cursor = 1
-        cost = 0
-        while cursor != len(path):
-            cost += path[cursor-1].get_euc_dist(path[cursor]) + path[cursor-1].traffic + path[cursor].traffic
-            cursor += 1
-        return cost
 
 
 
@@ -329,12 +220,24 @@ if __name__ == '__main__':
     passengerList = [p1, p2, p3, p4, p5]
     # passengerList = [p1, p2]
 
-    g = Graph(nodes=nodes, passengers=passengerList, ubers=ubers)
+    # our set, beautiful default map
+    g1 = Graph(nodes=nodes, passengers=passengerList, ubers=ubers)
 
+    # a random map for testing larger number of nodes
+    ran_nodes = gen_random_nodes(100)
+    ran_pass = gen_random_passengers(ran_nodes, 10)
+    ran_uber = gen_random_ubers(ran_nodes, 6)
+    g2 = Graph(nodes=ran_nodes, passengers=ran_pass, ubers=ran_uber)
 
+    # # run function for g1
+    for i in range(20):
+        print graph_map(g1)
+        g1.pass_time()
 
-    for i in range(40):
-        print graph_map(g)
-        g.pass_time()
+    # run function for g2
+    # the number is the number of time steps!
+    # for i in range(20):
+    #     print graph_map(g2)
+    #     g2.pass_time()
 
 

@@ -3,9 +3,7 @@
     CS182 Final Project
     Ying-ke Chin-Lee, Chris Rodowicz, and Jiacheng Zhao
 '''
-from nodes import Node
-from passengers import Passenger
-from util import *
+import util
 import math, sys
 
 class Uber:
@@ -28,9 +26,9 @@ class Uber:
 		myPass = None
 		for p in passengers:
 			if not p.got_uber:
-				came_from, _ = a_star_search(self.currentNode, p.start, True)
-				path = reconstruct_path(came_from, self.currentNode, p.start)
-				currDist = get_path_cost(path)
+				came_from, _ = util.a_star_search(self.currentNode, p.start, True)
+				path = util.reconstruct_path(came_from, self.currentNode, p.start)
+				currDist = util.get_path_cost(path)
 				if (currDist < minDist):
 					minDist = currDist
 					myPass = p
@@ -54,12 +52,12 @@ class Uber:
 					self.destinationNode = asseigned_p.goal
 				elif len(self.passengers) == 2:
 					# the closer one of the two
-					came_from1, _ = a_star_search(self.currentNode, self.passengers[0].goal, True)
-					came_from2, _ = a_star_search(self.currentNode, self.passengers[1].goal, True)
-					path1 = reconstruct_path(came_from1, self.currentNode, self.passengers[0].goal)
-					path2 = reconstruct_path(came_from2, self.currentNode, self.passengers[1].goal)
-					dist1 = get_path_cost(path1)
-					dist2 = get_path_cost(path2)
+					came_from1, _ = util.a_star_search(self.currentNode, self.passengers[0].goal, True)
+					came_from2, _ = util.a_star_search(self.currentNode, self.passengers[1].goal, True)
+					path1 = util.reconstruct_path(came_from1, self.currentNode, self.passengers[0].goal)
+					path2 = util.reconstruct_path(came_from2, self.currentNode, self.passengers[1].goal)
+					dist1 = util.get_path_cost(path1)
+					dist2 = util.get_path_cost(path2)
 					# print "currDist=", currDist
 					if (dist1 <= dist2):
 					    self.destinationNode = self.passengers[0].goal
@@ -92,7 +90,7 @@ class Uber:
 	# Gets called at every time step
 	def setNodePath(self):
 		#print "ASTAR", a_star_search(self.currentNode, self.destinationNode)[0]
-		self.nodePath = reconstruct_path(a_star_search(self.currentNode, self.destinationNode)[0], self.currentNode, self.destinationNode)[1:]
+		self.nodePath = util.reconstruct_path(util.a_star_search(self.currentNode, self.destinationNode)[0], self.currentNode, self.destinationNode)[1:]
 		#print "Self.nodePath", self.nodePath
 
 	# In graph, for all ubers:

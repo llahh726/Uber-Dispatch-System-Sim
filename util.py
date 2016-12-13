@@ -10,6 +10,9 @@ import random
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
+from nodes import *
+from passengers import *
+from uber import *
 
 NODE_ITERATOR = 0
 
@@ -299,5 +302,41 @@ def varyCostOfNodes(nodes):
         if node.traffic > 5.:
             node.traffic = 5.
         print "Nodeid, traffic:", node.node_id, node.traffic
+
+
+# a function that generates random node map
+# input: number of nodes -> Int
+def gen_random_nodes(num):
+    nodes = []
+    # create num nodes 
+    for i in range(num):
+        nodes.append(Node([],[],np.random.randint(0,100), np.random.randint(0,100)))
+    # get 3 num edges
+    for i in range(num*3):
+        add_neighbor(np.random.choice(nodes), np.random.choice(nodes))
+    # return 
+    return nodes
+        
+# a function that generates random passengers
+# input: nodes, number of passengers -> Int
+def gen_random_passengers(nodes, num):
+    # create num passengers
+    passengers = []
+    for i in range(num):
+        passengers.append(Passenger(np.random.choice(nodes), np.random.choice(nodes)))
+    # return 
+    return passengers
+
+
+# a function that generates random ubers
+# input: nodes, number of ubers -> Int
+def gen_random_ubers(nodes, num):
+    # create num passengers
+    ubers = []
+    for i in range(num):
+        ran_node = np.random.choice(nodes)
+        ubers.append(Uber(0, [], ran_node.x, ran_node.y, [], ran_node,  None, 0, []))
+    # return 
+    return ubers
 
 
