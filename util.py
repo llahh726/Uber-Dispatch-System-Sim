@@ -1,3 +1,8 @@
+'''
+    CS182 Final Project
+    Ying-ke Chin-Lee, Chris Rodowicz, and Jiacheng Zhao
+'''
+
 # all util helper class and functions 
 import collections
 import heapq

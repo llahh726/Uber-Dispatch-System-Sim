@@ -1,11 +1,6 @@
 '''
-Names...
-
-CS 182 Final Project
-
-Node class for Uber Dispatch System
-
-Node -> intersection of rodes
+    CS182 Final Project
+    Ying-ke Chin-Lee, Chris Rodowicz, and Jiacheng Zhao
 '''
 import numpy as np
 import passengers

@@ -1,3 +1,8 @@
+
+'''
+    CS182 Final Project
+    Ying-ke Chin-Lee, Chris Rodowicz, and Jiacheng Zhao
+'''
 from nodes import Node
 from passengers import Passenger
 from util import *

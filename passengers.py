@@ -1,8 +1,6 @@
 '''
-  TODO:
-    - passenger find closest uber
-    - do a simulation for pass_time to make sure that it works 
-      - integrate this with timestep = 1
+    CS182 Final Project
+    Ying-ke Chin-Lee, Chris Rodowicz, and Jiacheng Zhao
 '''
 
 import random
